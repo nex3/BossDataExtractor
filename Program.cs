@@ -1,4 +1,7 @@
-﻿using SoulsFormats;
+﻿using Fluid;
+using Fluid.Parser;
+using SoulsFormats;
+using System.Reflection;
 
 var gamePath = "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\";
 var paramdefPath = "F:\\Mods\\Smithbox_1_0_13\\Smithbox\\Assets\\Paramdex\\ER\\Defs";
@@ -228,3 +231,13 @@ foreach (var boss in bosses)
         "MadnessResistRate"
     );
 }
+
+var fluid = new FluidParser();
+
+string path = Path.Combine(
+    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
+    @"Boss.liquid"
+);
+var template = fluid.Parse(File.ReadAllText(path));
+var context = new TemplateContext(bosses[0]);
+Console.WriteLine(template.Render(context));
