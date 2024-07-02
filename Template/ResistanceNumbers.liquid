@@ -1,0 +1,8 @@
+{% for number in numbers %}
+	{% unless forloop.first %}&nbsp;/ {% endunless %}
+	{% if strong %}
+		<strong>{{number}}</strong>
+	{% else %}
+		{{number}}
+	{% endif %}
+{% endif %}

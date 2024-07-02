@@ -1,0 +1,30 @@
+<h3 class="bonfire">
+	Elden Ring {{Boss.Name}} Boss
+	{% if Display == 'EnemySpecific' %}
+		({% if Boss.Location == null  %}__location__{% else %}{{Boss.Location}}{% endif %})
+	{% endif %}
+</h3>
+
+<ul>
+	<li>
+		This is {% unless Boss.Optional %}not{% endunless %} an optional boss
+	</li>
+	<li>
+		Closest Site of Grace:
+		<strong>{% if Boss.Location == null %}__grace__{% else %}{{Boss.Location}}{% endif %}</strong>
+	</li>
+	<li>
+		Multiplayer is {% unless Boss.MultiplayerAllowed %}not{% endunless %} allowed for this
+		boss
+	</li>
+	<li>
+		You
+		{% if Boss.SummonsAllowed %}can{% else %}<strong>cannot</strong>{% endif %}
+		summon
+		<a
+			class="wiki_link"
+			href="https://eldenring.wiki.fextralife.com/Spirit+Ashes"
+		>Spirit Ashes</a>
+		for this boss
+	</li>
+</ul>

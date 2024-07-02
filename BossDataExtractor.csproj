@@ -1,24 +1,67 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UseWPF>True</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Boss.liquid" />
+    <None Remove="Template\BossHeader.liquid" />
+    <None Remove="Template\CombatInfo.liquid" />
+    <None Remove="Template\EnemySpecific.liquid" />
+    <None Remove="Template\Full.liquid" />
+    <None Remove="Template\IconLink.liquid" />
+    <None Remove="Template\Negation.liquid" />
+    <None Remove="Template\Negations.liquid" />
+    <None Remove="Template\NewGameRow.liquid" />
+    <None Remove="Template\Resistance.liquid" />
+    <None Remove="Template\ResistanceNumbers.liquid" />
+    <None Remove="Template\Resistances.liquid" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Boss.liquid">
+    <Content Include="Template\BossHeader.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\Negations.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\NewGameRow.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\Full.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\Negation.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\ResistanceNumbers.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\Resistance.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\Resistances.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\CombatInfo.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\EnemySpecific.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\IconLink.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Fluid.Core" Version="2.10.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="8.0.0" />
+    <PackageReference Include="WebMarkupMin.Core" Version="2.16.2" />
   </ItemGroup>
 
   <ItemGroup>

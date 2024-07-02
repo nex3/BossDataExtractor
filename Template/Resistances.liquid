@@ -1,0 +1,31 @@
+<div class="row flexrow">
+	<div class="col-sm-12">
+		<h4 class="special">Resistances</h4>
+		<div class="row">
+			<div class="col-sm-6">
+				<ul>
+					{% for entry in Boss.Resistance limit:4 %}
+						{% include 'Resistance', type: entry[0], value: entry[1] %}
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-sm-6">
+				<ul>
+					{% for entry in Boss.Resistance offset:4 %}
+						{% include 'Resistance', type: entry[0], value: entry[1] %}
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		<p>
+			The resistance numbers are the buildup amount to trigger it. For example, if a
+			resistance is 100 you must deal 100 points of the given buildup to trigger it. Note
+			that these go down over time, and increase each time the effect procs.
+
+			{% if Boss.HasMultipleResistanceProcs %}
+				The values after the "/"s indicate the increased resistances after
+				each successive proc.
+			{% endif %}
+		</p>
+	</div>
+</div>

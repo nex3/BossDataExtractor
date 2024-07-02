@@ -5,14 +5,14 @@
 			<tbody>
 				<tr>
 					<th colspan="2">
-						<h2>{{Name}}</h2>
+						<h2>{{Boss.Name}}</h2>
 						<h4>
-							{% if Location != '' %}
-								<!--<a
-									href="https://eldenring.wiki.fextralife.com/{{stats.location | spaceToPlus}}"
-										ngIf="stats.location !== ''; else other">
-									{{stats.location}}
-								</a>-->
+							{% if Boss.Location != null %}
+								<a
+									href="https://eldenring.wiki.fextralife.com/{{
+										Boss.Location | spaceToPlus
+									}}"
+								>{{Boss.Location}}</a>
 							{% else %}
 								__location__
 							{% endif %}
@@ -31,15 +31,28 @@
 						  title="Runes Icon"
 						  alt="Runes Icon"
 						  src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-						  attr.data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-						>{{Runes[0]}}
+						  data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+						>{{Boss.Runes[0] | number}}
 					</td>
 				</tr>
 				<tr>
 					<td>HP</td>
-					<td>{{HP[0]}}</td>
+					<td>{{Boss.HP[0] | number}}</td>
 				</tr>
 			</tbody>
 		</table>
+	</div>
+</div>
+
+{% include 'BossHeader', display: 'enemy-specific' %}
+
+<h3 class="bonfire">{{Boss.Name}} Combat information</h3>
+
+<div class="row flexrow">
+	<div class="col-sm-6">
+		{% include 'CombatInfo' %}
+	</div>
+	<div class="col-sm-6">
+		{% include 'Resistances' %}
 	</div>
 </div>

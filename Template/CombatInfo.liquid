@@ -1,0 +1,101 @@
+<ul>
+	{% if ShowEnemySpecific %}
+	    <li>
+            Health:
+            <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+                <strong>{{Boss.HP[0] | number}}</strong>
+                HP
+            </span>
+        </li>
+        <li>
+            Defense:
+            <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+            <strong>{{Boss.Defense[0]}}</strong>
+            </span>
+        </li>
+	{% endif %}
+	{% if ShowCrossEnemy %}
+	    <li>
+            <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Stance">Stance</a>:
+            <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+            <strong>{{Boss.Stance}}</strong>
+            </span>
+        </li>
+        <li>
+            <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Parrying">Parryable</a>:
+			{% if Boss.Parriable %}
+			    Yes{%
+				    if Boss.ParriesPerCrit != 1
+				%}, but {{Boss.ParriesPerCrit}} parries are required per
+                <a 
+					class="wiki_link"
+					href="https://eldenring.wiki.fextralife.com/Parrying"
+				>stance break</a>
+		        {% endif %}
+			{% else %}
+			    No
+			{% endif %}
+        </li>
+        <li>
+			{% if Boss.Critable %}
+                Is vulnerable to a
+                <a
+					class="wiki_link"
+					href="https://eldenring.wiki.fextralife.com/Critical+Damage"
+				>critical hit</a>
+                after being
+                <a
+					class="wiki_link"
+					href="https://eldenring.wiki.fextralife.com/Stance"
+				>stance broken</a>
+			    {% if Boss.Parriable %} or parried{% endif %}
+			{% else %}
+                Immune to
+                <a
+					class="wiki_link"
+					href="https://eldenring.wiki.fextralife.com/Critical+Damage"
+				>critical attacks</a>.
+                Breaking its
+                <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Stance">stance</a>
+			    {% if Boss.Parriable %}
+                    or
+                    <a
+						class="wiki_link"
+						href="https://eldenring.wiki.fextralife.com/Parrying"
+					>parrying</a>
+                    it
+				{% endif %}
+                will only stun it briefly
+            {% endif %}
+        </li>
+	{% endif %}
+	{% if Boss.DamageTypes %}
+        <li>
+            Damage:
+			{% for type in Boss.DamageTypes %}<!--
+			    -->{% unless forloop.first %}, {% endunless %}
+				{% include 'IconLink', type: type %}<!--
+			-->{% endfor %}
+        </li>
+	{% endif %}
+	{% if Boss.StatusTypes %}
+        <li>
+		    Inflicts:
+		    {% for type in Boss.StatusTypes %}<!--
+		        -->{% unless forloop.first %}, {% endunless %}
+		        {% include 'IconLink', type: type %}<!--
+		    -->{% endfor %}
+        </li>
+	{% endif %}
+	{% if ShowEnemySpecific %}
+        <li>
+            Drops
+            <img
+                title="Runes Icon"
+                alt="Runes Icon"
+                src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+                data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+            >{{Boss.Runes[0] | number}}
+        </li>
+	{% endif %}
+</ul>

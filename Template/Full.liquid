@@ -1,0 +1,62 @@
+{% include 'BossHeader', display: 'enemy-specific' %}
+
+<h3 class="bonfire">{{Boss.Name}} Combat information</h3>
+
+<div class="row flexrow">
+	<div class="col-sm-6">
+		{% include 'CombatInfo' %}
+	</div>
+	<div class="col-sm-6">
+		{% include 'Resistances' %}
+	</div>
+</div>
+
+<h3 class="bonfire">{{enemyName}} Combat information</h3>
+
+{% include 'CombatInfo' %}
+
+<div class="row flexrow" *ngIf="display === 'full'">
+	<div class="col-sm-6">
+		{% include 'Negations' %}
+	</div>
+	<div class="col-sm-6">
+		{% include 'Resistances' %}
+	</div>
+</div>
+
+<div>
+	<details open="">
+		<summary class="expandable">
+			NG+ and Beyond <small>(click to reveal)</small>
+		</summary>
+		<div class="table-responsive">
+			<table class="wiki_table">
+				<thead>
+					<tr>
+						<th scope="col" style="min-width: 9em"></th>
+						<th scope="col">NG</th>
+						<th scope="col">NG+</th>
+						{% for i in (2..7) %}
+						<th scope="col">NG+{{i}}</th>
+						{% endfor %}
+					</tr>
+				</thead>
+				<tbody>
+					{% include 'NewGameRow', name: 'HP', data: Boss.HP, commas: true %}
+					{% include 'NewGameRow', name: 'Defense', data: Boss.Defense %}
+					{% include 'NewGameRow', name: 'Runes', data: Boss.Runes, commas: true %}
+					{% if Boss.HasNewGameResistances %}
+						<tr>
+							<th colspan="9">
+								<h4>Resistances</h4>
+							</th>
+						</tr>
+						{% for entry in Boss.Resistance %}
+							{% include 'NewGameRow', type: entry[0], data: entry[1] %}
+						{% endfor %}
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</details>
+</div>

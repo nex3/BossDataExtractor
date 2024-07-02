@@ -1,0 +1,8 @@
+<li>
+	{% include 'IconLink', type: type %}:
+	{% if value != null %}
+		{% include 'ResistanceNumbers', numbers: value[0], strong: true %}
+	{% else %}
+		<strong>Immune</strong>
+	{% endif %}
+</li>

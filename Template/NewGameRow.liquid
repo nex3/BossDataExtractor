@@ -1,0 +1,32 @@
+<tr>
+	<th scope="row">
+		{% if type %}
+			{% include 'IconLink', type: type %}
+		{% else %}
+			{{name}}
+		{% endif %}
+	</th>
+
+	{% if data %}
+		{% for column in data %}
+			{% if column.Count %}
+				{% if column.Count == 3 %}
+					{% assign style = 'font-size: 90%' %}
+				{% elsif column.Count > 3 %}
+					{% assign style = 'font-size: 80%' %}
+				{% endif %}
+				<td style="{{style}}">
+					{% include 'ResistanceNumbers', numbers: column, strong: false %}
+				</td>
+			{% else %}
+				<td>
+					{% if commas %}{{column | number}}{% else %}{{column}}{% endif %}
+				</td>
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		<td colspan="8" style="text-align: center;">
+			<strong>Immune</strong>
+		</td>
+	{% endif %}
+</tr>
