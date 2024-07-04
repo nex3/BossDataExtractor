@@ -5,7 +5,7 @@
 			<tbody>
 				<tr>
 					<th colspan="2">
-						<h2>{{Boss.Name}}</h2>
+						<a id="{{Boss.Location | slugify}}"></a><h2>{{Boss.Name}}</h2>
 						<h4>
 							<a
 								href="https://eldenring.wiki.fextralife.com/{{
@@ -52,3 +52,5 @@
 		{% include 'Resistances' %}
 	</div>
 </div>
+
+{% include 'NewGamePlus' %}

@@ -6,15 +6,19 @@ using Fluid.Values;
 using WebMarkupMin.Core;
 using System.IO;
 using System.Windows;
+using System.Text.RegularExpressions;
 
 var gamePath = "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\";
 var paramdefPath = "F:\\Mods\\Smithbox_1_0_13\\Smithbox\\Assets\\Paramdex\\ER\\Defs";
 
-var bossName = "Dragon-Man";
+var bossName = "Lion";
+int? bossId = 52100088;
 var displayType = Display.Full;
 var minify = true;
 
-var boss = Boss.KnownBosses.Find((boss) => boss.Name.Contains(bossName));
+var boss = bossId == null
+    ? Boss.KnownBosses.Find((boss) => boss.Name.Contains(bossName))
+    : Boss.KnownBosses.Find((boss) => boss.ID == bossId);
 if (boss == null)
 {
     throw new Exception($"No boss found named {bossName}");
@@ -150,9 +154,11 @@ for (var i = 2; i < 8; i++)
 }
 
 // Base defense for all stats seems to be 100, and defense scaling seems to be consistent across
-// all damage types. Defense is also not multiplicative between NG and NG+ according to Phil.
+// all damage types. Phil's data doesn't have defense as multiplicative between NG and NG+, but
+// that's inconsistent with other stats and leads to a bunch of bosses having less defense in NG+
+// so I think it's wrong.
 var ngDefense = 100 * (float)ngScaling["physicsDiffenceRate"].Value;
-var ngpDefense = 100 * (float)ngpScaling["physicsDiffenceRate"].Value;
+var ngpDefense = ngDefense * (float)ngpScaling["physicsDiffenceRate"].Value;
 boss.Defense.Add((int)Math.Floor(ngDefense));
 boss.Defense.Add((int)Math.Floor(ngpDefense));
 for (var i = 2; i < 8; i++)
@@ -249,6 +255,8 @@ options.Filters.AddFilter("spaceToPlus", (input, args, context) =>
     new StringValue(input.ToStringValue().Replace(' ', '+')));
 options.Filters.AddFilter("number", (input, args, context) =>
     new StringValue($"{input.ToNumberValue():n0}"));
+options.Filters.AddFilter("slugify", (input, args, context) =>
+    new StringValue(Regex.Replace(input.ToStringValue(), "[^a-z0-9]+", "-")));
 options.FileProvider = new PhysicalFileProvider(templateRoot);
 
 string path = options.FileProvider.GetFileInfo(

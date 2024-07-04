@@ -11,11 +11,13 @@
   <ItemGroup>
     <None Remove="Template\BossHeader.liquid" />
     <None Remove="Template\CombatInfo.liquid" />
+    <None Remove="Template\CrossEnemy.liquid" />
     <None Remove="Template\EnemySpecific.liquid" />
     <None Remove="Template\Full.liquid" />
     <None Remove="Template\IconLink.liquid" />
     <None Remove="Template\Negation.liquid" />
     <None Remove="Template\Negations.liquid" />
+    <None Remove="Template\NewGamePlus.liquid" />
     <None Remove="Template\NewGameRow.liquid" />
     <None Remove="Template\Resistance.liquid" />
     <None Remove="Template\ResistanceNumbers.liquid" />
@@ -24,6 +26,12 @@
 
   <ItemGroup>
     <Content Include="Template\BossHeader.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\CrossEnemy.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\NewGamePlus.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\Negations.liquid">

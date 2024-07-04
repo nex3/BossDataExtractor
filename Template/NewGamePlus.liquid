@@ -1,0 +1,34 @@
+<div>
+	<details open="">
+		<summary class="expandable">
+			NG+ and Beyond <small>(click to reveal)</small>
+		</summary>
+		<div class="table-responsive">
+			<table class="wiki_table">
+				<thead>
+					<tr>
+						<th scope="col" style="min-width: 9em"></th>
+						<th scope="col">NG</th>
+						<th scope="col">NG+</th>
+						{% for i in (2..7) %}
+						<th scope="col">NG+{{i}}</th>
+						{% endfor %}
+					</tr>
+				</thead>
+				<tbody>
+					{% include 'NewGameRow', name: 'HP', data: Boss.HP, commas: true %}
+					{% include 'NewGameRow', name: 'Defense', data: Boss.Defense %}
+					{% include 'NewGameRow', data: Boss.Runes, icon: RuneIcon, commas: true %}
+					<tr>
+						<th colspan="9">
+							<h4>Resistances</h4>
+						</th>
+					</tr>
+					{% for entry in Boss.ResistancePairs %}
+						{% include 'NewGameRow', icon: entry.Item1, data: entry.Item2 %}
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</details>
+</div>

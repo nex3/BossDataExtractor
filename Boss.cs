@@ -23,6 +23,20 @@ public class Boss
             gameAreaID: 43010800,
             location: "Dragon's Pit",
             parriable: true
+        ),
+        new Boss(
+            52100088, "Divine Beast Dancing Lion",
+            gameAreaID: 20000800,
+            location: "Belurat, Tower Settlement",
+            optional: false,
+            statusTypes: [StatusType.Frostbite]
+        ),
+        new Boss(
+            52100094, "Divine Beast Dancing Lion",
+            gameAreaID: 2046460800,
+            location: "Ancient Ruins of Rauh",
+            closestGrace: "Temple Town Ruins",
+            statusTypes: [StatusType.DeathBlight]
         )
     ];
 

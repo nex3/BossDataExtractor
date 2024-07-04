@@ -1,16 +1,10 @@
-{% include 'BossHeader' %}
-
 <h3 class="bonfire">{{Boss.Name}} Combat information</h3>
-
-{% include 'CombatInfo' %}
 
 <div class="row flexrow">
 	<div class="col-sm-6">
-		{% include 'Negations' %}
+		{% include 'CombatInfo' %}
 	</div>
 	<div class="col-sm-6">
-		{% include 'Resistances' %}
+		{% include 'Negations' %}
 	</div>
 </div>
-
-{% include 'NewGamePlus' %}
