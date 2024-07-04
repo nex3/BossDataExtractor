@@ -1,18 +1,18 @@
 <tr>
 	<th scope="row">
-		{% if type %}
-			{% include 'IconLink', type: type %}
+		{% if icon %}
+			{% include 'IconLink', type: icon %}
 		{% else %}
 			{{name}}
 		{% endif %}
 	</th>
 
-	{% if data %}
+	{% if data.size > 0 %}
 		{% for column in data %}
-			{% if column.Count %}
-				{% if column.Count == 3 %}
+			{% if column.size %}
+				{% if column.size == 3 %}
 					{% assign style = 'font-size: 90%' %}
-				{% elsif column.Count > 3 %}
+				{% elsif column.size > 3 %}
 					{% assign style = 'font-size: 80%' %}
 				{% endif %}
 				<td style="{{style}}">

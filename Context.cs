@@ -10,8 +10,14 @@ public class Context
     public Context(Display display, Boss boss)
     {
         displayEnum = display;
-        Boss = boss;
+        Boss = boss;;
     }
+
+    public IconLink RuneIcon
+    {
+        get { return IconLink.Runes; }
+    }
+
     public Boss Boss { get; init; }
 
     public string Display

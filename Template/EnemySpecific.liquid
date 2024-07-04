@@ -7,15 +7,11 @@
 					<th colspan="2">
 						<h2>{{Boss.Name}}</h2>
 						<h4>
-							{% if Boss.Location != null %}
-								<a
-									href="https://eldenring.wiki.fextralife.com/{{
-										Boss.Location | spaceToPlus
-									}}"
-								>{{Boss.Location}}</a>
-							{% else %}
-								__location__
-							{% endif %}
+							<a
+								href="https://eldenring.wiki.fextralife.com/{{
+									Boss.Location | spaceToPlus
+								}}"
+							>{{Boss.Location}}</a>
 						</h4>
 					</th>
 				</tr>

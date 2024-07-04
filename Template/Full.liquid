@@ -1,21 +1,10 @@
-{% include 'BossHeader', display: 'enemy-specific' %}
+{% include 'BossHeader' %}
 
 <h3 class="bonfire">{{Boss.Name}} Combat information</h3>
 
-<div class="row flexrow">
-	<div class="col-sm-6">
-		{% include 'CombatInfo' %}
-	</div>
-	<div class="col-sm-6">
-		{% include 'Resistances' %}
-	</div>
-</div>
-
-<h3 class="bonfire">{{enemyName}} Combat information</h3>
-
 {% include 'CombatInfo' %}
 
-<div class="row flexrow" *ngIf="display === 'full'">
+<div class="row flexrow">
 	<div class="col-sm-6">
 		{% include 'Negations' %}
 	</div>
@@ -44,15 +33,15 @@
 				<tbody>
 					{% include 'NewGameRow', name: 'HP', data: Boss.HP, commas: true %}
 					{% include 'NewGameRow', name: 'Defense', data: Boss.Defense %}
-					{% include 'NewGameRow', name: 'Runes', data: Boss.Runes, commas: true %}
+					{% include 'NewGameRow', data: Boss.Runes, icon: RuneIcon, commas: true %}
 					{% if Boss.HasNewGameResistances %}
 						<tr>
 							<th colspan="9">
 								<h4>Resistances</h4>
 							</th>
 						</tr>
-						{% for entry in Boss.Resistance %}
-							{% include 'NewGameRow', type: entry[0], data: entry[1] %}
+						{% for entry in Boss.ResistancePairs %}
+							{% include 'NewGameRow', icon: entry.Item1, data: entry.Item2 %}
 						{% endfor %}
 					{% endif %}
 				</tbody>

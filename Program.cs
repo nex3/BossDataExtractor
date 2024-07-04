@@ -10,8 +10,9 @@ using System.Windows;
 var gamePath = "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\";
 var paramdefPath = "F:\\Mods\\Smithbox_1_0_13\\Smithbox\\Assets\\Paramdex\\ER\\Defs";
 
-var bossName = "Onze";
+var bossName = "Dragon-Man";
 var displayType = Display.Full;
+var minify = true;
 
 var boss = Boss.KnownBosses.Find((boss) => boss.Name.Contains(bossName));
 if (boss == null)
@@ -256,10 +257,9 @@ string path = options.FileProvider.GetFileInfo(
 var template = fluid.Parse(File.ReadAllText(path));
 var context = new TemplateContext(new Context(displayType, boss), options);
 var html = template.Render(context);
+if (minify) html = new HtmlMinifier().Minify(html).MinifiedContent;
 
-Thread thread = new Thread(() => {
-    Clipboard.SetText(new HtmlMinifier().Minify(html).MinifiedContent);
-});
+Thread thread = new Thread(() => Clipboard.SetText(html));
 thread.SetApartmentState(ApartmentState.STA);
 thread.Start();
 thread.Join();

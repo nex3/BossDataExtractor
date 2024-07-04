@@ -1,8 +1,6 @@
 <h3 class="bonfire">
 	Elden Ring {{Boss.Name}} Boss
-	{% if Display == 'EnemySpecific' %}
-		({% if Boss.Location == null  %}__location__{% else %}{{Boss.Location}}{% endif %})
-	{% endif %}
+	{% if Display == 'EnemySpecific' %}({{Boss.Location}}){% endif %}
 </h3>
 
 <ul>
@@ -11,7 +9,7 @@
 	</li>
 	<li>
 		Closest Site of Grace:
-		<strong>{% if Boss.Location == null %}__grace__{% else %}{{Boss.Location}}{% endif %}</strong>
+		<strong>{{Boss.ClosestGrace}}</strong>
 	</li>
 	<li>
 		Multiplayer is {% unless Boss.MultiplayerAllowed %}not{% endunless %} allowed for this

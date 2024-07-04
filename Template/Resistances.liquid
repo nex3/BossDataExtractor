@@ -4,15 +4,15 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<ul>
-					{% for entry in Boss.Resistance limit:4 %}
-						{% include 'Resistance', type: entry[0], value: entry[1] %}
+					{% for entry in Boss.ResistancePairs limit:4 %}
+						{% include 'Resistance', type: entry.Item1, value: entry.Item2 %}
 					{% endfor %}
 				</ul>
 			</div>
 			<div class="col-sm-6">
 				<ul>
-					{% for entry in Boss.Resistance offset:4 %}
-						{% include 'Resistance', type: entry[0], value: entry[1] %}
+					{% for entry in Boss.ResistancePairs offset:4 %}
+						{% include 'Resistance', type: entry.Item1, value: entry.Item2 %}
 					{% endfor %}
 				</ul>
 			</div>

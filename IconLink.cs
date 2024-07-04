@@ -1,5 +1,11 @@
 ﻿public class IconLink
 {
+    public static readonly IconLink Runes = new IconLink(
+        "Runes",
+        "/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png",
+        "/Runes"
+    );
+
     protected IconLink(string name, string src, string href, string? color = null)
     {
         Name = name;

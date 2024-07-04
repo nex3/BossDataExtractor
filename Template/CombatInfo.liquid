@@ -78,7 +78,7 @@
 			-->{% endfor %}
         </li>
 	{% endif %}
-	{% if Boss.StatusTypes %}
+	{% if Boss.StatusTypes.size > 0 %}
         <li>
 		    Inflicts:
 		    {% for type in Boss.StatusTypes %}<!--
