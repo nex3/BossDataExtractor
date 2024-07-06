@@ -5,7 +5,10 @@
 			<tbody>
 				<tr>
 					<th colspan="2">
-						<a id="{{Boss.Location | slugify}}"></a><h2>{{Boss.Name}}</h2>
+						<h2>
+							<a id="{{Boss.Location | slugify}}" class="mce-item-anchor"></a><!--
+							-->{{Boss.Name}}
+						</h2>
 						<h4>
 							<a
 								href="https://eldenring.wiki.fextralife.com/{{
@@ -28,7 +31,14 @@
 						  alt="Runes Icon"
 						  src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
 						  data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-						>{{Boss.Runes[0] | number}}
+						>{{Boss.Runes[0] | number}}<!--
+						-->{% for drop in Boss.Drops %}<!--
+							--><br><!--
+							--><a
+								href="/{{drop | noXCount | spaceToPlus}}"
+							>{{drop | noXCount}}</a><!--
+							-->{{drop | onlyXCount}}<!--
+						-->{% endfor %}
 					</td>
 				</tr>
 				<tr>

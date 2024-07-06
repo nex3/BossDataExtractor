@@ -1,11 +1,16 @@
 <h3 class="bonfire">
-	Elden Ring {{Boss.Name}} Boss
+	Elden Ring {{Boss.Name}}
+	{% if Boss.IsBoss %}Boss{% endif %}
 	{% if Display == 'EnemySpecific' %}({{Boss.Location}}){% endif %}
 </h3>
 
 <ul>
 	<li>
-		This is {% unless Boss.Optional %}not{% endunless %} an optional boss
+		{% if Boss.IsBoss %}
+			This is {% unless Boss.Optional %}not{% endunless %} an optional boss
+		{% else %}
+			This enemy does not have a boss bar, but it will not respawn when killed
+		{% endif %}
 	</li>
 	<li>
 		Closest Site of Grace:
@@ -13,7 +18,7 @@
 	</li>
 	<li>
 		Multiplayer is {% unless Boss.MultiplayerAllowed %}not{% endunless %} allowed for this
-		boss
+		{% if Boss.IsBoss %}boss{% else %}enemy{% endif %}
 	</li>
 	<li>
 		You
@@ -23,6 +28,15 @@
 			class="wiki_link"
 			href="https://eldenring.wiki.fextralife.com/Spirit+Ashes"
 		>Spirit Ashes</a>
-		for this boss
+		for this {% if Boss.IsBoss %}boss{% else %}enemy{% endif %}
 	</li>
+	{% if Boss.SummonableNPCs.size > 0 %}
+		<li>
+			<a href="/NPC+Summons">NPC Summons</a>:
+			{% for npc in Boss.SummonableNPCs %}<!--
+				-->{% unless forloop.first %}, {% endunless %}
+				<a href="{{npc | spaceToPlus}}">{{npc}}</a><!--
+			-->{% endfor %}
+		</li>
+	{% endif %}
 </ul>

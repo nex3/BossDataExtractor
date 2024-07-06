@@ -11,9 +11,9 @@ using System.Text.RegularExpressions;
 var gamePath = "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\";
 var paramdefPath = "F:\\Mods\\Smithbox_1_0_13\\Smithbox\\Assets\\Paramdex\\ER\\Defs";
 
-var bossName = "Lion";
-int? bossId = 52100088;
-var displayType = Display.Full;
+var bossName = "Hippo";
+int? bossId = 50110094;
+var displayType = Display.EnemySpecific;
 var minify = true;
 
 var boss = bossId == null
@@ -140,6 +140,24 @@ foreach (var (name, param) in defenseParams)
     boss.TypeDefense[name] = (int)Math.Round(100 * value);
 }
 
+List<(WeaknessType, string)> weaknessParams = [
+    (WeaknessType.Gravity, "isWeakA"),
+    (WeaknessType.Undead, "isWeakB"),
+    (WeaknessType.AncientDragon, "isWeakC"),
+    (WeaknessType.Dragon, "isWeakD")
+];
+foreach (var (weakness, field) in weaknessParams)
+{
+    if (((byte)bossParams[field].Value) > 0) boss.Weaknesses.Add(weakness);
+}
+
+if ((byte)bossParams["partsDamageType"].Value == 1)
+{
+    boss.WeakPointExtraDamage = (int)Math.Round(
+        100 * (((float)bossParams["weakPartsDamageRate"].Value) - 1)
+    );
+}
+
 var ngScaling = spEffects[(int)bossParams["spEffectID3"].Value];
 var ngpScaling = spEffects[(int)bossParams["GameClearSpEffectID"].Value];
 
@@ -168,7 +186,9 @@ for (var i = 2; i < 8; i++)
     );
 }
 
-var ngRunes = (uint)gameAreaParam[boss.GameAreaID]["bonusSoul_single"].Value;
+var ngRunes = boss.GameAreaID == null
+    ? (uint)bossParams["getSoul"].Value
+    : (uint)gameAreaParam[(int)boss.GameAreaID]["bonusSoul_single"].Value;
 var ngpRunes = ngRunes * (float)ngpScaling["haveSoulRate"].Value;
 boss.Runes.Add((int)ngRunes);
 boss.Runes.Add((int)Math.Round(ngpRunes));
@@ -256,7 +276,11 @@ options.Filters.AddFilter("spaceToPlus", (input, args, context) =>
 options.Filters.AddFilter("number", (input, args, context) =>
     new StringValue($"{input.ToNumberValue():n0}"));
 options.Filters.AddFilter("slugify", (input, args, context) =>
-    new StringValue(Regex.Replace(input.ToStringValue(), "[^a-z0-9]+", "-")));
+    new StringValue(Regex.Replace(input.ToStringValue().ToLower(), @"[^a-z0-9]+", "-")));
+options.Filters.AddFilter("noXCount", (input, args, context) =>
+    new StringValue(Regex.Replace(input.ToStringValue(), @" x[0-9]+$", "")));
+options.Filters.AddFilter("onlyXCount", (input, args, context) =>
+    new StringValue(Regex.Replace(input.ToStringValue(), @"(.*?)( x[0-9]+)?$", "$2")));
 options.FileProvider = new PhysicalFileProvider(templateRoot);
 
 string path = options.FileProvider.GetFileInfo(

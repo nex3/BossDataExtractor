@@ -68,24 +68,39 @@
                 will only stun it briefly
             {% endif %}
         </li>
-	{% endif %}
-	{% if Boss.DamageTypes %}
-        <li>
-            Damage:
-			{% for type in Boss.DamageTypes %}<!--
-			    -->{% unless forloop.first %}, {% endunless %}
-				{% include 'IconLink', type: type %}<!--
-			-->{% endfor %}
-        </li>
-	{% endif %}
-	{% if Boss.StatusTypes.size > 0 %}
-        <li>
-		    Inflicts:
-		    {% for type in Boss.StatusTypes %}<!--
-		        -->{% unless forloop.first %}, {% endunless %}
-		        {% include 'IconLink', type: type %}<!--
-		    -->{% endfor %}
-        </li>
+		{% if Boss.DamageTypes %}
+			<li>
+				Damage:
+				{% for type in Boss.DamageTypes %}<!--
+					-->{% unless forloop.first %}, {% endunless %}
+					{% include 'IconLink', type: type %}<!--
+				-->{% endfor %}
+			</li>
+		{% endif %}
+		{% if Boss.StatusTypes.size > 0 %}
+			<li>
+				Inflicts:
+				{% for type in Boss.StatusTypes %}<!--
+					-->{% unless forloop.first %}, {% endunless %}
+					{% include 'IconLink', type: type %}<!--
+				-->{% endfor %}
+			</li>
+		{% endif %}
+		{% if Boss.Weaknesses.size > 0 %}
+			<li>
+				{% for type in Boss.Weaknesses %}
+					{% unless forloop.first %} and {% endunless %}
+					{% include 'IconLink', type: type %}
+				{% endfor %}
+				type
+			</li>
+		{% endif %}
+		{% if Boss.WeakPoint %}
+			<li>
+				Weak point: {{Boss.WeakPoint}}
+				{% if Boss.WeakPointExtraDamage %}(+{{Boss.WeakPointExtraDamage}}%){% endif %}
+			</li>
+		{% endif %}
 	{% endif %}
 	{% if ShowEnemySpecific %}
         <li>
@@ -95,7 +110,11 @@
                 alt="Runes Icon"
                 src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
                 data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-            >{{Boss.Runes[0] | number}}
+            >{{Boss.Runes[0] | number}}<!--
+			-->{% for drop in Boss.Drops %}<!--
+				-->, <a href="/{{drop | noXCount | spaceToPlus}}">{{drop | noXCount}}</a><!--
+				-->{{drop | onlyXCount}}<!--
+			-->{% endfor %}
         </li>
 	{% endif %}
 </ul>
