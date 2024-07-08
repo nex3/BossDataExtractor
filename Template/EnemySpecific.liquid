@@ -35,6 +35,7 @@
 						-->{% for drop in Boss.Drops %}<!--
 							--><br><!--
 							--><a
+								class="wiki_link"
 								href="/{{drop | noXCount | spaceToPlus}}"
 							>{{drop | noXCount}}</a><!--
 							-->{{drop | onlyXCount}}<!--
@@ -43,7 +44,13 @@
 				</tr>
 				<tr>
 					<td>HP</td>
-					<td>{{Boss.HP[0] | number}}</td>
+					<td>
+						{% for hp in Boss.HP[0] %}
+							{% unless forloop.first %}<br>{% endunless %}
+							{{hp | number}}
+							{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}
+						{% endfor %}
+					</td>
 				</tr>
 			</tbody>
 		</table>

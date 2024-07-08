@@ -11,17 +11,24 @@ using System.Text.RegularExpressions;
 var gamePath = "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\";
 var paramdefPath = "F:\\Mods\\Smithbox_1_0_13\\Smithbox\\Assets\\Paramdex\\ER\\Defs";
 
-var bossName = "Hippo";
-int? bossId = 50110094;
+var bossName = "Magma Wyrm";
+int? bossID = 62510093;
 var displayType = Display.EnemySpecific;
 var minify = true;
 
-var boss = bossId == null
+var boss = bossID == null
     ? Boss.KnownBosses.Find((boss) => boss.Name.Contains(bossName))
-    : Boss.KnownBosses.Find((boss) => boss.ID == bossId);
+    : Boss.KnownBosses.Find((boss) => boss.ID == bossID);
 if (boss == null)
 {
-    throw new Exception($"No boss found named {bossName}");
+    if (bossID == null)
+    {
+        throw new Exception($"No boss found named {bossName}");
+    }
+    else
+    {
+        throw new Exception($"No boss found with ID {bossID}");
+    }
 }
 
 var paramsWeCareAbout = new HashSet<string>([
@@ -77,55 +84,57 @@ foreach (var attack in attacks.Rows)
     }
 }
 
-var bossParams = npcs[boss.ID];
-
-boss.Stance = (int)Math.Round((float)bossParams["superArmorDurability"].Value);
-
-var behavior = bossParams["behaviorVariationId"];
-if (attacksForEnemy.TryGetValue((int)behavior.Value / 10, out var bossAttacks))
+void loadBossData(Boss boss)
 {
-    foreach (var attack in bossAttacks)
+    var bossParams = npcs[boss.ID];
+
+    boss.Stance = (int)Math.Round((float)bossParams["superArmorDurability"].Value);
+
+    var behavior = bossParams["behaviorVariationId"];
+    if (attacksForEnemy.TryGetValue((int)behavior.Value / 10, out var bossAttacks))
     {
-        if ((ushort)attack["atkPhys"].Value > 0)
+        foreach (var attack in bossAttacks)
         {
-            switch ((byte)attack["atkAttribute"].Value)
+            if ((ushort)attack["atkPhys"].Value > 0)
             {
-                case 0:
-                    boss.DamageTypes.Add(DamageType.Slash);
-                    break;
-                case 1:
-                    boss.DamageTypes.Add(DamageType.Strike);
-                    break;
-                case 2:
-                    boss.DamageTypes.Add(DamageType.Pierce);
-                    break;
-                default:
-                    boss.DamageTypes.Add(DamageType.Standard);
-                    break;
+                switch ((byte)attack["atkAttribute"].Value)
+                {
+                    case 0:
+                        boss.DamageTypes.Add(DamageType.Slash);
+                        break;
+                    case 1:
+                        boss.DamageTypes.Add(DamageType.Strike);
+                        break;
+                    case 2:
+                        boss.DamageTypes.Add(DamageType.Pierce);
+                        break;
+                    default:
+                        boss.DamageTypes.Add(DamageType.Standard);
+                        break;
+                }
+            }
+
+            if ((ushort)attack["atkMag"].Value > 0)
+            {
+                boss.DamageTypes.Add(DamageType.Magic);
+            }
+            if ((ushort)attack["atkFire"].Value > 0)
+            {
+                boss.DamageTypes.Add(DamageType.Fire);
+            }
+            if ((ushort)attack["atkThun"].Value > 0)
+            {
+                boss.DamageTypes.Add(DamageType.Lightning);
+            }
+            if ((ushort)attack["atkDark"].Value > 0)
+            {
+                boss.DamageTypes.Add(DamageType.Holy);
             }
         }
-
-        if ((ushort)attack["atkMag"].Value > 0)
-        {
-            boss.DamageTypes.Add(DamageType.Magic);
-        }
-        if ((ushort)attack["atkFire"].Value > 0)
-        {
-            boss.DamageTypes.Add(DamageType.Fire);
-        }
-        if ((ushort)attack["atkThun"].Value > 0)
-        {
-            boss.DamageTypes.Add(DamageType.Lightning);
-        }
-        if ((ushort)attack["atkDark"].Value > 0)
-        {
-            boss.DamageTypes.Add(DamageType.Holy);
-        }
     }
-}
 
-List<(DamageType, string)> defenseParams = [
-    (DamageType.Standard, "neutralDamageCutRate"),
+    List<(DamageType, string)> defenseParams = [
+        (DamageType.Standard, "neutralDamageCutRate"),
     (DamageType.Slash, "slashDamageCutRate"),
     (DamageType.Strike, "blowDamageCutRate"),
     (DamageType.Pierce, "thrustDamageCutRate"),
@@ -134,134 +143,151 @@ List<(DamageType, string)> defenseParams = [
     (DamageType.Lightning, "thunderDamageCutRate"),
     (DamageType.Holy, "darkDamageCutRate"),
 ];
-foreach (var (name, param) in defenseParams)
-{
-    var value = 1 - (float)bossParams[param].Value;
-    boss.TypeDefense[name] = (int)Math.Round(100 * value);
-}
+    foreach (var (name, param) in defenseParams)
+    {
+        var value = 1 - (float)bossParams[param].Value;
+        boss.TypeDefense[name] = (int)Math.Round(100 * value);
+    }
 
-List<(WeaknessType, string)> weaknessParams = [
-    (WeaknessType.Gravity, "isWeakA"),
+    List<(WeaknessType, string)> weaknessParams = [
+        (WeaknessType.Gravity, "isWeakA"),
     (WeaknessType.Undead, "isWeakB"),
     (WeaknessType.AncientDragon, "isWeakC"),
     (WeaknessType.Dragon, "isWeakD")
-];
-foreach (var (weakness, field) in weaknessParams)
-{
-    if (((byte)bossParams[field].Value) > 0) boss.Weaknesses.Add(weakness);
-}
-
-if ((byte)bossParams["partsDamageType"].Value == 1)
-{
-    boss.WeakPointExtraDamage = (int)Math.Round(
-        100 * (((float)bossParams["weakPartsDamageRate"].Value) - 1)
-    );
-}
-
-var ngScaling = spEffects[(int)bossParams["spEffectID3"].Value];
-var ngpScaling = spEffects[(int)bossParams["GameClearSpEffectID"].Value];
-
-var baseHP = (uint)bossParams["hp"].Value;
-var ngHP = baseHP * (float)ngScaling["maxHpRate"].Value;
-var ngpHP = ngHP * (float)ngpScaling["maxHpRate"].Value;
-boss.HP.Add((int)Math.Floor(ngHP));
-boss.HP.Add((int)Math.Floor(ngpHP));
-for (var i = 2; i < 8; i++)
-{
-    boss.HP.Add((int)Math.Floor(ngpHP * (float)clearCountParams[i]["MaxHpRate"].Value));
-}
-
-// Base defense for all stats seems to be 100, and defense scaling seems to be consistent across
-// all damage types. Phil's data doesn't have defense as multiplicative between NG and NG+, but
-// that's inconsistent with other stats and leads to a bunch of bosses having less defense in NG+
-// so I think it's wrong.
-var ngDefense = 100 * (float)ngScaling["physicsDiffenceRate"].Value;
-var ngpDefense = ngDefense * (float)ngpScaling["physicsDiffenceRate"].Value;
-boss.Defense.Add((int)Math.Floor(ngDefense));
-boss.Defense.Add((int)Math.Floor(ngpDefense));
-for (var i = 2; i < 8; i++)
-{
-    boss.Defense.Add(
-        (int)Math.Floor(ngpDefense * (float)clearCountParams[i]["PhysicsDefenseRate"].Value)
-    );
-}
-
-var ngRunes = boss.GameAreaID == null
-    ? (uint)bossParams["getSoul"].Value
-    : (uint)gameAreaParam[(int)boss.GameAreaID]["bonusSoul_single"].Value;
-var ngpRunes = ngRunes * (float)ngpScaling["haveSoulRate"].Value;
-boss.Runes.Add((int)ngRunes);
-boss.Runes.Add((int)Math.Round(ngpRunes));
-for (var i = 2; i < 8; i++)
-{
-    boss.Runes.Add((int)Math.Round(ngpRunes * (float)clearCountParams[i]["SoulRate"].Value));
-}
-
-List<List<int>>? resistances(
-    String baseCell, String correctCell, String rateCell, String clearCountCell
-) {
-    var baseValue = (ushort)bossParams[baseCell].Value;
-    if (baseValue == 999) return [];
-
-    var correct = resistCorrectParam[(int)bossParams[correctCell].Value];
-    var ngProc1 = baseValue * (float)ngScaling[rateCell].Value;
-    var ngpProc1 = ngProc1 * (float)ngpScaling[rateCell].Value;
-    List<float> firstProcs = [ngProc1, ngpProc1];
-    for (var i = 2; i < 8; i++)
+    ];
+    foreach (var (weakness, field) in weaknessParams)
     {
-        firstProcs.Add(ngpProc1 * (float)clearCountParams[i][clearCountCell].Value);
+        if (((byte)bossParams[field].Value) > 0) boss.Weaknesses.Add(weakness);
     }
 
-    var resistances = firstProcs.Select((proc1) => {
-        List<float> procs = [proc1];
-        for (var i = 1; i < 6; i++)
-        {
-            procs.Add(proc1 + (float)correct[$"addPoint{i}"].Value);
-        }
-        return procs;
-    });
+    if ((byte)bossParams["partsDamageType"].Value == 1)
+    {
+        boss.WeakPointExtraDamage = (int)Math.Round(
+            100 * (((float)bossParams["weakPartsDamageRate"].Value) - 1)
+        );
+    }
 
-    return resistances.Select(
-        (procs) => procs.Select((proc) => (int)Math.Round(proc)).ToList()
-    ).ToList();
+    var ngScaling = spEffects[(int)bossParams["spEffectID3"].Value];
+    var ngpScaling = spEffects[(int)bossParams["GameClearSpEffectID"].Value];
+
+    var baseHP = (uint)bossParams["hp"].Value;
+    var ngHP = baseHP * (float)ngScaling["maxHpRate"].Value;
+    var ngpHP = ngHP * (float)ngpScaling["maxHpRate"].Value;
+    boss.HP.Add([(int)Math.Floor(ngHP)]);
+    boss.HP.Add([(int)Math.Floor(ngpHP)]);
+    for (var i = 2; i < 8; i++)
+    {
+        boss.HP.Add([(int)Math.Floor(ngpHP * (float)clearCountParams[i]["MaxHpRate"].Value)]);
+    }
+
+    // Base defense for all stats seems to be 100, and defense scaling seems to be consistent across
+    // all damage types. Phil's data doesn't have defense as multiplicative between NG and NG+, but
+    // that's inconsistent with other stats and leads to a bunch of bosses having less defense in NG+
+    // so I think it's wrong.
+    var ngDefense = 100 * (float)ngScaling["physicsDiffenceRate"].Value;
+    var ngpDefense = ngDefense * (float)ngpScaling["physicsDiffenceRate"].Value;
+    boss.Defense.Add((int)Math.Floor(ngDefense));
+    boss.Defense.Add((int)Math.Floor(ngpDefense));
+    for (var i = 2; i < 8; i++)
+    {
+        boss.Defense.Add(
+            (int)Math.Floor(ngpDefense * (float)clearCountParams[i]["PhysicsDefenseRate"].Value)
+        );
+    }
+
+    var ngRunes = boss.GameAreaID == null
+        ? (uint)bossParams["getSoul"].Value
+        : (uint)gameAreaParam[(int)boss.GameAreaID]["bonusSoul_single"].Value;
+    var ngpRunes = ngRunes * (float)ngpScaling["haveSoulRate"].Value;
+    boss.Runes.Add((int)ngRunes);
+    boss.Runes.Add((int)Math.Round(ngpRunes));
+    for (var i = 2; i < 8; i++)
+    {
+        boss.Runes.Add((int)Math.Round(ngpRunes * (float)clearCountParams[i]["SoulRate"].Value));
+    }
+
+    List<List<int>>? resistances(
+        String baseCell, String correctCell, String rateCell, String clearCountCell
+    )
+    {
+        var baseValue = (ushort)bossParams[baseCell].Value;
+        if (baseValue == 999) return [];
+
+        var correct = resistCorrectParam[(int)bossParams[correctCell].Value];
+        var ngProc1 = baseValue * (float)ngScaling[rateCell].Value;
+        var ngpProc1 = ngProc1 * (float)ngpScaling[rateCell].Value;
+        List<float> firstProcs = [ngProc1, ngpProc1];
+        for (var i = 2; i < 8; i++)
+        {
+            firstProcs.Add(ngpProc1 * (float)clearCountParams[i][clearCountCell].Value);
+        }
+
+        var resistances = firstProcs.Select((proc1) =>
+        {
+            List<float> procs = [proc1];
+            for (var i = 1; i < 6; i++)
+            {
+                procs.Add(proc1 + (float)correct[$"addPoint{i}"].Value);
+            }
+            return procs;
+        });
+
+        return resistances.Select(
+            (procs) => procs.Select((proc) => (int)Math.Round(proc)).ToList()
+        ).ToList();
+    }
+
+    boss.Resistance[StatusType.Poison] = resistances(
+        "resist_poison",
+        "resistCorrectId_poison",
+        "registPoizonChangeRate",
+        "PoisionResistRate"
+    );
+    boss.Resistance[StatusType.ScarletRot] = resistances(
+        "resist_desease",
+        "resistCorrectId_disease",
+        "registDiseaseChangeRate",
+        "DiseaseResistRate"
+    );
+    boss.Resistance[StatusType.Hemorrhage] = resistances(
+        "resist_blood",
+        "resistCorrectId_blood",
+        "registBloodChangeRate",
+        "BloodResistRate"
+    );
+    boss.Resistance[StatusType.Frostbite] = resistances(
+        "resist_freeze",
+        "resistCorrectId_freeze",
+        "registFreezeChangeRate",
+        "FreezeResistRate"
+    );
+    boss.Resistance[StatusType.Sleep] = resistances(
+        "resist_sleep",
+        "resistCorrectId_sleep",
+        "registSleepChangeRate",
+        "SleepResistRate"
+    );
+    boss.Resistance[StatusType.Madness] = resistances(
+        "resist_madness",
+        "resistCorrectId_madness",
+        "registMadnessChangeRate",
+        "MadnessResistRate"
+    );
+
+    foreach (var phase in boss.AdditionalPhases)
+    {
+        loadBossData(phase);
+        if (boss.HP[0][0] != phase.HP[0][0])
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                boss.HP[i].Add(phase.HP[i][0]);
+            }
+        }
+    }
 }
 
-boss.Resistance[StatusType.Poison] = resistances(
-    "resist_poison",
-    "resistCorrectId_poison",
-    "registPoizonChangeRate",
-    "PoisionResistRate"
-);
-boss.Resistance[StatusType.ScarletRot] = resistances(
-    "resist_desease",
-    "resistCorrectId_disease",
-    "registDiseaseChangeRate",
-    "DiseaseResistRate"
-);
-boss.Resistance[StatusType.Hemorrhage] = resistances(
-    "resist_blood",
-    "resistCorrectId_blood",
-    "registBloodChangeRate",
-    "BloodResistRate"
-);
-boss.Resistance[StatusType.Frostbite] = resistances(
-    "resist_freeze",
-    "resistCorrectId_freeze",
-    "registFreezeChangeRate",
-    "FreezeResistRate"
-);
-boss.Resistance[StatusType.Sleep] = resistances(
-    "resist_sleep",
-    "resistCorrectId_sleep",
-    "registSleepChangeRate",
-    "SleepResistRate"
-);
-boss.Resistance[StatusType.Madness] = resistances(
-    "resist_madness",
-    "resistCorrectId_madness",
-    "registMadnessChangeRate",
-    "MadnessResistRate"
-);
+loadBossData(boss);
 
 var fluid = new FluidParser();
 
@@ -276,7 +302,10 @@ options.Filters.AddFilter("spaceToPlus", (input, args, context) =>
 options.Filters.AddFilter("number", (input, args, context) =>
     new StringValue($"{input.ToNumberValue():n0}"));
 options.Filters.AddFilter("slugify", (input, args, context) =>
-    new StringValue(Regex.Replace(input.ToStringValue().ToLower(), @"[^a-z0-9]+", "-")));
+    new StringValue(Regex.Replace(
+        input.ToStringValue().ToLower().Replace("'s", "s"),
+        @"[^a-z0-9]+", "-")
+    ));
 options.Filters.AddFilter("noXCount", (input, args, context) =>
     new StringValue(Regex.Replace(input.ToStringValue(), @" x[0-9]+$", "")));
 options.Filters.AddFilter("onlyXCount", (input, args, context) =>

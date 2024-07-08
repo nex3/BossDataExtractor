@@ -1,8 +1,8 @@
-{% for number in numbers %}
+{% for num in numbers %}
 	{% unless forloop.first %}&nbsp;/ {% endunless %}
 	{% if strong %}
-		<strong>{{number}}</strong>
+		<strong>{% if commas %}{{num | number}}{% else %}{{num}}{% endif %}</strong>
 	{% else %}
-		{{number}}
+		{% if commas %}{{num | number}}{% else %}{{num}}{% endif %}
 	{% endif %}
 {% endfor %}

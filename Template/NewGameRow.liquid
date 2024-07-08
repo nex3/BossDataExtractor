@@ -16,7 +16,7 @@
 					{% assign style = 'font-size: 80%' %}
 				{% endif %}
 				<td style="{{style}}">
-					{% include 'ResistanceNumbers', numbers: column, strong: false %}
+					{% include 'ResistanceNumbers', numbers: column, commas: commas, strong: false %}
 				</td>
 			{% else %}
 				<td>

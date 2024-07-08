@@ -2,11 +2,15 @@
 	{% if ShowEnemySpecific %}
 	    <li>
             Health:
-            <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
-                <strong>{{Boss.HP[0] | number}}</strong>
-                HP
-            </span>
-        </li>
+			{% for hp in Boss.HP[0] %}<!--
+				-->{% unless forloop.first %}, {% endunless %}
+				<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+					<strong>{{hp | number}}</strong>
+					HP
+				</span>
+				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
+			-->{% endfor %}
+		</li>
         <li>
             Defense:
             <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
@@ -68,6 +72,12 @@
                 will only stun it briefly
             {% endif %}
         </li>
+		{% if Boss.Backstabbable %}
+			<li>
+				Is vulnerable to a 
+				<a class="wiki_link" href="/Critical+Damage">backstab critical</a>
+			</li>
+		{% endif %}
 		{% if Boss.DamageTypes %}
 			<li>
 				Damage:
@@ -112,7 +122,10 @@
                 data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
             >{{Boss.Runes[0] | number}}<!--
 			-->{% for drop in Boss.Drops %}<!--
-				-->, <a href="/{{drop | noXCount | spaceToPlus}}">{{drop | noXCount}}</a><!--
+				-->, <a
+					class="wiki_link"
+					href="/{{drop | noXCount | spaceToPlus}}"
+				>{{drop | noXCount}}</a><!--
 				-->{{drop | onlyXCount}}<!--
 			-->{% endfor %}
         </li>

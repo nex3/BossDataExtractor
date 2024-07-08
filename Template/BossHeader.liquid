@@ -32,7 +32,7 @@
 	</li>
 	{% if Boss.SummonableNPCs.size > 0 %}
 		<li>
-			<a href="/NPC+Summons">NPC Summons</a>:
+			<a class="wiki_link" href="/NPC+Summons">NPC Summons</a>:
 			{% for npc in Boss.SummonableNPCs %}<!--
 				-->{% unless forloop.first %}, {% endunless %}
 				<a href="{{npc | spaceToPlus}}">{{npc}}</a><!--
