@@ -1,0 +1,26 @@
+<div class="row flexrow">
+	<div class="col-sm-12">
+		<h4 class="special">Defenses</h4>
+		<div class="row">
+			<div class="col-sm-6">
+				<ul>
+					{% for entry in Boss.TypeDefensePairs limit:1 %}
+						{% include 'Negation', type: entry.Item1, value: entry.Item2[0] %}
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-sm-6">
+				<ul>
+					{% for entry in Boss.TypeDefensePairs offset:1 %}
+						{% include 'Negation', type: entry.Item1, value: entry.Item2[0] %}
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		<p>
+			The <a class="wiki_link" href="/Calculating+Damage">defense</a> numbers are compared to
+			the incoming attack power to determine how much to scale down the damage. The higher
+			the ratio, the more damage comes through.
+		</p>
+	</div>
+</div>

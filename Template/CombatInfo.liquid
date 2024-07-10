@@ -11,20 +11,32 @@
 				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
 			-->{% endfor %}
 		</li>
-        <li>
-            Defense:
-            <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
-            <strong>{{Boss.Defense[0]}}</strong>
-            </span>
-        </li>
+		{% unless Boss.IsNPC %}
+			<li>
+				<a class="wiki_link" href="/Calculating+Damage">Defense</a>:
+				<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+					<strong>{{Boss.Defense[0]}}</strong>
+				</span>
+			</li>
+		{% endunless %}
 	{% endif %}
 	{% if ShowCrossEnemy %}
 	    <li>
-            <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Stance">Stance</a>:
+            <a class="wiki_link" href="/{% if Boss.IsNPC %}Poise{% else %}Stance{% endif %}"><!--
+				-->{% if Boss.IsNPC %}Poise{% else %}Stance{% endif %}
+			</a>:
             <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
-            <strong>{{Boss.Stance}}</strong>
+				<strong>{{Boss.Stance}}</strong>
             </span>
         </li>
+		{% if Boss.FlaskCharges %}
+			<li>
+				<a class="wiki_link" href="/Flask+of+Crimson+Tears">Flask</a> charges:
+				<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+					<strong>{{Boss.FlaskCharges}}</strong>
+				</span>
+			</li>
+		{% endif %}
         <li>
             <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Parrying">Parryable</a>:
 			{% if Boss.Parriable %}
@@ -78,7 +90,7 @@
 				<a class="wiki_link" href="/Critical+Damage">backstab critical</a>
 			</li>
 		{% endif %}
-		{% if Boss.DamageTypes %}
+		{% if Boss.DamageTypes.size > 0 %}
 			<li>
 				Damage:
 				{% for type in Boss.DamageTypes %}<!--
@@ -109,6 +121,41 @@
 			<li>
 				Weak point: {{Boss.WeakPoint}}
 				{% if Boss.WeakPointExtraDamage %}(+{{Boss.WeakPointExtraDamage}}%){% endif %}
+			</li>
+		{% endif %}
+		{% if Boss.RightHand.size > 0 or Boss.LeftHand.size > 0 %}
+			<li>
+				Weapons:
+				{% for weapon in Boss.RightHand %}<!--
+					-->{% unless forloop.first %},{% endunless %}
+					{% include 'Weapon', weapon: weapon %}<!--
+				-->{% endfor %}
+				{% if Boss.RightHand.size > 0 and Boss.LeftHand.size > 0 %}(right),{% endif %}
+				{% for weapon in Boss.LeftHand %}<!--
+					-->{% unless forloop.first %},{% endunless %}
+					{% include 'Weapon', weapon: weapon %}<!--
+				-->{% endfor %}
+				{% if Boss.RightHand.size > 0 and Boss.LeftHand.size > 0 %}(left){% endif %}
+			</li>
+		{% endif %}
+		{% if Boss.Armor.size > 0 %}
+			<li>
+				Armor:
+				{% for armor in Boss.Armor %}<!--
+					-->{% if armor.Name %}<!--
+						-->{% unless forloop.first %}, {% endunless %}
+						<a class="wiki_link" href="/{{armor.Name | spaceToPlus}}">{{armor.Name}}</a><!--
+					-->{% endif %}<!--
+				-->{% endfor %}
+			</li>
+		{% endif %}
+		{% if Boss.Spells.size > 0 %}
+			<li>
+				Spells:
+				{% for spell in Boss.Spells %}<!--
+					-->{% unless forloop.first %}, {% endunless %}
+					<a class="wiki_link" href="/{{spell | spaceToPlus}}">{{spell}}</a><!--
+				-->{% endfor %}
 			</li>
 		{% endif %}
 	{% endif %}

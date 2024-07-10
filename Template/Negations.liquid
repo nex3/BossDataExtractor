@@ -4,25 +4,25 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<ul>
-					{% for entry in Boss.TypeDefensePairs limit:4 %}
+					{% for entry in Boss.TypeNegationPairs limit:4 %}
 						{% include 'Negation', type: entry.Item1, value: entry.Item2 %}
 					{% endfor %}
 				</ul>
 			</div>
 			<div class="col-sm-6">
 				<ul>
-					{% for entry in Boss.TypeDefensePairs offset:4 %}
+					{% for entry in Boss.TypeNegationPairs offset:4 %}
 						{% include 'Negation', type: entry.Item1, value: entry.Item2 %}
 					{% endfor %}
 				</ul>
 			</div>
 		</div>
 		<p>
-			The negation numbers are the % of your damage that gets blocked. For example, if a
-			negation is 60, 40% of that damage by that type will go through and 60% will be
-			negated. Bigger number = less damage. A negation of 100 means no damage goes through,
-			and a negation of -100 mean the enemy takes 2x damage from that source. 0 means damage
-			goes pretty much as is.
+			The <a class="wiki_link" href="/Calculating+Damage">negation</a> numbers are the % of
+			your damage that gets blocked. For example, if a negation is 60, 40% of that damage by
+			that type will go through a nd 60% will be negated. Bigger number = less damage. A
+			negation of 100 means no damage goes through, and a negation of -100 mean the enemy
+			takes 2x damage from that source. 0 means damage goes pretty much as is.
 		</p>
 	</div>
 </div>

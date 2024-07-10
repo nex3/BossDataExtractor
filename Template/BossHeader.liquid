@@ -12,6 +12,12 @@
 			This enemy does not have a boss bar, but it will not respawn when killed
 		{% endif %}
 	</li>
+	{% if Boss.IsNPC %}
+		<li>
+			This is a Tarnished boss: its stats and attacks work like a player character with
+			equipped items
+		</li>
+	{% endif %}
 	<li>
 		Closest Site of Grace:
 		<strong>{{Boss.ClosestGrace}}</strong>

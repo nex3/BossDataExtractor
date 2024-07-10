@@ -17,8 +17,20 @@
 				</thead>
 				<tbody>
 					{% include 'NewGameRow', name: 'HP', data: Boss.HP, commas: true %}
-					{% include 'NewGameRow', name: 'Defense', data: Boss.Defense %}
+					{% unless Boss.IsNPC %}
+						{% include 'NewGameRow', name: 'Defense', data: Boss.Defense %}
+					{% endunless %}
 					{% include 'NewGameRow', data: Boss.Runes, icon: RuneIcon, commas: true %}
+					{% if Boss.IsNPC %}
+						<tr>
+							<th colspan="9">
+								<h4>Defenses</h4>
+							</th>
+						</tr>
+						{% for entry in Boss.TypeDefensePairs %}
+							{% include 'NewGameRow', icon: entry.Item1, data: entry.Item2 %}
+						{% endfor %}
+					{% endif %}
 					<tr>
 						<th colspan="9">
 							<h4>Resistances</h4>

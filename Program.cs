@@ -7,13 +7,14 @@ using WebMarkupMin.Core;
 using System.IO;
 using System.Windows;
 using System.Text.RegularExpressions;
+using System.Numerics;
 
 var gamePath = "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\";
-var paramdefPath = "F:\\Mods\\Smithbox_1_0_13\\Smithbox\\Assets\\Paramdex\\ER\\Defs";
+var smithboxAssetPath = "F:\\Mods\\Smithbox_1_0_14_4\\Smithbox\\Assets";
 
-var bossName = "Magma Wyrm";
-int? bossID = 62510093;
-var displayType = Display.EnemySpecific;
+var bossName = "Patches";
+int? bossID = null;
+var displayType = Display.Full;
 var minify = true;
 
 var boss = bossID == null
@@ -33,13 +34,17 @@ if (boss == null)
 
 var paramsWeCareAbout = new HashSet<string>([
     "NpcParam", "GameAreaParam", "MultiPlayCorrectionParam", "ResistCorrectParam", "SpEffectParam",
-    "AtkParam_Npc", "ClearCountCorrectParam"
+    "AtkParam_Npc", "ClearCountCorrectParam", "CharaInitParam", "EquipParamProtector",
+    "EquipParamWeapon", "EquipParamCustomWeapon", "EquipParamGem", "Magic"
 ]);
 
 Console.WriteLine("Loading params...");
 
 var paramdefs = new Dictionary<string, PARAMDEF>();
-foreach (var file in Directory.GetFiles(paramdefPath, "*.xml"))
+foreach (var file in Directory.GetFiles(
+    Path.Join(smithboxAssetPath, "Paramdex\\ER\\Defs"),
+    "*.xml"
+))
 {
     var paramdef = PARAMDEF.XmlDeserialize(file)!;
     paramdefs[paramdef.ParamType] = paramdef;
@@ -60,6 +65,25 @@ foreach (var file in bnd.Files)
     paramDict[paramName] = param;
 }
 
+var paramNames = new Dictionary<string, Dictionary<int, string>>();
+foreach (var file in Directory.GetFiles(
+    Path.Join(smithboxAssetPath, "Paramdex\\ER\\Names"),
+    "*.txt"
+))
+{
+    var name = Path.GetFileNameWithoutExtension(file);
+    if (paramsWeCareAbout.Contains(name))
+    {
+        var names = new Dictionary<int, string>();
+        foreach (var line in File.ReadAllLines(file))
+        {
+            var split = line.Split(' ', 2);
+            names[int.Parse(split[0])] = split[1];
+        }
+        paramNames[name] = names;
+    }
+}
+
 Console.WriteLine("Params loaded!");
 
 var npcs = paramDict["NpcParam"];
@@ -68,6 +92,47 @@ var attacks = paramDict["AtkParam_Npc"];
 var clearCountParams = paramDict["ClearCountCorrectParam"];
 var gameAreaParam = paramDict["GameAreaParam"];
 var resistCorrectParam = paramDict["ResistCorrectParam"];
+var charaInitParam = paramDict["CharaInitParam"];
+var equipParamProtector = paramDict["EquipParamProtector"];
+var equipParamWeapon = paramDict["EquipParamWeapon"];
+var equipParamCustomWeapon = paramDict["EquipParamCustomWeapon"];
+
+var equipParamProtectorNames = paramNames["EquipParamProtector"];
+var equipParamWeaponNames = paramNames["EquipParamWeapon"];
+var equipParamGemNames = paramNames["EquipParamGem"];
+var magicNames = paramNames["Magic"];
+
+Dictionary<int, string> weaponNamesByModel = [];
+foreach (var weapon in equipParamWeapon.Rows)
+{
+    var modelID = (ushort)weapon["equipModelId"].Value;
+    if (!weaponNamesByModel.ContainsKey(modelID) &&
+        equipParamWeaponNames.TryGetValue(weapon.ID, out var weaponName))
+    {
+        weaponNamesByModel[modelID] = weaponName;
+    }
+}
+
+string? getWeaponName(int id)
+{
+    if (equipParamWeaponNames.TryGetValue(id, out var weaponName))
+    {
+        return weaponName;
+    }
+    else if (
+        equipParamWeapon[id] is PARAM.Row weaponRow &&
+        weaponNamesByModel.TryGetValue(
+            (ushort)weaponRow["equipModelId"].Value,
+            out var weaponNameByModel
+    ))
+    {
+        return weaponNameByModel;
+    }
+    else
+    {
+        return null;
+    }
+}
 
 var attacksForEnemy = new Dictionary<int, List<PARAM.Row>>();
 foreach (var attack in attacks.Rows)
@@ -88,72 +153,262 @@ void loadBossData(Boss boss)
 {
     var bossParams = npcs[boss.ID];
 
-    boss.Stance = (int)Math.Round((float)bossParams["superArmorDurability"].Value);
+    var ngScaling = spEffects[(int)bossParams["spEffectID3"].Value];
+    var ngpScaling = spEffects[(int)bossParams["GameClearSpEffectID"].Value];
 
-    var behavior = bossParams["behaviorVariationId"];
-    if (attacksForEnemy.TryGetValue((int)behavior.Value / 10, out var bossAttacks))
+    uint baseHP;
+    if (!boss.IsNPC)
     {
-        foreach (var attack in bossAttacks)
+        boss.Stance = (int)Math.Round((float)bossParams["superArmorDurability"].Value);
+
+        var behavior = bossParams["behaviorVariationId"];
+        if (attacksForEnemy.TryGetValue((int)behavior.Value / 10, out var bossAttacks))
         {
-            if ((ushort)attack["atkPhys"].Value > 0)
+            foreach (var attack in bossAttacks)
             {
-                switch ((byte)attack["atkAttribute"].Value)
+                if ((ushort)attack["atkPhys"].Value > 0)
                 {
-                    case 0:
-                        boss.DamageTypes.Add(DamageType.Slash);
-                        break;
-                    case 1:
-                        boss.DamageTypes.Add(DamageType.Strike);
-                        break;
-                    case 2:
-                        boss.DamageTypes.Add(DamageType.Pierce);
-                        break;
-                    default:
-                        boss.DamageTypes.Add(DamageType.Standard);
-                        break;
+                    switch ((byte)attack["atkAttribute"].Value)
+                    {
+                        case 0:
+                            boss.DamageTypes.Add(DamageType.Slash);
+                            break;
+                        case 1:
+                            boss.DamageTypes.Add(DamageType.Strike);
+                            break;
+                        case 2:
+                            boss.DamageTypes.Add(DamageType.Pierce);
+                            break;
+                        default:
+                            boss.DamageTypes.Add(DamageType.Standard);
+                            break;
+                    }
+                }
+
+                if ((ushort)attack["atkMag"].Value > 0)
+                {
+                    boss.DamageTypes.Add(DamageType.Magic);
+                }
+                if ((ushort)attack["atkFire"].Value > 0)
+                {
+                    boss.DamageTypes.Add(DamageType.Fire);
+                }
+                if ((ushort)attack["atkThun"].Value > 0)
+                {
+                    boss.DamageTypes.Add(DamageType.Lightning);
+                }
+                if ((ushort)attack["atkDark"].Value > 0)
+                {
+                    boss.DamageTypes.Add(DamageType.Holy);
+                }
+            }
+        }
+
+        List<(DamageType, string)> negationParams = [
+            (DamageType.Standard, "neutralDamageCutRate"),
+            (DamageType.Slash, "slashDamageCutRate"),
+            (DamageType.Strike, "blowDamageCutRate"),
+            (DamageType.Pierce, "thrustDamageCutRate"),
+            (DamageType.Magic, "magicDamageCutRate"),
+            (DamageType.Fire, "fireDamageCutRate"),
+            (DamageType.Lightning, "thunderDamageCutRate"),
+            (DamageType.Holy, "darkDamageCutRate"),
+        ];
+        foreach (var (name, param) in negationParams)
+        {
+            var value = 1 - (float)bossParams[param].Value;
+            boss.Negations[name] = (int)Math.Round(100 * value);
+        }
+
+        baseHP = (uint)bossParams["hp"].Value;
+    }
+    else
+    {
+        var shortID = boss.ID / 1000 % 100000;
+        var npc = charaInitParam[shortID] ?? charaInitParam[2000000 + shortID];
+        List<string> armorFields = ["equip_Helm", "equip_Armer", "equip_Gaunt", "equip_Leg"];
+        foreach (var field in armorFields)
+        {
+            if (npc[field].Value is int id && id != -1)
+            {
+                boss.Armor.Add(new ArmorPiece(
+                    equipParamProtectorNames.GetValueOrDefault(id),
+                    equipParamProtector[id]
+                ));
+            }
+        }
+
+        List<string> subweaponNames = ["equip_Wep_{}", "equip_Subwep_{}", "equip_Subwep_{}3"];
+        foreach (var name in subweaponNames)
+        {
+            Weapon? getWeapon(string cellName)
+            {
+                if (npc[cellName].Value is int weaponID && weaponID != -1)
+                {
+                    if (getWeaponName(weaponID) is string weaponName)
+                    {
+                        return new Weapon(weaponName);
+                    }
+
+                    var customWeapon = equipParamCustomWeapon[weaponID];
+                    if (getWeaponName((int)customWeapon["baseWepId"].Value) is string baseWeaponName)
+                    {
+                        return new Weapon(
+                            baseWeaponName,
+                            customWeapon["gemId"].Value is int gemID && gemID != 0
+                                ? equipParamGemNames[gemID].Replace("Ash of War: ", "")
+                                : null);
+                    }
+
+                    return null;
+                }
+                else
+                {
+                    return null;
                 }
             }
 
-            if ((ushort)attack["atkMag"].Value > 0)
+            if (getWeapon(name.Replace("{}", "Right")) is Weapon right) boss.RightHand.Add(right);
+            if (getWeapon(name.Replace("{}", "Left")) is Weapon left) boss.LeftHand.Add(left);
+        }
+
+        for (var i = 1; i <= 7; i++)
+        {
+            if (magicNames.TryGetValue((int)npc[$"equip_Spell_0{i}"].Value, out var spellName))
             {
-                boss.DamageTypes.Add(DamageType.Magic);
-            }
-            if ((ushort)attack["atkFire"].Value > 0)
-            {
-                boss.DamageTypes.Add(DamageType.Fire);
-            }
-            if ((ushort)attack["atkThun"].Value > 0)
-            {
-                boss.DamageTypes.Add(DamageType.Lightning);
-            }
-            if ((ushort)attack["atkDark"].Value > 0)
-            {
-                boss.DamageTypes.Add(DamageType.Holy);
+                boss.Spells.Add(Regex.Replace(spellName, @"\[NPC: [^\]]+\] ", ""));
             }
         }
-    }
 
-    List<(DamageType, string)> defenseParams = [
-        (DamageType.Standard, "neutralDamageCutRate"),
-    (DamageType.Slash, "slashDamageCutRate"),
-    (DamageType.Strike, "blowDamageCutRate"),
-    (DamageType.Pierce, "thrustDamageCutRate"),
-    (DamageType.Magic, "magicDamageCutRate"),
-    (DamageType.Fire, "fireDamageCutRate"),
-    (DamageType.Lightning, "thunderDamageCutRate"),
-    (DamageType.Holy, "darkDamageCutRate"),
-];
-    foreach (var (name, param) in defenseParams)
-    {
-        var value = 1 - (float)bossParams[param].Value;
-        boss.TypeDefense[name] = (int)Math.Round(100 * value);
+        T sumArmor<T>(string field) where T : INumber<T>
+        {
+            T total = T.Zero;
+            foreach (var piece in boss.Armor)
+            {
+                if (piece == null) continue;
+                total += (T)piece.Row[field].Value;
+            }
+            return total;
+        }
+        boss.Stance = (int)Math.Round(1000 * sumArmor<float>("toughnessCorrectRate"));
+
+        if (npc["item_01"].Value is 50201 or 50203)
+        {
+            boss.FlaskCharges = (byte)npc["itemNum_01"].Value;
+        }
+
+        int getNegation(string field)
+        {
+            var combinedVulnerability = 1.0;
+            foreach (var piece in boss.Armor)
+            {
+                if (piece == null) continue;
+                combinedVulnerability *= (float)piece.Row[field].Value;
+            }
+            return (int)Math.Round(100 * (1 - combinedVulnerability));
+        }
+        boss.Negations[DamageType.Standard] = getNegation("neutralDamageCutRate");
+        boss.Negations[DamageType.Slash] = getNegation("slashDamageCutRate");
+        boss.Negations[DamageType.Pierce] = getNegation("thrustDamageCutRate");
+        boss.Negations[DamageType.Strike] = getNegation("blowDamageCutRate");
+        boss.Negations[DamageType.Magic] = getNegation("magicDamageCutRate");
+        boss.Negations[DamageType.Fire] = getNegation("fireDamageCutRate");
+        boss.Negations[DamageType.Lightning] = getNegation("thunderDamageCutRate");
+        boss.Negations[DamageType.Holy] = getNegation("darkDamageCutRate");
+
+        // We need to run further calculations, so we break the rules a bit and edit the params
+        // directly.
+        var level = (short)npc["soulLv"].Value;
+        var vigor = (byte)npc["baseVit"].Value;
+        double baseResistance = level switch
+        {
+            < 72 => 75 + 30 * ((level + 79 - 1) / 149.0),
+            < 112 => 105 + 40 * ((level + 79 - 150) / 40.0),
+            < 162 => 145 + 15 * ((level + 79 - 190) / 50.0),
+            _ => 160 + 20 * ((level + 79 - 240) / 552.0)
+        } + vigor switch
+        {
+            < 31 => 0,
+            < 41 => 30 * ((vigor - 30) / 10.0),
+            < 61 => 30 + 10 * ((vigor - 40) / 20.0),
+            _ => 40 + 10 * ((vigor - 60) / 39.0)
+        };
+
+        bossParams["resist_poison"].Value = baseResistance + sumArmor<ushort>("resistPoison");
+        bossParams["resist_desease"].Value = baseResistance + sumArmor<ushort>("resistDisease");
+        bossParams["resist_blood"].Value = baseResistance + sumArmor<ushort>("resistBlood");
+        bossParams["resist_curse"].Value = baseResistance + sumArmor<ushort>("resistCurse");
+        bossParams["resist_freeze"].Value = baseResistance + sumArmor<ushort>("resistFreeze");
+        bossParams["resist_sleep"].Value = baseResistance + sumArmor<ushort>("resistSleep");
+        bossParams["resist_madness"].Value = baseResistance + sumArmor<ushort>("resistMadness");
+
+        double baseDefense = level switch
+        {
+            < 72 => 40 + (level + 78) / 2.483,
+            < 92 => 29 + level,
+            < 161 => 120 + (level - 91) / 4.667,
+            _ => 135 + (level - 161) / 27.6
+        };
+
+        List<int> ngDefenses(double statDefense)
+        {
+            var ngDefense = (baseDefense + statDefense) * (float)ngScaling["physicsDiffenceRate"].Value;
+            var ngpDefense = ngDefense * (float)ngpScaling["physicsDiffenceRate"].Value;
+            List<int> defense = [];
+            defense.Add((int)Math.Floor(ngDefense));
+            defense.Add((int)Math.Floor(ngpDefense));
+            for (var i = 2; i < 8; i++)
+            {
+                defense.Add((int)Math.Floor(
+                    ngpDefense * (float)clearCountParams[i]["PhysicsDefenseRate"].Value
+                ));
+            }
+            return defense;
+        }
+        boss.TypeDefense[DamageType.Physical] = ngDefenses((byte)npc["baseStr"].Value switch
+        {
+            < 30 and var stat => stat / 3.0,
+            < 40 and var stat => 10 + (stat - 30) / 2.0,
+            < 60 and var stat => 15 + (stat - 40) / 1.333,
+            var stat => 30 + (stat - 60) / 3.9
+        });
+        boss.TypeDefense[DamageType.Magic] = ngDefenses((byte)npc["baseMag"].Value switch
+        {
+            < 20 and var stat => stat * 2.0,
+            < 35 and var stat => 40 + (stat - 20) / 1.5,
+            < 60 and var stat => 50 + (stat - 35) / 2.5,
+            var stat => 60 + (stat - 60) / 3.9
+        });
+        boss.TypeDefense[DamageType.Fire] = ngDefenses(vigor switch
+        {
+            < 30 => vigor / 1.5,
+            < 40 => 20 + (vigor - 30) * 2.0,
+            < 60 => vigor,
+            _ => 60 + (vigor - 60) / 3.9
+        });
+        boss.TypeDefense[DamageType.Lightning] = ngDefenses(0);
+        boss.TypeDefense[DamageType.Holy] = ngDefenses((byte)npc["baseLuc"].Value switch
+        {
+            < 20 and var stat => stat * 2.0,
+            < 35 and var stat => 40 + (stat - 20) / 1.5,
+            < 60 and var stat => 50 + (stat - 35) / 2.5,
+            var stat => 60 + (stat - 60) / 3.9
+        });
+
+        baseHP = (uint)Math.Floor(vigor switch
+        {
+            < 26 => 300 + 4.25259 * Math.Pow(vigor - 1, 1.5),
+            < 41 => 800 + 33.0532 * Math.Pow(vigor - 25, 1.1),
+            < 61 => 1900 - 12.3588 * Math.Pow(60 - vigor, 1.2),
+            _ => 2100 - 2.46463 * Math.Pow(99 - vigor, 1.2)
+        });
     }
 
     List<(WeaknessType, string)> weaknessParams = [
         (WeaknessType.Gravity, "isWeakA"),
-    (WeaknessType.Undead, "isWeakB"),
-    (WeaknessType.AncientDragon, "isWeakC"),
-    (WeaknessType.Dragon, "isWeakD")
+        (WeaknessType.Undead, "isWeakB"),
+        (WeaknessType.AncientDragon, "isWeakC"),
+        (WeaknessType.Dragon, "isWeakD")
     ];
     foreach (var (weakness, field) in weaknessParams)
     {
@@ -167,10 +422,6 @@ void loadBossData(Boss boss)
         );
     }
 
-    var ngScaling = spEffects[(int)bossParams["spEffectID3"].Value];
-    var ngpScaling = spEffects[(int)bossParams["GameClearSpEffectID"].Value];
-
-    var baseHP = (uint)bossParams["hp"].Value;
     var ngHP = baseHP * (float)ngScaling["maxHpRate"].Value;
     var ngpHP = ngHP * (float)ngpScaling["maxHpRate"].Value;
     boss.HP.Add([(int)Math.Floor(ngHP)]);

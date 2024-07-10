@@ -1,5 +1,12 @@
 ﻿public class DamageType : IconLink, IComparable<DamageType>
 {
+    public static readonly DamageType Physical = new DamageType(
+        "Physical",
+        "/file/Elden-Ring/standard_upgrade_affinity_elden_ring_wiki_guide_60px.jpg",
+        "/Physical+Damage",
+        0
+    );
+
     public static readonly DamageType Standard = new DamageType(
         "Standard", "/file/Elden-Ring/standard-damage-57px.png", "/Standard+Damage", 1
     );
@@ -17,18 +24,18 @@
     );
 
     public static readonly DamageType Magic = new DamageType(
-        "Magic", "/file/Elden-Ring/magic-upgrades-elden-ring-wiki-guide-30.png", "/Magic+Damage", 5,
+        "Magic", "/file/Elden-Ring/magic_upgrade_affinity_elden_ring_wiki_guide_60px.jpg", "/Magic+Damage", 5,
         color: "#3fbddd"
     );
 
     public static readonly DamageType Fire = new DamageType(
-        "Fire", "/file/Elden-Ring/fire-upgrades-elden-ring-wiki-guide-30.png", "/Fire+Damage", 6,
+        "Fire", "/file/Elden-Ring/fire_upgrade_affinity_elden_ring_wiki_guide_60px.jpg", "/Fire+Damage", 6,
         color: "#cc9d57"
     );
 
     public static readonly DamageType Lightning = new DamageType(
         "Lightning",
-        "/file/Elden-Ring/lightning-upgrades-elden-ring-wiki-guide-30.png",
+        "/file/Elden-Ring/lightning_upgrade_affinity_elden_ring_wiki_guide_60px.jpg",
         "/Lightning+Damage",
         7,
         color: "#d5d559"
