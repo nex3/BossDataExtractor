@@ -13,13 +13,15 @@
     <None Remove="Template\CombatInfo.liquid" />
     <None Remove="Template\CrossEnemy.liquid" />
     <None Remove="Template\Defenses.liquid" />
-    <None Remove="Template\EnemySpecific.liquid" />
+    <None Remove="Template\ExtraEnemy.liquid" />
     <None Remove="Template\Full.liquid" />
     <None Remove="Template\IconLink.liquid" />
+    <None Remove="Template\Infobox.liquid" />
     <None Remove="Template\Negation.liquid" />
     <None Remove="Template\Negations.liquid" />
     <None Remove="Template\NewGamePlus.liquid" />
     <None Remove="Template\NewGameRow.liquid" />
+	<None Remove="Template\OneEnemyOfMany.liquid" />
     <None Remove="Template\Resistance.liquid" />
     <None Remove="Template\ResistanceNumbers.liquid" />
     <None Remove="Template\Resistances.liquid" />
@@ -34,6 +36,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\Defenses.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\ExtraEnemy.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\Infobox.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\Weapon.liquid">
@@ -66,7 +74,7 @@
     <Content Include="Template\CombatInfo.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Template\EnemySpecific.liquid">
+    <Content Include="Template\OneEnemyOfMany.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\IconLink.liquid">

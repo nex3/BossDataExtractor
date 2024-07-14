@@ -1,6 +1,6 @@
 ﻿public enum Display
 {
-    Full, CrossEnemy, EnemySpecific
+    Full, CrossEnemy, OneEnemyOfMany, ExtraEnemy
 }
 
 public class Context
@@ -32,7 +32,14 @@ public class Context
 
     public bool ShowCrossEnemy
     {
-        get { return displayEnum != global::Display.EnemySpecific; }
+        get { return displayEnum != global::Display.OneEnemyOfMany; }
+    }
+    public bool UniqueFight
+    {
+        get {
+            return displayEnum == global::Display.Full ||
+                displayEnum == global::Display.OneEnemyOfMany;
+        }
     }
 
     public override string ToString()

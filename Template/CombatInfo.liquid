@@ -36,6 +36,11 @@
 					<strong>{{Boss.FlaskCharges}}</strong>
 				</span>
 			</li>
+		{% elsif Boss.IsNPC %}
+			<li>
+				Does not carry a
+				<a class="wiki_link" href="/Flask+of+Crimson+Tears">Flask of Crimson Tears</a>
+			</li>
 		{% endif %}
         <li>
             <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Parrying">Parryable</a>:
@@ -52,38 +57,47 @@
 			    No
 			{% endif %}
         </li>
-        <li>
-			{% if Boss.Critable %}
-                Is vulnerable to a
-                <a
-					class="wiki_link"
-					href="https://eldenring.wiki.fextralife.com/Critical+Damage"
-				>critical hit</a>
-                after being
-                <a
-					class="wiki_link"
-					href="https://eldenring.wiki.fextralife.com/Stance"
-				>stance broken</a>
-			    {% if Boss.Parriable %} or parried{% endif %}
-			{% else %}
-                Immune to
-                <a
-					class="wiki_link"
-					href="https://eldenring.wiki.fextralife.com/Critical+Damage"
-				>critical attacks</a>.
-                Breaking its
-                <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Stance">stance</a>
-			    {% if Boss.Parriable %}
-                    or
-                    <a
+		{% if Boss.Critable or Boss.IsNPC != true %}
+			<li>
+				{% if Boss.Critable %}
+					Is vulnerable to a
+					<a
 						class="wiki_link"
-						href="https://eldenring.wiki.fextralife.com/Parrying"
-					>parrying</a>
-                    it
+						href="https://eldenring.wiki.fextralife.com/Critical+Damage"
+					>critical hit</a>
+					after being
+					{% unless Boss.IsNPC %}
+						<a
+							class="wiki_link"
+							href="https://eldenring.wiki.fextralife.com/Stance"
+						>stance broken</a>
+					{% endunless %}
+					{% if Boss.Parriable %}
+						{% unless Boss.IsNPC %}or{% endunless %} parried
+					{% endif %}
+				{% else %}
+					Immune to
+					<a
+						class="wiki_link"
+						href="https://eldenring.wiki.fextralife.com/Critical+Damage"
+					>critical attacks</a>.
+					Breaking its
+					<a
+						class="wiki_link"
+						href="https://eldenring.wiki.fextralife.com/Stance"
+					>stance</a>
+					{% if Boss.Parriable %}
+						or
+						<a
+							class="wiki_link"
+							href="https://eldenring.wiki.fextralife.com/Parrying"
+						>parrying</a>
+						it
+					{% endif %}
+					will only stun it briefly
 				{% endif %}
-                will only stun it briefly
-            {% endif %}
-        </li>
+			</li>
+		{% endif %}
 		{% if Boss.Backstabbable %}
 			<li>
 				Is vulnerable to a 
@@ -125,7 +139,8 @@
 		{% endif %}
 		{% if Boss.RightHand.size > 0 or Boss.LeftHand.size > 0 %}
 			<li>
-				Weapons:
+				{% assign totalWeapons = Boss.RightHand.size | plus: Boss.LeftHand.size %}
+				Weapon{% if totalWeapons > 1 %}s{% endif %}:
 				{% for weapon in Boss.RightHand %}<!--
 					-->{% unless forloop.first %},{% endunless %}
 					{% include 'Weapon', weapon: weapon %}<!--
@@ -138,20 +153,18 @@
 				{% if Boss.RightHand.size > 0 and Boss.LeftHand.size > 0 %}(left){% endif %}
 			</li>
 		{% endif %}
-		{% if Boss.Armor.size > 0 %}
+		{% if Boss.NamedArmor.size > 0 %}
 			<li>
 				Armor:
-				{% for armor in Boss.Armor %}<!--
-					-->{% if armor.Name %}<!--
-						-->{% unless forloop.first %}, {% endunless %}
-						<a class="wiki_link" href="/{{armor.Name | spaceToPlus}}">{{armor.Name}}</a><!--
-					-->{% endif %}<!--
+				{% for armor in Boss.NamedArmor %}<!--
+					-->{% unless forloop.first %}, {% endunless %}
+					<a class="wiki_link" href="/{{armor.Name | spaceToPlus}}">{{armor.Name}}</a><!--
 				-->{% endfor %}
 			</li>
 		{% endif %}
 		{% if Boss.Spells.size > 0 %}
 			<li>
-				Spells:
+				Spell{% if Boss.Spells.size > 1 %}s{% endif %}:
 				{% for spell in Boss.Spells %}<!--
 					-->{% unless forloop.first %}, {% endunless %}
 					<a class="wiki_link" href="/{{spell | spaceToPlus}}">{{spell}}</a><!--
@@ -159,7 +172,7 @@
 			</li>
 		{% endif %}
 	{% endif %}
-	{% if ShowEnemySpecific %}
+	{% if UniqueFight %}
         <li>
             Drops
             <img

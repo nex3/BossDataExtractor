@@ -12,9 +12,9 @@ using System.Numerics;
 var gamePath = "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\";
 var smithboxAssetPath = "F:\\Mods\\Smithbox_1_0_14_4\\Smithbox\\Assets";
 
-var bossName = "Patches";
-int? bossID = null;
-var displayType = Display.Full;
+var bossName = "Gideon";
+int? bossID = 56200084;
+var displayType = Display.OneEnemyOfMany;
 var minify = true;
 
 var boss = bossID == null
@@ -35,7 +35,7 @@ if (boss == null)
 var paramsWeCareAbout = new HashSet<string>([
     "NpcParam", "GameAreaParam", "MultiPlayCorrectionParam", "ResistCorrectParam", "SpEffectParam",
     "AtkParam_Npc", "ClearCountCorrectParam", "CharaInitParam", "EquipParamProtector",
-    "EquipParamWeapon", "EquipParamCustomWeapon", "EquipParamGem", "Magic"
+    "EquipParamWeapon", "EquipParamCustomWeapon", "EquipParamGem", "EquipParamAccessory", "Magic"
 ]);
 
 Console.WriteLine("Loading params...");
@@ -96,6 +96,7 @@ var charaInitParam = paramDict["CharaInitParam"];
 var equipParamProtector = paramDict["EquipParamProtector"];
 var equipParamWeapon = paramDict["EquipParamWeapon"];
 var equipParamCustomWeapon = paramDict["EquipParamCustomWeapon"];
+var equipParamAccessory = paramDict["EquipParamAccessory"];
 
 var equipParamProtectorNames = paramNames["EquipParamProtector"];
 var equipParamWeaponNames = paramNames["EquipParamWeapon"];
@@ -115,6 +116,7 @@ foreach (var weapon in equipParamWeapon.Rows)
 
 string? getWeaponName(int id)
 {
+    id = id / 1000 * 1000;
     if (equipParamWeaponNames.TryGetValue(id, out var weaponName))
     {
         return weaponName;
@@ -127,6 +129,39 @@ string? getWeaponName(int id)
     ))
     {
         return weaponNameByModel;
+    }
+    else
+    {
+        return null;
+    }
+}
+
+Dictionary<int, string> armorNamesByModel = [];
+foreach (var armor in equipParamProtector.Rows)
+{
+    var modelID = (ushort)armor["equipModelId"].Value;
+    if (!armorNamesByModel.ContainsKey(modelID) &&
+        equipParamProtectorNames.TryGetValue(armor.ID, out var armorName))
+    {
+        armorNamesByModel[modelID] = armorName;
+    }
+}
+
+string? getArmorName(int id)
+{
+    id = id / 100 * 100;
+    if (equipParamProtectorNames.TryGetValue(id, out var armorName))
+    {
+        return armorName;
+    }
+    else if (
+        equipParamProtector[id] is PARAM.Row armorRow &&
+        armorNamesByModel.TryGetValue(
+            (ushort)armorRow["equipModelId"].Value,
+            out var armorNameByModel
+    ))
+    {
+        return armorNameByModel;
     }
     else
     {
@@ -225,14 +260,18 @@ void loadBossData(Boss boss)
     else
     {
         var shortID = boss.ID / 1000 % 100000;
-        var npc = charaInitParam[shortID] ?? charaInitParam[2000000 + shortID];
+        var npc = boss.CharaInitID is int charaInitID
+            ? charaInitParam[charaInitID]
+            : charaInitParam[shortID] ?? charaInitParam[2000000 + shortID];
         List<string> armorFields = ["equip_Helm", "equip_Armer", "equip_Gaunt", "equip_Leg"];
         foreach (var field in armorFields)
         {
             if (npc[field].Value is int id && id != -1)
             {
+                // PC armor isn't upgradable, but NPC armor can be!
+                id = id / 100 * 100;
                 boss.Armor.Add(new ArmorPiece(
-                    equipParamProtectorNames.GetValueOrDefault(id),
+                    getArmorName(id),
                     equipParamProtector[id]
                 ));
             }
@@ -276,7 +315,25 @@ void loadBossData(Boss boss)
         {
             if (magicNames.TryGetValue((int)npc[$"equip_Spell_0{i}"].Value, out var spellName))
             {
-                boss.Spells.Add(Regex.Replace(spellName, @"\[NPC: [^\]]+\] ", ""));
+                boss.Spells.Add(Regex.Replace(spellName, @"^\[NPC: [^\]]+\] (.*?)( \d+)?$", "$1"));
+            }
+        }
+
+        List<PARAM.Row> talismanEffects = [];
+        for (var i = 1; i <= 4; i++)
+        {
+            var talismanID = (int)npc[$"equip_Accessory0{i}"].Value;
+            if (talismanID == -1) continue;
+            var talisman = equipParamAccessory[talismanID];
+            var talismanEffect = spEffects[(int)talisman["refId"].Value];
+            if (talismanEffect != null) talismanEffects.Add(talismanEffect);
+        }
+
+        IEnumerable<T> talismanValues<T>(string field) where T: INumber<T>
+        {
+            foreach (var effect in talismanEffects)
+            {
+                yield return (T)effect[field].Value;
             }
         }
 
@@ -290,14 +347,18 @@ void loadBossData(Boss boss)
             }
             return total;
         }
-        boss.Stance = (int)Math.Round(1000 * sumArmor<float>("toughnessCorrectRate"));
+        boss.Stance = (int)Math.Round(
+            1000
+                * sumArmor<float>("toughnessCorrectRate")
+                / talismanValues<float>("toughnessDamageCutRate").Aggregate(1.0, (x, y) => x * y)
+        );
 
         if (npc["item_01"].Value is 50201 or 50203)
         {
             boss.FlaskCharges = (byte)npc["itemNum_01"].Value;
         }
 
-        int getNegation(string field)
+        int getNegation(string field, string spEffectField)
         {
             var combinedVulnerability = 1.0;
             foreach (var piece in boss.Armor)
@@ -305,16 +366,27 @@ void loadBossData(Boss boss)
                 if (piece == null) continue;
                 combinedVulnerability *= (float)piece.Row[field].Value;
             }
+
+            combinedVulnerability *=
+                talismanValues<float>(spEffectField).Aggregate(1.0, (x, y) => x * y);
             return (int)Math.Round(100 * (1 - combinedVulnerability));
         }
-        boss.Negations[DamageType.Standard] = getNegation("neutralDamageCutRate");
-        boss.Negations[DamageType.Slash] = getNegation("slashDamageCutRate");
-        boss.Negations[DamageType.Pierce] = getNegation("thrustDamageCutRate");
-        boss.Negations[DamageType.Strike] = getNegation("blowDamageCutRate");
-        boss.Negations[DamageType.Magic] = getNegation("magicDamageCutRate");
-        boss.Negations[DamageType.Fire] = getNegation("fireDamageCutRate");
-        boss.Negations[DamageType.Lightning] = getNegation("thunderDamageCutRate");
-        boss.Negations[DamageType.Holy] = getNegation("darkDamageCutRate");
+        boss.Negations[DamageType.Standard] =
+            getNegation("neutralDamageCutRate", "defEnemyDmgCorrectRate_Physics");
+        boss.Negations[DamageType.Slash] =
+            getNegation("slashDamageCutRate", "defEnemyDmgCorrectRate_Physics");
+        boss.Negations[DamageType.Pierce] =
+            getNegation("thrustDamageCutRate", "defEnemyDmgCorrectRate_Physics");
+        boss.Negations[DamageType.Strike] =
+            getNegation("blowDamageCutRate", "defEnemyDmgCorrectRate_Physics");
+        boss.Negations[DamageType.Magic] =
+            getNegation("magicDamageCutRate", "defEnemyDmgCorrectRate_Magic");
+        boss.Negations[DamageType.Fire] =
+            getNegation("fireDamageCutRate", "defEnemyDmgCorrectRate_Fire");
+        boss.Negations[DamageType.Lightning] =
+            getNegation("thunderDamageCutRate", "defEnemyDmgCorrectRate_Thunder");
+        boss.Negations[DamageType.Holy] =
+            getNegation("darkDamageCutRate", "defEnemyDmgCorrectRate_Dark");
 
         // We need to run further calculations, so we break the rules a bit and edit the params
         // directly.
@@ -334,13 +406,21 @@ void loadBossData(Boss boss)
             _ => 40 + 10 * ((vigor - 60) / 39.0)
         };
 
-        bossParams["resist_poison"].Value = baseResistance + sumArmor<ushort>("resistPoison");
-        bossParams["resist_desease"].Value = baseResistance + sumArmor<ushort>("resistDisease");
-        bossParams["resist_blood"].Value = baseResistance + sumArmor<ushort>("resistBlood");
-        bossParams["resist_curse"].Value = baseResistance + sumArmor<ushort>("resistCurse");
-        bossParams["resist_freeze"].Value = baseResistance + sumArmor<ushort>("resistFreeze");
-        bossParams["resist_sleep"].Value = baseResistance + sumArmor<ushort>("resistSleep");
-        bossParams["resist_madness"].Value = baseResistance + sumArmor<ushort>("resistMadness");
+        void setResistanceValue(string bossField, string armorField, string spEffectField)
+        {
+            bossParams[bossField].Value =
+                baseResistance +
+                sumArmor<ushort>(armorField) +
+                talismanValues<int>(spEffectField).Aggregate(0, (x, y) => x + y);
+        }
+
+        setResistanceValue("resist_poison", "resistPoison", "changePoisonResistPoint");
+        setResistanceValue("resist_desease", "resistDisease", "changeDiseaseResistPoint");
+        setResistanceValue("resist_blood", "resistBlood", "changeBloodResistPoint");
+        setResistanceValue("resist_curse", "resistCurse", "changeCurseResistPoint");
+        setResistanceValue("resist_freeze", "resistFreeze", "changeFreezeResistPoint");
+        setResistanceValue("resist_sleep", "resistSleep", "changeSleepResistPoint");
+        setResistanceValue("resist_madness", "resistMadness", "changeMadnessResistPoint");
 
         double baseDefense = level switch
         {
@@ -401,7 +481,7 @@ void loadBossData(Boss boss)
             < 41 => 800 + 33.0532 * Math.Pow(vigor - 25, 1.1),
             < 61 => 1900 - 12.3588 * Math.Pow(60 - vigor, 1.2),
             _ => 2100 - 2.46463 * Math.Pow(99 - vigor, 1.2)
-        });
+        } * talismanValues<float>("maxHpRate").Aggregate(1.0, (x, y) => x * y));
     }
 
     List<(WeaknessType, string)> weaknessParams = [
@@ -457,12 +537,28 @@ void loadBossData(Boss boss)
         boss.Runes.Add((int)Math.Round(ngpRunes * (float)clearCountParams[i]["SoulRate"].Value));
     }
 
+    List<PARAM.Row> allSpEffects = [];
+    for (var i = 0; i <= 31; i++)
+    {
+        var spEffectID = (int)bossParams[$"spEffectID{i}"].Value;
+        if (spEffectID == -1) continue;
+        allSpEffects.Add(spEffects[spEffectID]);
+    }
+
     List<List<int>>? resistances(
-        String baseCell, String correctCell, String rateCell, String clearCountCell
+        String baseCell,
+        String correctCell,
+        String rateCell,
+        String clearCountCell,
+        String disableCell
     )
     {
         var baseValue = (ushort)bossParams[baseCell].Value;
         if (baseValue == 999) return [];
+        if (allSpEffects.Any((row) => row.ID != 9642 && (byte)row[disableCell].Value == 1))
+        {
+            return [];
+        }
 
         var correct = resistCorrectParam[(int)bossParams[correctCell].Value];
         var ngProc1 = baseValue * (float)ngScaling[rateCell].Value;
@@ -492,37 +588,43 @@ void loadBossData(Boss boss)
         "resist_poison",
         "resistCorrectId_poison",
         "registPoizonChangeRate",
-        "PoisionResistRate"
+        "PoisionResistRate",
+        "disablePoison"
     );
     boss.Resistance[StatusType.ScarletRot] = resistances(
         "resist_desease",
         "resistCorrectId_disease",
         "registDiseaseChangeRate",
-        "DiseaseResistRate"
+        "DiseaseResistRate",
+        "disableDisease"
     );
     boss.Resistance[StatusType.Hemorrhage] = resistances(
         "resist_blood",
         "resistCorrectId_blood",
         "registBloodChangeRate",
-        "BloodResistRate"
+        "BloodResistRate",
+        "disableBlood"
     );
     boss.Resistance[StatusType.Frostbite] = resistances(
         "resist_freeze",
         "resistCorrectId_freeze",
         "registFreezeChangeRate",
-        "FreezeResistRate"
+        "FreezeResistRate",
+        "disableFreeze"
     );
     boss.Resistance[StatusType.Sleep] = resistances(
         "resist_sleep",
         "resistCorrectId_sleep",
         "registSleepChangeRate",
-        "SleepResistRate"
+        "SleepResistRate",
+        "disableSleep"
     );
     boss.Resistance[StatusType.Madness] = resistances(
         "resist_madness",
         "resistCorrectId_madness",
         "registMadnessChangeRate",
-        "MadnessResistRate"
+        "MadnessResistRate",
+        "disableMadness"
     );
 
     foreach (var phase in boss.AdditionalPhases)

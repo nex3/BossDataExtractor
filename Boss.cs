@@ -10,6 +10,7 @@ public partial class Boss
         bool boss = true,
         bool npc = false,
         int? gameAreaID = null,
+        int? charaInitID = null,
         string? closestGrace = null,
         bool optional = true,
         bool multiplayerAllowed = true,
@@ -18,6 +19,7 @@ public partial class Boss
         bool backstabbable = false,
         int parriesPerCrit = 1,
         bool critable = true,
+        IEnumerable<DamageType>? damageTypes = null,
         IEnumerable<StatusType>? statusTypes = null,
         IEnumerable<string>? drops = null,
         string? weakPoint = null,
@@ -33,13 +35,15 @@ public partial class Boss
         MultiplayerAllowed = multiplayerAllowed;
         SummonsAllowed = summonsAllowed;
         GameAreaID = gameAreaID;
+        CharaInitID = charaInitID;
+        if (damageTypes != null) DamageTypes.AddAll(damageTypes);
         if (statusTypes != null) StatusTypes.AddAll(statusTypes);
         WeakPoint = weakPoint;
         if (drops != null) Drops.AddAll(drops);
         Backstabbable = backstabbable || npc;
         Parriable = parriable;
         ParriesPerCrit = parriesPerCrit;
-        Critable = critable;
+        Critable = critable && (!npc || parriable);
         if (summonableNPCs != null) SummonableNPCs.AddAll(summonableNPCs);
 
         if (additionalPhases != null)
@@ -62,6 +66,7 @@ public partial class Boss
     public bool MultiplayerAllowed { get; init; }
     public bool SummonsAllowed { get; init; }
     public int? GameAreaID { get; init; }
+    public int? CharaInitID { get; init; }
     public int Stance { get; set; }
     public bool Parriable { get; init; }
     public bool Backstabbable { get; init; }
@@ -86,6 +91,10 @@ public partial class Boss
 
     // NPC-exclusive stuff
     public List<ArmorPiece> Armor { get; set; } = [];
+    public List<ArmorPiece> NamedArmor
+    {
+        get { return Armor.Where((armor) => armor.Name != null).ToList(); }
+    }
     public List<Weapon> RightHand { get; } = [];
     public List<Weapon> LeftHand { get; } = [];
     public List<string> Spells { get; } = [];

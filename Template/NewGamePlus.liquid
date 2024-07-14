@@ -20,7 +20,9 @@
 					{% unless Boss.IsNPC %}
 						{% include 'NewGameRow', name: 'Defense', data: Boss.Defense %}
 					{% endunless %}
-					{% include 'NewGameRow', data: Boss.Runes, icon: RuneIcon, commas: true %}
+					{% if UniqueFight %}
+						{% include 'NewGameRow', data: Boss.Runes, icon: RuneIcon, commas: true %}
+					{% endif %}
 					{% if Boss.IsNPC %}
 						<tr>
 							<th colspan="9">

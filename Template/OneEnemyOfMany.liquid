@@ -1,0 +1,16 @@
+{% include 'Infobox' %}
+
+{% include 'BossHeader', display: 'enemy-specific' %}
+
+<h3 class="bonfire">{{Boss.Name}} Combat information</h3>
+
+<div class="row flexrow">
+	<div class="col-sm-6">
+		{% include 'CombatInfo' %}
+	</div>
+	<div class="col-sm-6">
+		{% include 'Resistances' %}
+	</div>
+</div>
+
+{% include 'NewGamePlus' %}

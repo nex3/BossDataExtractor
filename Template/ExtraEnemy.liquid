@@ -1,0 +1,21 @@
+{% include 'Infobox' %}
+
+<h3 class="bonfire">{{Boss.Name}} Combat information</h3>
+
+{% include 'CombatInfo' %}
+
+<div class="row flexrow">
+	{% if Boss.IsNPC %}
+		<div class="col-sm-4">
+			{% include 'Defenses' %}
+		</div>
+	{% endif %}
+	<div class="col-sm-{% if Boss.IsNPC %}4{% else %}6{% endif %}">
+		{% include 'Negations' %}
+	</div>
+	<div class="col-sm-{% if Boss.IsNPC %}4{% else %}6{% endif %}">
+		{% include 'Resistances' %}
+	</div>
+</div>
+
+{% include 'NewGamePlus' %}

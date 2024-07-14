@@ -16,7 +16,120 @@ public partial class Boss
             gameAreaID: 31000800,
             location: "Murkwater Cave",
             npc: true,
-            parriable: true
+            parriable: true,
+            damageTypes: [DamageType.Strike, DamageType.Pierce]
+        ),
+        new Boss(
+            523560020, "Adan, Thief of Fire",
+            gameAreaID: 1038410800,
+            location: "Malefactor's Evergaol",
+            closestGrace: "Scenic Isle",
+            npc: true,
+            parriable: false,
+            multiplayerAllowed: false,
+            summonsAllowed: false,
+            damageTypes: [DamageType.Strike, DamageType.Fire],
+            drops: ["Flame of the Fell God"]
+        ),
+        new Boss(
+            523760930, "Necromancer Garris",
+            gameAreaID: 31190850,
+            location: "Sage's Cave",
+            npc: true,
+            parriable: false,
+            damageTypes: [DamageType.Strike, DamageType.Magic],
+            drops: ["Family Heads"]
+        ),
+        new Boss(
+            523860000, "Esgar, Priest of Blood",
+            gameAreaID: 35000850,
+            location: "Leyndell Catacombs",
+            npc: true,
+            parriable: true,
+            damageTypes: [
+                DamageType.Standard, DamageType.Slash, DamageType.Pierce, DamageType.Magic,
+                DamageType.Fire
+            ],
+            statusTypes: [StatusType.Hemorrhage],
+            drops: ["Lord of Blood's Exultation"]
+        ),
+        new Boss(
+            523040050, "Roundtable Knight Vyke",
+            gameAreaID: 1053560800,
+            location: "Lord Contender's Evergaol",
+            closestGrace: "Whiteridge Road",
+            npc: true,
+            parriable: true,
+            multiplayerAllowed: false,
+            summonsAllowed: false,
+            damageTypes: [DamageType.Standard, DamageType.Pierce, DamageType.Lightning],
+            drops: ["Fingerprint Set", "Vyke's Dragonbolt"]
+        ),
+        new Boss(
+            523610066, "First Champion",
+            location: "Deeproot Depths",
+            closestGrace: "Across the Roots",
+            npc: true,
+            parriable: true,
+            multiplayerAllowed: true,
+            summonsAllowed: true
+        ),
+        new Boss(
+            523250066, "Sorcerer Rogier", // Fia's Champions
+            charaInitID: 23252,
+            location: "Deeproot Depths",
+            closestGrace: "Across the Roots",
+            npc: true,
+            parriable: true,
+            multiplayerAllowed: true,
+            summonsAllowed: true
+        ),
+        new Boss(
+            523290066, "Lionel the Lionhearted", // Fia's Champions
+            location: "Deeproot Depths",
+            closestGrace: "Across the Roots",
+            npc: true,
+            parriable: true,
+            multiplayerAllowed: true,
+            summonsAllowed: true,
+            statusTypes: [StatusType.DeathBlight]
+        ),
+        new Boss(
+            523610066, "Fourth Champion",
+            location: "Deeproot Depths",
+            charaInitID: 23701,
+            closestGrace: "Across the Roots",
+            npc: true,
+            parriable: true,
+            multiplayerAllowed: true,
+            summonsAllowed: true
+        ),
+        new Boss(
+            523610066, "Fifth Champion",
+            charaInitID: 23711,
+            location: "Deeproot Depths",
+            closestGrace: "Across the Roots",
+            npc: true,
+            parriable: true,
+            multiplayerAllowed: true,
+            summonsAllowed: true
+        ),
+        new Boss(
+            523240070, "Sir Gideon Ofnir, the All-Knowing",
+            gameAreaID: 11050850,
+            charaInitID: 23248,
+            location: "Leyndell, Ashen Capital",
+            npc: true,
+            parriable: true,
+            optional: false,
+            multiplayerAllowed: true,
+            summonsAllowed: true,
+            damageTypes: [
+                DamageType.Standard, DamageType.Strike, DamageType.Magic, DamageType.Fire,
+                DamageType.Holy
+            ],
+            statusTypes: [StatusType.ScarletRot, StatusType.Hemorrhage],
+            drops: ["All-Knowing Set", "Scepter of the All-Knowing"]
         ),
 
         /// DLC
@@ -370,6 +483,13 @@ public partial class Boss
             closestGrace: "Fingerstone Hill",
             weakPoint: "Face and Rump",
             drops: ["Gravitational Missile"]
+        ),
+        new Boss(
+            56200084, "Tibia Mariner",
+            location: "Charo's Hidden Grave",
+            critable: false,
+            boss: false,
+            drops: ["Tibia's Cookbook"]
         ),
         // Note: humanoid boss, unclear how to handle it. Madness resist is definitely wrong, other
         // stuff might be as well.
