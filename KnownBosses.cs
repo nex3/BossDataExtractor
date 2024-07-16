@@ -499,17 +499,111 @@ public partial class Boss
             location: "Dragon's Pit",
             npc: true,
             parriable: true,
+            damageTypes: [
+                DamageType.Standard, DamageType.Slash, DamageType.Pierce, DamageType.Fire
+            ],
             drops: ["Dragon-Hunter's Great Katana"]
+        ),
+        new Boss(
+            524200190, "Count Ymir, Mother of Fingers",
+            gameAreaID: 2051450800,
+            location: "Cathedral of Manus Meyr",
+            npc: true,
+            multiplayerAllowed: false,
+            summonsAllowed: false,
+            drops: ["Ymir's Bell Bearing", "Maternal Staff", "High Priest Set"]
+        ),
+        new Boss(
+            524090190, "Swordhand of Night Jolan",
+            charaInitID: 2024091,
+            location: "Cathedral of Manus Meyr",
+            npc: true,
+            multiplayerAllowed: false,
+            summonsAllowed: false
+        ),
+        new Boss(
+            524210095, "Red Bear",
+            gameAreaID: 2046450800,
+            location: "Northern Nameless Mausoleum",
+            closestGrace: "Temple Town Ruins",
+            npc: true,
+            parriable: true,
+            summonsAllowed: false,
+            damageTypes: [DamageType.Standard, DamageType.Slash],
+            statusTypes: [StatusType.Hemorrhage],
+            drops: ["Red Bear's Claw", "Iron Rivet Set"]
+        ),
+        new Boss(
+            524220083, "Dancer of Ranah",
+            gameAreaID: 2046380800,
+            location: "Southern Nameless Mausoluem",
+            closestGrace: "Cerulean Coast West",
+            npc: true,
+            parriable: true,
+            summonsAllowed: false,
+            drops: ["Dancing Blade of Ranah", "Dancer's Set"]
+        ),
+        new Boss(
+            524230091, "Rakshasa",
+            gameAreaID: 2051440800,
+            location: "Eastern Namelss Mausoleum",
+            closestGrace: "Recluses' River Downstream",
+            npc: true,
+            parriable: true,
+            summonsAllowed: false,
+            drops: ["Rakshasa's Great Katana", "Rakshasa's Set"]
+        ),
+        new Boss(
+            524240080, "Knight of the Solitary Gaol",
+            gameAreaID: 2046410800,
+            location: "Western Nameless Mausoleum",
+            closestGrace: "Scorched Ruins",
+            npc: true,
+            parriable: true,
+            summonsAllowed: false,
+            drops: ["Greatsword of Solitude", "Solitude Set"]
+        ),
+        new Boss(
+            524250190, "Dryleaf Dane",
+            location: "Moorth Ruins",
+            npc: true,
+            parriable: true,
+            drops: ["Dane's Hat", "Dryleaf Arts"]
+        ),
+        new Boss(
+            524270084, "Lamenter",
+            gameAreaID: 41020800,
+            location: "Lamenter's Gaol",
+            npc: true,
+            parriable: true,
+            drops: ["Lamenter's Mask"]
+        ),
+        new Boss(
+            524140189, "Hornsent",
+            location: "Enir-Ilim",
+            npc: true,
+            parriable: true
+        ),
+        new Boss(
+            524250289, "Dryleaf Dane",
+            location: "Enir-Ilim",
+            npc: true,
+            parriable: true
         ),
         new Boss(
             524170289, "Redmane Freyja",
             location: "Enir-Ilim",
             npc: true,
+            parriable: true
+        ),
+        new Boss(
+            524180289, "Needle Knight Leda",
+            location: "Enir-Ilim",
+            npc: true,
+            optional: false,
             parriable: true,
-            drops: [
-                "Freyja's Greatsword", "Freyja's Helm", "Freyja's Armor", "Freyja's Gauntlets",
-                "Freyja's Greaves"
-            ]
+            summonableNPCs: ["Thiollier", "Sir Ansbach", "Sanguine Noble Nalaan"],
+            drops: ["Leda's Sword"]
         )
     ];
 }

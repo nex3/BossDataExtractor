@@ -2,18 +2,21 @@
 
 <h3 class="bonfire">{{Boss.Name}} Combat information</h3>
 
-{% include 'CombatInfo' %}
+
+{% if Boss.IsNPC %}
+	<div class="row flexrow">
+		<div class="col-sm-6">{% include 'CombatInfo' %}</div>
+		<div class="col-sm-6">{% include 'Defenses' %}</div>
+	</div>
+{% else %}
+	{% include 'CombatInfo' %}
+{% endif %}
 
 <div class="row flexrow">
-	{% if Boss.IsNPC %}
-		<div class="col-sm-4">
-			{% include 'Defenses' %}
-		</div>
-	{% endif %}
-	<div class="col-sm-{% if Boss.IsNPC %}4{% else %}6{% endif %}">
+	<div class="col-sm-6">
 		{% include 'Negations' %}
 	</div>
-	<div class="col-sm-{% if Boss.IsNPC %}4{% else %}6{% endif %}">
+	<div class="col-sm-6">
 		{% include 'Resistances' %}
 	</div>
 </div>

@@ -10,11 +10,11 @@ using System.Text.RegularExpressions;
 using System.Numerics;
 
 var gamePath = "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\";
-var smithboxAssetPath = "F:\\Mods\\Smithbox_1_0_14_4\\Smithbox\\Assets";
+var smithboxAssetPath = "F:\\Mods\\Smithbox_1_0_15_1\\Smithbox\\Assets";
 
-var bossName = "Gideon";
-int? bossID = 56200084;
-var displayType = Display.OneEnemyOfMany;
+var bossName = "Leda";
+int? bossID = null;
+var displayType = Display.ExtraEnemy;
 var minify = true;
 
 var boss = bossID == null
@@ -78,7 +78,7 @@ foreach (var file in Directory.GetFiles(
         foreach (var line in File.ReadAllLines(file))
         {
             var split = line.Split(' ', 2);
-            names[int.Parse(split[0])] = split[1];
+            if (split[1] != "") names[int.Parse(split[0])] = split[1];
         }
         paramNames[name] = names;
     }
@@ -141,7 +141,8 @@ foreach (var armor in equipParamProtector.Rows)
 {
     var modelID = (ushort)armor["equipModelId"].Value;
     if (!armorNamesByModel.ContainsKey(modelID) &&
-        equipParamProtectorNames.TryGetValue(armor.ID, out var armorName))
+        equipParamProtectorNames.TryGetValue(armor.ID, out var armorName) &&
+        armorName != "")
     {
         armorNamesByModel[modelID] = armorName;
     }
