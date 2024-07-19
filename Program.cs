@@ -12,9 +12,9 @@ using System.Numerics;
 var gamePath = "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\";
 var smithboxAssetPath = "F:\\Mods\\Smithbox_1_0_15_1\\Smithbox\\Assets";
 
-var bossName = "Leda";
+var bossName = "Consort of Miquella";
 int? bossID = null;
-var displayType = Display.ExtraEnemy;
+var displayType = Display.Full;
 var minify = true;
 
 var boss = bossID == null

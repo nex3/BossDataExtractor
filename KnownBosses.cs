@@ -312,13 +312,28 @@ public partial class Boss
             drops: ["Remembrance of the Mother of Fingers"]
         ),
         new Boss(
-            52201089, "Promised Consort Radahn",
+            52200089, "Promised Consort Radahn",
+            location: "Enir-Elim",
+            closestGrace: "Divine Gatefront Staircase",
             gameAreaID: 20010800,
-            optional: false,
-            location: "Enir-Ilim",
-            closestGrace: "Divine Gate Front Staircase",
             parriable: true,
-            parriesPerCrit: 3
+            parriesPerCrit: 3,
+            optional: false,
+            damageTypes: [DamageType.Fire, DamageType.Standard, DamageType.Pierce, DamageType.Holy],
+            drops: ["Remembrance of a God and a Lord"],
+            summonableNPCs: ["Thiollier", "Sir Ansbach"]
+        ),
+        new Boss(
+            52201089, "Radahn, Consort of Miquella",
+            location: "Enir-Elim",
+            closestGrace: "Divine Gatefront Staircase",
+            gameAreaID: 20010800,
+            parriable: true,
+            parriesPerCrit: 3,
+            optional: false,
+            damageTypes: [DamageType.Fire, DamageType.Standard, DamageType.Slash, DamageType.Pierce, DamageType.Holy],
+            drops: ["Remembrance of a God and a Lord"],
+            summonableNPCs: ["Thiollier", "Sir Ansbach"]
         ),
         new Boss(
             52200089, "Promised Consort Radahn",
@@ -579,19 +594,24 @@ public partial class Boss
             drops: ["Lamenter's Mask"]
         ),
         new Boss(
-            524140189, "Hornsent",
+            524170289, "Redmane Freyja",
             location: "Enir-Ilim",
             npc: true,
             parriable: true
+        ),
+        new Boss(
+            524140289, "Hornsent",
+            location: "Enir-Ilim",
+            npc: true,
+            parriable: true
+        ),
+        new Boss(
+            524150289, "Moore",
+            location: "Enir-Ilim",
+            npc: true
         ),
         new Boss(
             524250289, "Dryleaf Dane",
-            location: "Enir-Ilim",
-            npc: true,
-            parriable: true
-        ),
-        new Boss(
-            524170289, "Redmane Freyja",
             location: "Enir-Ilim",
             npc: true,
             parriable: true
