@@ -12,7 +12,7 @@ using System.Numerics;
 var gamePath = "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\";
 var smithboxAssetPath = "F:\\Mods\\Smithbox_1_0_15_1\\Smithbox\\Assets";
 
-var bossName = "Consort of Miquella";
+var bossName = "Elden Beast";
 int? bossID = null;
 var displayType = Display.Full;
 var minify = true;
@@ -256,7 +256,7 @@ void loadBossData(Boss boss)
             boss.Negations[name] = (int)Math.Round(100 * value);
         }
 
-        baseHP = (uint)bossParams["hp"].Value;
+        baseHP = (uint)Math.Floor((uint)bossParams["hp"].Value * 1.8);
     }
     else
     {

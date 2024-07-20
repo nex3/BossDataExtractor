@@ -9,6 +9,32 @@ public partial class Boss
             location: "Mountaintops of the Giants",
             optional: false
         ),
+        new Boss(
+            21900078, "Radagon of the Golden Order",
+            location: "Erdtree",
+            closestGrace: "Elden Throne",
+            optional: false,
+            parriable: true,
+            parriesPerCrit: 3
+        ),
+        new Boss(
+            21900078, "Elden Beast",
+            gameAreaID: 19000800,
+            location: "Erdtree",
+            closestGrace: "Elden Throne",
+            optional: false,
+            drops: ["Elden Remembrance"]
+        ),
+        new Boss(
+            21200056, "Malenia, Blade of Miquella",
+            gameAreaID: 15000800,
+            location: "Elphael, Brace of the Haligtree",
+            closestGrace: "Haligtree Roots",
+            parriable: true,
+            parriesPerCrit: 3,
+            statusTypes: [StatusType.ScarletRot],
+            drops: ["Malenia's Great Rune", "Remembrance of the Rot Goddess"]
+        ),
 
         /// NPCs
         new Boss(
