@@ -411,6 +411,7 @@ public partial class Boss
             gameAreaID: 2049410800,
             location: "Jagged Peak Foothills",
             closestGrace: "Dragon's Pit Terminus",
+            multiplayerAllowed: false,
             weakPoint: "Head",
             drops: ["Dragon Heart", "Dragonscale Flesh"]
         ),
@@ -419,6 +420,8 @@ public partial class Boss
             gameAreaID: 2052400800,
             location: "Jagged Peak",
             closestGrace: "Foot of the Jagged Peak",
+            multiplayerAllowed: false,
+            summonsAllowed: false,
             weakPoint: "Head",
             drops: ["Dragon Heart", "Dragonscale Flesh"]
         ),
