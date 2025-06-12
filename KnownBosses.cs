@@ -18,7 +18,7 @@ public partial class Boss
             parriesPerCrit: 3
         ),
         new Boss(
-            21900078, "Elden Beast",
+            22000078, "Elden Beast",
             gameAreaID: 19000800,
             location: "Erdtree",
             closestGrace: "Elden Throne",
@@ -595,7 +595,7 @@ public partial class Boss
             drops: ["Rakshasa's Great Katana", "Rakshasa's Set"]
         ),
         new Boss(
-            524240080, "Knight of the Solitary Gaol",
+            524240080, "Blackgaol Knight",
             gameAreaID: 2046410800,
             location: "Western Nameless Mausoleum",
             closestGrace: "Scorched Ruins",

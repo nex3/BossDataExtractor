@@ -191,6 +191,8 @@ void loadBossData(Boss boss)
 
     var ngScaling = spEffects[(int)bossParams["spEffectID3"].Value];
     var ngpScaling = spEffects[(int)bossParams["GameClearSpEffectID"].Value];
+    var dlcpId = (int)bossParams["dlcGameClearSpEffectID"].Value;
+    var dlcpScaling = dlcpId == -1 ? null : spEffects[dlcpId];
 
     uint baseHP;
     if (!boss.IsNPC)
@@ -256,7 +258,7 @@ void loadBossData(Boss boss)
             boss.Negations[name] = (int)Math.Round(100 * value);
         }
 
-        baseHP = (uint)Math.Floor((uint)bossParams["hp"].Value * 1.8);
+        baseHP = (uint)bossParams["hp"].Value;
     }
     else
     {
@@ -354,9 +356,13 @@ void loadBossData(Boss boss)
                 / talismanValues<float>("toughnessDamageCutRate").Aggregate(1.0, (x, y) => x * y)
         );
 
-        if (npc["item_01"].Value is 50201 or 50203)
+        for (var i = 1; i <= 10; i++)
         {
-            boss.FlaskCharges = (byte)npc["itemNum_01"].Value;
+            var suffix = "_" + i.ToString().PadLeft(2, '0');
+            if (npc[$"item{suffix}"].Value is 50201 or 50203)
+            {
+                boss.FlaskCharges = (boss.FlaskCharges ?? 0) + (byte)npc[$"itemNum{suffix}"].Value;
+            }
         }
 
         int getNegation(string field, string spEffectField)
@@ -512,6 +518,21 @@ void loadBossData(Boss boss)
         boss.HP.Add([(int)Math.Floor(ngpHP * (float)clearCountParams[i]["MaxHpRate"].Value)]);
     }
 
+    if (dlcpScaling != null)
+    {
+        var dlcpModifier = (float)dlcpScaling["maxHpRate"].Value;
+        var dlcpHp = ngpHP * dlcpModifier;
+        boss.DlcPlusHP.Add([(int)Math.Floor(dlcpHp)]);
+        for (var i = 2; i < 8; i++)
+        {
+            boss.DlcPlusHP.Add([(int)Math.Floor(
+                ngpHP *
+                    (float)clearCountParams[i]["MaxHpRate"].Value *
+                    (float)dlcpScaling["maxHpRate"].Value
+            )]);
+        }
+    }
+
     // Base defense for all stats seems to be 100, and defense scaling seems to be consistent across
     // all damage types. Phil's data doesn't have defense as multiplicative between NG and NG+, but
     // that's inconsistent with other stats and leads to a bunch of bosses having less defense in NG+
@@ -636,6 +657,7 @@ void loadBossData(Boss boss)
             for (int i = 0; i < 8; i++)
             {
                 boss.HP[i].Add(phase.HP[i][0]);
+                if (i < 7) boss.DlcPlusHP[i].Add(phase.DlcPlusHP[i][0]);
             }
         }
     }

@@ -9,7 +9,9 @@
 
 	{% if data.size > 0 %}
 		{% for column in data %}
-			{% if column.size %}
+			{% if column == "-" %}
+				<td style="text-align: center; opacity: 0.7">—</td>
+			{% elsif column.size %}
 				{% if column.size == 3 %}
 					{% assign style = 'font-size: 90%' %}
 				{% elsif column.size > 3 %}

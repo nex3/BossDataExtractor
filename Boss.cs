@@ -76,6 +76,7 @@ public partial class Boss
     public SortedSet<StatusType> StatusTypes { get; } = [];
     public SortedDictionary<DamageType, int> Negations { get; } = [];
     public List<List<int>> HP { get; } = [];
+    public List<List<int>> DlcPlusHP { get; } = [];
     public List<int> Defense { get; } = [];
     public List<int> Runes { get; } = [];
     public List<string> Drops { get; } = [];

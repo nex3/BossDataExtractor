@@ -1,6 +1,6 @@
 ﻿public enum Display
 {
-    Full, CrossEnemy, OneEnemyOfMany, ExtraEnemy
+    Full, CrossEnemy, OneEnemyOfMany, ExtraEnemy, NewGamePlus
 }
 
 public class Context
@@ -38,7 +38,8 @@ public class Context
     {
         get {
             return displayEnum == global::Display.Full ||
-                displayEnum == global::Display.OneEnemyOfMany;
+                displayEnum == global::Display.OneEnemyOfMany ||
+                displayEnum == global::Display.NewGamePlus;
         }
     }
 

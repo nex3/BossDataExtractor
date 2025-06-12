@@ -17,6 +17,14 @@
 				</thead>
 				<tbody>
 					{% include 'NewGameRow', name: 'HP', data: Boss.HP, commas: true %}
+					{% if Boss.DlcPlusHP.size > 0 %}
+						{% assign dlcpHP = "-" | split: "" | concat: Boss.DlcPlusHP %}
+						{%
+							include 'NewGameRow',
+								name: '<a href="/New+Game+Plus#dlc-plus" class="wiki_link">DLC+</a> HP',
+								data: dlcpHP, commas: true
+						%}
+					{% endif %}
 					{% unless Boss.IsNPC %}
 						{% include 'NewGameRow', name: 'Defense', data: Boss.Defense %}
 					{% endunless %}
