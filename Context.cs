@@ -1,16 +1,17 @@
 ﻿public enum Display
 {
-    Full, CrossEnemy, OneEnemyOfMany, ExtraEnemy, NewGamePlus
+    Full, Infobox, CrossEnemy, OneEnemyOfMany, ExtraEnemy, NewGamePlus
 }
 
 public class Context
 {
     private Display displayEnum;
 
-    public Context(Display display, Boss boss)
+    public Context(Display display, Boss boss, bool eldenRing)
     {
         displayEnum = display;
-        Boss = boss;;
+        Boss = boss;
+        EldenRing = eldenRing;
     }
 
     public IconLink RuneIcon
@@ -19,6 +20,12 @@ public class Context
     }
 
     public Boss Boss { get; init; }
+
+    public bool EldenRing { get; init; }
+
+    public bool Nightreign {
+        get { return !EldenRing; }
+    }
 
     public string Display
     {
@@ -34,13 +41,19 @@ public class Context
     {
         get { return displayEnum != global::Display.OneEnemyOfMany; }
     }
+
     public bool UniqueFight
     {
         get {
             return displayEnum == global::Display.Full ||
+                displayEnum == global::Display.Infobox ||
                 displayEnum == global::Display.OneEnemyOfMany ||
                 displayEnum == global::Display.NewGamePlus;
         }
+    }
+
+    public int InfoboxColspan {
+        get { return Boss.Nightlord ? 4 : 2; }
     }
 
     public override string ToString()

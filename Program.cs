@@ -8,18 +8,26 @@ using System.IO;
 using System.Windows;
 using System.Text.RegularExpressions;
 using System.Numerics;
+using System.Text.Json;
 
-var gamePath = "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\";
-var smithboxAssetPath = "F:\\Mods\\Smithbox_1_0_15_1\\Smithbox\\Assets";
+// Elden Ring or Nightreign
+var eldenRing = false;
 
-var bossName = "Elden Beast";
+var gamePath = eldenRing
+    ? "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\"
+    : "C:\\Users\\Natalie\\SteamLibrary\\steamapps\\common\\ELDEN RING NIGHTREIGN\\Game\\";
+var gameAbbrev = eldenRing ? "ER" : "NR";
+var smithboxAssetPath = "F:\\Mods\\Smithbox-2-0-5-10-06-2025\\Assets";
+
+var bossName = "Gladius, Beast of Night";
 int? bossID = null;
-var displayType = Display.Full;
+var displayType = Display.Infobox;
 var minify = true;
 
+var knownBosses = eldenRing ? Boss.KnownERBosses : Boss.KnownNRBosses;
 var boss = bossID == null
-    ? Boss.KnownBosses.Find((boss) => boss.Name.Contains(bossName))
-    : Boss.KnownBosses.Find((boss) => boss.ID == bossID);
+    ? knownBosses.Find((boss) => boss.Name.Contains(bossName))
+    : knownBosses.Find((boss) => boss.ID == bossID);
 if (boss == null)
 {
     if (bossID == null)
@@ -42,7 +50,7 @@ Console.WriteLine("Loading params...");
 
 var paramdefs = new Dictionary<string, PARAMDEF>();
 foreach (var file in Directory.GetFiles(
-    Path.Join(smithboxAssetPath, "Paramdex\\ER\\Defs"),
+    Path.Join(smithboxAssetPath, $"PARAM\\{gameAbbrev}\\Defs"),
     "*.xml"
 ))
 {
@@ -50,7 +58,9 @@ foreach (var file in Directory.GetFiles(
     paramdefs[paramdef.ParamType] = paramdef;
 }
 
-var bnd = SFUtil.DecryptERRegulation($"{gamePath}\\regulation.bin");
+var bnd = eldenRing
+    ? SFUtil.DecryptERRegulation($"{gamePath}\\regulation.bin")
+    : SFUtil.DecryptNightreignRegulation($"{gamePath}\\regulation.bin");
 var paramDict = new Dictionary<string, PARAM>();
 foreach (var file in bnd.Files)
 {
@@ -66,19 +76,20 @@ foreach (var file in bnd.Files)
 }
 
 var paramNames = new Dictionary<string, Dictionary<int, string>>();
-foreach (var file in Directory.GetFiles(
-    Path.Join(smithboxAssetPath, "Paramdex\\ER\\Names"),
-    "*.txt"
+using (var communityRowNames = JsonDocument.Parse(
+    File.ReadAllText(
+        Path.Join(smithboxAssetPath, $"PARAM\\{gameAbbrev}\\Community Row Names.json")
+    )
 ))
 {
-    var name = Path.GetFileNameWithoutExtension(file);
-    if (paramsWeCareAbout.Contains(name))
+    foreach (var param in communityRowNames.RootElement.GetProperty("Params").EnumerateArray())
     {
+        var name = param.GetProperty("Name").GetString()!;
+        if (!paramsWeCareAbout.Contains(name)) continue;
         var names = new Dictionary<int, string>();
-        foreach (var line in File.ReadAllLines(file))
+        foreach (var entry in param.GetProperty("Entries")!.EnumerateArray())
         {
-            var split = line.Split(' ', 2);
-            if (split[1] != "") names[int.Parse(split[0])] = split[1];
+            names[entry.GetProperty("ID").GetInt32()!] = entry.GetProperty("Name").GetString()!;
         }
         paramNames[name] = names;
     }
@@ -90,17 +101,18 @@ var npcs = paramDict["NpcParam"];
 var spEffects = paramDict["SpEffectParam"];
 var attacks = paramDict["AtkParam_Npc"];
 var clearCountParams = paramDict["ClearCountCorrectParam"];
-var gameAreaParam = paramDict["GameAreaParam"];
+var gameAreaParam = eldenRing ? paramDict["GameAreaParam"] : new PARAM();
 var resistCorrectParam = paramDict["ResistCorrectParam"];
 var charaInitParam = paramDict["CharaInitParam"];
 var equipParamProtector = paramDict["EquipParamProtector"];
 var equipParamWeapon = paramDict["EquipParamWeapon"];
 var equipParamCustomWeapon = paramDict["EquipParamCustomWeapon"];
 var equipParamAccessory = paramDict["EquipParamAccessory"];
+var multiPlayCorrectionParam = paramDict["MultiPlayCorrectionParam"];
 
 var equipParamProtectorNames = paramNames["EquipParamProtector"];
 var equipParamWeaponNames = paramNames["EquipParamWeapon"];
-var equipParamGemNames = paramNames["EquipParamGem"];
+var equipParamGemNames = eldenRing ? paramNames["EquipParamGem"] : [];
 var magicNames = paramNames["Magic"];
 
 Dictionary<int, string> weaponNamesByModel = [];
@@ -191,7 +203,7 @@ void loadBossData(Boss boss)
 
     var ngScaling = spEffects[(int)bossParams["spEffectID3"].Value];
     var ngpScaling = spEffects[(int)bossParams["GameClearSpEffectID"].Value];
-    var dlcpId = (int)bossParams["dlcGameClearSpEffectID"].Value;
+    var dlcpId = (int?)bossParams["dlcGameClearSpEffectID"]?.Value ?? -1;
     var dlcpScaling = dlcpId == -1 ? null : spEffects[dlcpId];
 
     uint baseHP;
@@ -510,23 +522,27 @@ void loadBossData(Boss boss)
     }
 
     var ngHP = baseHP * (float)ngScaling["maxHpRate"].Value;
-    var ngpHP = ngHP * (float)ngpScaling["maxHpRate"].Value;
     boss.HP.Add([(int)Math.Floor(ngHP)]);
-    boss.HP.Add([(int)Math.Floor(ngpHP)]);
-    for (var i = 2; i < 8; i++)
+
+    float? ngpHP = ngpScaling == null ? null : ngHP * (float)ngpScaling["maxHpRate"].Value;
+    if (ngpHP is not null)
     {
-        boss.HP.Add([(int)Math.Floor(ngpHP * (float)clearCountParams[i]["MaxHpRate"].Value)]);
+        boss.HP.Add([(int)Math.Floor((float)ngpHP)]);
+        for (var i = 2; i < 8; i++)
+        {
+            boss.HP.Add([(int)Math.Floor((float)ngpHP * (float)clearCountParams[i]["MaxHpRate"].Value)]);
+        }
     }
 
     if (dlcpScaling != null)
     {
         var dlcpModifier = (float)dlcpScaling["maxHpRate"].Value;
-        var dlcpHp = ngpHP * dlcpModifier;
+        var dlcpHp = (float)ngpHP! * dlcpModifier;
         boss.DlcPlusHP.Add([(int)Math.Floor(dlcpHp)]);
         for (var i = 2; i < 8; i++)
         {
             boss.DlcPlusHP.Add([(int)Math.Floor(
-                ngpHP *
+                (float)ngpHP *
                     (float)clearCountParams[i]["MaxHpRate"].Value *
                     (float)dlcpScaling["maxHpRate"].Value
             )]);
@@ -538,25 +554,33 @@ void loadBossData(Boss boss)
     // that's inconsistent with other stats and leads to a bunch of bosses having less defense in NG+
     // so I think it's wrong.
     var ngDefense = 100 * (float)ngScaling["physicsDiffenceRate"].Value;
-    var ngpDefense = ngDefense * (float)ngpScaling["physicsDiffenceRate"].Value;
     boss.Defense.Add((int)Math.Floor(ngDefense));
-    boss.Defense.Add((int)Math.Floor(ngpDefense));
-    for (var i = 2; i < 8; i++)
+
+    if (ngpScaling is not null)
     {
-        boss.Defense.Add(
-            (int)Math.Floor(ngpDefense * (float)clearCountParams[i]["PhysicsDefenseRate"].Value)
-        );
+        var ngpDefense = ngDefense * (float)ngpScaling["physicsDiffenceRate"].Value;
+        boss.Defense.Add((int)Math.Floor(ngpDefense));
+        for (var i = 2; i < 8; i++)
+        {
+            boss.Defense.Add(
+                (int)Math.Floor(ngpDefense * (float)clearCountParams[i]["PhysicsDefenseRate"].Value)
+            );
+        }
     }
 
     var ngRunes = boss.GameAreaID == null
         ? (uint)bossParams["getSoul"].Value
         : (uint)gameAreaParam[(int)boss.GameAreaID]["bonusSoul_single"].Value;
-    var ngpRunes = ngRunes * (float)ngpScaling["haveSoulRate"].Value;
     boss.Runes.Add((int)ngRunes);
-    boss.Runes.Add((int)Math.Round(ngpRunes));
-    for (var i = 2; i < 8; i++)
+
+    if (ngpScaling is not null)
     {
-        boss.Runes.Add((int)Math.Round(ngpRunes * (float)clearCountParams[i]["SoulRate"].Value));
+        var ngpRunes = ngRunes * (float)ngpScaling["haveSoulRate"].Value;
+        boss.Runes.Add((int)Math.Round(ngpRunes));
+        for (var i = 2; i < 8; i++)
+        {
+            boss.Runes.Add((int)Math.Round(ngpRunes * (float)clearCountParams[i]["SoulRate"].Value));
+        }
     }
 
     List<PARAM.Row> allSpEffects = [];
@@ -584,11 +608,16 @@ void loadBossData(Boss boss)
 
         var correct = resistCorrectParam[(int)bossParams[correctCell].Value];
         var ngProc1 = baseValue * (float)ngScaling[rateCell].Value;
-        var ngpProc1 = ngProc1 * (float)ngpScaling[rateCell].Value;
-        List<float> firstProcs = [ngProc1, ngpProc1];
-        for (var i = 2; i < 8; i++)
+        List<float> firstProcs = [ngProc1];
+
+        if (ngpScaling is not null)
         {
-            firstProcs.Add(ngpProc1 * (float)clearCountParams[i][clearCountCell].Value);
+            var ngpProc1 = ngProc1 * (float)ngpScaling[rateCell].Value;
+            firstProcs.Add(ngProc1);
+            for (var i = 2; i < 8; i++)
+            {
+                firstProcs.Add(ngpProc1 * (float)clearCountParams[i][clearCountCell].Value);
+            }
         }
 
         var resistances = firstProcs.Select((proc1) =>
@@ -620,7 +649,7 @@ void loadBossData(Boss boss)
         "DiseaseResistRate",
         "disableDisease"
     );
-    boss.Resistance[StatusType.Hemorrhage] = resistances(
+    boss.Resistance[eldenRing ? StatusType.Hemorrhage : StatusType.BloodLoss] = resistances(
         "resist_blood",
         "resistCorrectId_blood",
         "registBloodChangeRate",
@@ -661,6 +690,18 @@ void loadBossData(Boss boss)
             }
         }
     }
+
+    var multiPlayerParamId = (int)bossParams["multiPlayCorrectionParamId"].Value;
+    if (multiPlayerParamId != 0)
+    {
+        var multiPlayerParam = multiPlayCorrectionParam[multiPlayerParamId];
+        var duoSpEffect = spEffects[(int)multiPlayerParam["client1SpEffectId"].Value];
+        var trioSpEffect = spEffects[(int)multiPlayerParam["client2SpEffectId"].Value];
+        boss.MultiplayerHPScaling = (
+            (float)duoSpEffect["maxHpRate"].Value,
+            (float)trioSpEffect["maxHpRate"].Value
+        );
+    }
 }
 
 loadBossData(boss);
@@ -692,7 +733,7 @@ string path = options.FileProvider.GetFileInfo(
     Enum.GetName(typeof(Display), displayType) + ".liquid"
 ).PhysicalPath!;
 var template = fluid.Parse(File.ReadAllText(path));
-var context = new TemplateContext(new Context(displayType, boss), options);
+var context = new TemplateContext(new Context(displayType, boss, eldenRing), options);
 var html = template.Render(context);
 if (minify) html = new HtmlMinifier().Minify(html).MinifiedContent;
 

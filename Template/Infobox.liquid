@@ -1,20 +1,22 @@
-<hr style="clear: both">
-<div class="infobox">
+{% unless Display == 'Infobox' %}<hr style="clear: both">{% endunless %}
+<div {% if Display == 'Infobox' %}id="infobox"{% endif %} class="infobox">
 	<div class="table-responsive">
 		<table class="wiki_table">
 			<tbody>
 				<tr>
-					<th colspan="2">
+					<th colspan=2>
 						<h2>
 							{% if Display == 'OneEnemyOfMany' %}
 								{% assign slug = Boss.Location %}
 							{% else %}
 								{% assign slug = Boss.Name %}
 							{% endif %}
-							<a id="{{slug | slugify}}" class="mce-item-anchor"></a><!--
+							{% unless Display == 'Infobox' %}
+								<a id="{{slug | slugify}}" class="mce-item-anchor"></a><!--
+							-->{% endunless %}<!--
 							-->{{Boss.Name}}
 						</h2>
-						{% unless Display == 'ExtraEnemy' %}
+						{% unless Display == 'ExtraEnemy' or Nightreign %}
 							<h4>
 								<a
 									href="https://eldenring.wiki.fextralife.com/{{
@@ -26,22 +28,34 @@
 					</th>
 				</tr>
 				<tr>
-					<td style="text-align: center" data-mce-style="text-align: center" colspan="2">
-						__image__
+					<td style="text-align: center" data-mce-style="text-align: center" colspan=2>
+						{% if Boss.ImageUrl %}
+							<img
+								src="{{ Boss.ImageUrl }}"
+								alt="
+									{{ Boss.Name }}
+									{% if Boss.Nightlord %}Nightlord{% endif %}
+									elden ring nightreign wiki guide
+								">
+						{% else %}
+							__image__
+						{% endif %}
 					</td>
 				</tr>
 				{% unless Display == 'ExtraEnemy' %}
 					<tr>
 						<td>Drops</td>
 						<td>
-							<img
-							  title="Runes Icon"
-							  alt="Runes Icon"
-							  src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-							  data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-							>{{Boss.Runes[0] | number}}<!--
+							{% if Boss.Runes[0] > 0 %}
+								<img
+									title="Runes Icon"
+									alt="Runes Icon"
+									src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+									data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+								>{{Boss.Runes[0] | number}}<!--
+							-->{% endif %}<!--
 							-->{% for drop in Boss.Drops %}<!--
-								--><br><!--
+								-->{% unless forloop.first and Boss.Runes[0] == 0 %}<br>{% endunless %}<!--
 								--><a
 									class="wiki_link"
 									href="/{{drop | noXCount | spaceToPlus}}"
@@ -57,10 +71,125 @@
 						{% for hp in Boss.HP[0] %}
 							{% unless forloop.first %}<br>{% endunless %}
 							{{hp | number}}
-							{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}
+							{% if forloop.length > 1 %}
+								<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
+							{% endif %}
 						{% endfor %}
+						{% if Nightreign %}
+						    <span style="color: #b4b2b0">solo</span><br/>
+							{% for hp in Boss.TrioHP[0] %}
+								{% unless forloop.first %}<br>{% endunless %}
+								{{hp | number}}
+								{% if forloop.length > 1 %}
+									<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
+								{% endif %}
+							{% endfor %}
+						    <span style="color: #b4b2b0">trio</span>
+						{% endif %}
 					</td>
 				</tr>
+				<tr>
+					<td>
+						Stronger VS
+						<div class="lineleft">
+							{% if Boss.StrongerVS %}
+								{% for type in Boss.StrongerVS %}
+									{% include 'IconLink', type: type %}<!--
+									-->{% unless forloop.last %}<br/>{% endunless %}
+								{% endfor %}
+							{% else %}
+								A<br/>
+								B
+							{% endif %}
+						</div>
+					</td>
+					<td>
+						Weak to
+						<div class="lineleft">
+							{% if Boss.WeakerVS %}
+								{% for type in Boss.WeakerVS %}
+									{% include 'IconLink', type: type %}<!--
+									-->{% unless forloop.last %}<br/>{% endunless %}
+								{% endfor %}
+							{% else %}
+								A<br/>
+								B
+							{% endif %}
+						</div>
+					</td>
+				</tr>
+				{% if Boss.Nightlord %}
+					<tr><td colspan=2><table style="width: 100%; border: none">
+						<tr style="text-align: center">
+							<td colspan=4>
+								<h4 style="margin: 0">{{ Boss.ShortName }} Negations</h4>
+								<p style="margin: 0; font-size: 8pt; font-weight: normal">
+									(higher numbers prevent more damage)
+								</p>
+							</td>
+						</tr>
+						<tr style="text-align: center">
+							{% for entry in Boss.TypeNegationPairs limit:4 %}
+								<td style="padding: 0">
+									{% include 'IconLink', type: entry.Item1, imageOnly: true %}
+								</td>
+							{% endfor %}
+						</tr>
+						<tr style="text-align: center">
+							{% for entry in Boss.TypeNegationPairs limit:4 %}
+								<td style="padding-top: 0; padding-bottom: 10px">{{ entry.Item2 }}</td>
+							{% endfor %}
+						</tr>
+						<tr style="text-align: center">
+							{% for entry in Boss.TypeNegationPairs offset:4 %}
+								<td style="padding: 0">
+									{% include 'IconLink', type: entry.Item1, imageOnly: true %}
+								</td>
+							{% endfor %}
+						</tr>
+						<tr style="text-align: center">
+							{% for entry in Boss.TypeNegationPairs offset:4 %}
+								<td style="padding-top: 0; padding-bottom: 10px">{{ entry.Item2 }}</td>
+							{% endfor %}
+						</tr>
+						<tr style="text-align: center">
+							<td colspan=4>
+								<h4 style="margin: 0">{{ Boss.ShortName }} Resistances</h4>
+								<p style="margin: 0; font-size: 8pt; font-weight: normal">
+									(higher numbers prevent more damage)
+								</p>
+							</td>
+						</tr>
+						<tr style="text-align: center">
+							{% for entry in Boss.ResistancePairs limit:4 %}
+								<td style="padding: 0">
+									{% include 'IconLink', type: entry.Item1, imageOnly: true %}
+								</td>
+							{% endfor %}
+						</tr>
+						<tr style="text-align: center">
+							{% for entry in Boss.ResistancePairs limit:4 %}
+								<td style="padding-top: 0; padding-bottom: 10px">
+									{% if entry.Item2 == null %}-{% else %}{{ entry.Item2[0][0] }}{% endif %}
+								</td>
+							{% endfor %}
+						</tr>
+						<tr style="text-align: center">
+							{% for entry in Boss.ResistancePairs offset:4 %}
+								<td colspan="2" style="padding: 0">
+									{% include 'IconLink', type: entry.Item1, imageOnly: true %}
+								</td>
+							{% endfor %}
+						</tr>
+						<tr style="text-align: center">
+							{% for entry in Boss.ResistancePairs offset:4 %}
+								<td style="padding-top: 0; padding-bottom: 10px" colspan="2">
+									{% if entry.Item2 == null %}-{% else %}{{ entry.Item2[0][0] }}{% endif %}
+								</td>
+							{% endfor %}
+						</tr>
+					</table></td></tr>
+				{% endif %}
 			</tbody>
 		</table>
 	</div>

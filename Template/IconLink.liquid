@@ -3,11 +3,14 @@
 {% endif %}
 <a class="wiki_link"
         title="{{type}}" data-mce-href="{{type.Href}}"
-        href="https://eldenring.wiki.fextralife.com{{type.Href}}"
+        href="{{type.Href}}"
         style="{{style}}"
         data-mce-style="{{style}}">
 	<img title="{{type}} Icon" alt="{{type}} Icon" width="20"
-        src="https://eldenring.wiki.fextralife.com{{type.Src}}"
+        src="{{type.Src}}"
         data-mce-src="{{type.Src}}"
-    >{{type}}<!--
+    ><!--
+	-->{% unless imageOnly %}<!--
+	    -->{{type}}<!--
+	-->{% endunless %}<!--
 --></a>

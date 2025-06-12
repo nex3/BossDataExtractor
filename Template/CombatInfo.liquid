@@ -10,10 +10,22 @@
 				</span>
 				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
 			-->{% endfor %}
+			{% if Nightreign %}
+			  solo;
+				{% for hp in Boss.TrioHP[0] %}<!--
+					-->{% unless forloop.first %}, {% endunless %}
+					<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+						<strong>{{hp | number}}</strong>
+						HP
+					</span>
+				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
+			  -->{% endfor %}
+			  trio
+			{% endif %}
 		</li>
 		{% unless Boss.IsNPC %}
 			<li>
-				<a class="wiki_link" href="/Calculating+Damage">Defense</a>:
+				<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Calculating+Damage">Defense</a>:
 				<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
 					<strong>{{Boss.Defense[0]}}</strong>
 				</span>
@@ -22,7 +34,7 @@
 	{% endif %}
 	{% if ShowCrossEnemy %}
 	    <li>
-            <a class="wiki_link" href="/{% if Boss.IsNPC %}Poise{% else %}Stance{% endif %}"><!--
+            <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/{% if Boss.IsNPC %}Poise{% else %}Stance{% endif %}"><!--
 				-->{% if Boss.IsNPC %}Poise{% else %}Stance{% endif %}
 			</a>:
             <span style="color: #ffffff;" data-mce-style="color: #ffffff;">
@@ -31,7 +43,7 @@
         </li>
 		{% if Boss.FlaskCharges %}
 			<li>
-				<a class="wiki_link" href="/Flask+of+Crimson+Tears">Flask</a> charges:
+				<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Flask+of+Crimson+Tears">Flask</a> charges:
 				<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
 					<strong>{{Boss.FlaskCharges}}</strong>
 				</span>
@@ -39,7 +51,7 @@
 		{% elsif Boss.IsNPC %}
 			<li>
 				Does not carry a
-				<a class="wiki_link" href="/Flask+of+Crimson+Tears">Flask of Crimson Tears</a>
+				<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Flask+of+Crimson+Tears">Flask of Crimson Tears</a>
 			</li>
 		{% endif %}
         <li>
@@ -101,7 +113,7 @@
 		{% if Boss.Backstabbable %}
 			<li>
 				Is vulnerable to a 
-				<a class="wiki_link" href="/Critical+Damage">backstab critical</a>
+				<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Critical+Damage">backstab critical</a>
 			</li>
 		{% endif %}
 		{% if Boss.DamageTypes.size > 0 %}
@@ -158,7 +170,7 @@
 				Armor:
 				{% for armor in Boss.NamedArmor %}<!--
 					-->{% unless forloop.first %}, {% endunless %}
-					<a class="wiki_link" href="/{{armor.Name | spaceToPlus}}">{{armor.Name}}</a><!--
+					<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/{{armor.Name | spaceToPlus}}">{{armor.Name}}</a><!--
 				-->{% endfor %}
 			</li>
 		{% endif %}
@@ -167,7 +179,7 @@
 				Spell{% if Boss.Spells.size > 1 %}s{% endif %}:
 				{% for spell in Boss.Spells %}<!--
 					-->{% unless forloop.first %}, {% endunless %}
-					<a class="wiki_link" href="/{{spell | spaceToPlus}}">{{spell}}</a><!--
+					<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/{{spell | spaceToPlus}}">{{spell}}</a><!--
 				-->{% endfor %}
 			</li>
 		{% endif %}
@@ -175,14 +187,17 @@
 	{% if UniqueFight %}
         <li>
             Drops
-            <img
-                title="Runes Icon"
-                alt="Runes Icon"
-                src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-                data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-            >{{Boss.Runes[0] | number}}<!--
+			{% if Boss.Runes[0] > 0 %}
+				<img
+					title="Runes Icon"
+					alt="Runes Icon"
+					src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+					data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
+				>{{Boss.Runes[0] | number}}<!--
+			-->{% endif %}<!--
 			-->{% for drop in Boss.Drops %}<!--
-				-->, <a
+				-->{% unless forloop.first and Boss.Runes[0] == 0 %},{% endunless %}
+				<a
 					class="wiki_link"
 					href="/{{drop | noXCount | spaceToPlus}}"
 				>{{drop | noXCount}}</a><!--

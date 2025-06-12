@@ -1,5 +1,5 @@
 <h3 class="bonfire">
-	Elden Ring {{Boss.Name}}
+	Elden Ring{% if Nightreign %} Nightreign{% endif %} {{Boss.Name}}
 	{% if Boss.IsBoss %}Boss{% endif %}
 	{% if Display == 'OneEnemyOfMany' %}({{Boss.Location}}){% endif %}
 </h3>
@@ -7,7 +7,19 @@
 <ul>
 	<li>
 		{% if Boss.IsBoss %}
-			This is {% unless Boss.Optional %}not{% endunless %} an optional boss
+			{% if Nightreign %}
+				This is {% if Boss.Nightlord %}the nightlord{% else %}a boss{% endif %} encountered
+				during the
+				{% for expedition in Boss.Expeditions %}
+					{% if forloop.last and Boss.Expeditions.size > 1 %}and{% endif %}
+					<a class="wiki_link" href="/{{ expedition | slugify }}"><!--
+					-->{{ expedition }}<!--
+					--></a>{% unless forloop.last %},{% endunless %}
+				{% endfor %}
+				expedition{% if Boss.Expeditions.size > 1 %}s{% endif %}
+			{% else %}
+				This is {% unless Boss.Optional %}not{% endunless %} an optional boss
+			{% endif %}
 		{% else %}
 			This enemy does not have a boss bar, but it will not respawn when killed
 		{% endif %}
@@ -18,31 +30,39 @@
 			equipped items
 		</li>
 	{% endif %}
-	<li>
-		Closest Site of Grace:
-		<strong>{{Boss.ClosestGrace}}</strong>
-	</li>
-	<li>
-		Multiplayer is {% unless Boss.MultiplayerAllowed %}not{% endunless %} allowed for this
-		{% if Boss.IsBoss %}boss{% else %}enemy{% endif %}
-	</li>
-	<li>
-		You
-		{% if Boss.SummonsAllowed %}can{% else %}<strong>cannot</strong>{% endif %}
-		summon
-		<a
-			class="wiki_link"
-			href="https://eldenring.wiki.fextralife.com/Spirit+Ashes"
-		>Spirit Ashes</a>
-		for this {% if Boss.IsBoss %}boss{% else %}enemy{% endif %}
-	</li>
-	{% if Boss.SummonableNPCs.size > 0 %}
+	{% if EldenRing %}
 		<li>
-			<a class="wiki_link" href="/NPC+Summons">NPC Summons</a>:
-			{% for npc in Boss.SummonableNPCs %}<!--
-				-->{% unless forloop.first %}, {% endunless %}
-				<a href="{{npc | spaceToPlus}}">{{npc}}</a><!--
-			-->{% endfor %}
+			Closest Site of Grace:
+			<strong>{{Boss.ClosestGrace}}</strong>
+		</li>
+		<li>
+			Multiplayer is {% unless Boss.MultiplayerAllowed %}not{% endunless %} allowed for this
+			{% if Boss.IsBoss %}boss{% else %}enemy{% endif %}
+		</li>
+		<li>
+			You
+			{% if Boss.SummonsAllowed %}can{% else %}<strong>cannot</strong>{% endif %}
+			summon
+			<a
+				class="wiki_link"
+				href="https://eldenring.wiki.fextralife.com/Spirit+Ashes"
+			>Spirit Ashes</a>
+			for this {% if Boss.IsBoss %}boss{% else %}enemy{% endif %}
+		</li>
+		{% if Boss.SummonableNPCs.size > 0 %}
+			<li>
+				<a class="wiki_link" href="/NPC+Summons">NPC Summons</a>:
+				{% for npc in Boss.SummonableNPCs %}<!--
+					-->{% unless forloop.first %}, {% endunless %}
+					<a href="{{npc | spaceToPlus}}">{{npc}}</a><!--
+				-->{% endfor %}
+			</li>
+		{% endif %}
+	{% endif %}
+	{% if Boss.FirstAppearance %}
+		<li>
+			This boss first appeared in
+			<a href="{{ Boss.FirstAppearance.Href }}">{{ Boss.FirstAppearance.Name }}</a>
 		</li>
 	{% endif %}
 </ul>

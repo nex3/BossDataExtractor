@@ -2,7 +2,7 @@
 
 public partial class Boss
 {
-    public static readonly List<Boss> KnownBosses = [
+    public static readonly List<Boss> KnownERBosses = [
         new Boss(
             47601050, "Fire Giant",
             gameAreaID: 1052520800,
@@ -651,5 +651,20 @@ public partial class Boss
             summonableNPCs: ["Thiollier", "Sir Ansbach", "Sanguine Noble Nalaan"],
             drops: ["Leda's Sword"]
         )
+    ];
+
+
+    public static readonly List<Boss> KnownNRBosses = [
+        new Boss(
+            75000000, "Gladius, Beast of Night",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/gladius-beast-of-night-nightlord-elden-ring-nightreign-wiki-guide.png",
+            drops: ["Old Pocketwatch", "Night of the Beast", "Relics"],
+            strongerVS: [DamageType.Fire],
+            weakerVS: [
+                DamageType.Holy, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Sleep
+            ],
+            nightlord: true,
+            expeditions: ["Tricephalos"]
+        ),
     ];
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BossDataExtractor", "BossDataExtractor.csproj", "{3E675A0A-1973-4DF2-AA6E-73890F1B8241}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoulsFormats", "..\SoulsFormats\SoulsFormats\SoulsFormats.csproj", "{8A43A86B-3A3B-4DFA-9E8E-5708A2E4C7C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoulsFormats", "..\SoulsFormats\SoulsFormats\Andre.SoulsFormats.csproj", "{8A43A86B-3A3B-4DFA-9E8E-5708A2E4C7C2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3E675A0A-1973-4DF2-AA6E-73890F1B8241} = {3E675A0A-1973-4DF2-AA6E-73890F1B8241}
 	EndProjectSection

@@ -1,13 +1,17 @@
-﻿public class IconLink
+﻿public class IconLink : IComparable<IconLink>
 {
-    public static readonly IconLink Runes = new IconLink(
+    public static readonly IconLink Runes = new(
+        1000,
         "Runes",
         "/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png",
         "/Runes"
     );
 
-    protected IconLink(string name, string src, string href, string? color = null)
+    private readonly int order;
+
+    protected IconLink(int order, string name, string src, string href, string? color = null)
     {
+        this.order = order;
         Name = name;
         Src = src;
         Href = href;
@@ -18,6 +22,10 @@
     public string Src { get; init; }
     public string Href { get; init; }
     public string? Color { get; init; }
+    public int CompareTo(IconLink? other)
+    {
+        return order.CompareTo(other?.order ?? -1);
+    }
 
     public override string ToString()
     {

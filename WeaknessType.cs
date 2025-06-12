@@ -1,43 +1,34 @@
-﻿public class WeaknessType : IconLink, IComparable<WeaknessType>
+﻿public class WeaknessType : IconLink
 {
     public static readonly WeaknessType Gravity = new WeaknessType(
+        500,
         "Gravity",
-        "/file/Elden-Ring/gravity-icon-40px.png",
-        "/Special+Weaknesses#gravity",
-        1
+        "https://eldenring.wiki.fextralife.com/file/Elden-Ring/gravity-icon-40px.png",
+        "https://eldenring.wiki.fextralife.com/Special+Weaknesses#gravity"
     );
 
     public static readonly WeaknessType Undead = new WeaknessType(
+        501,
         "Undead",
-        "/file/Elden-Ring/undead-icon-40px.png",
-        "/Special+Weaknesses#undead",
-        2
+        "https://eldenring.wiki.fextralife.com/file/Elden-Ring/undead-icon-40px.png",
+        "https://eldenring.wiki.fextralife.com/Special+Weaknesses#undead"
     );
 
     public static readonly WeaknessType Dragon = new WeaknessType(
+        502,
         "Dragon",
-        "/file/Elden-Ring/dragon-icon-40px.png",
-        "/Special+Weaknesses#dragon",
-        3
+        "https://eldenring.wiki.fextralife.com/file/Elden-Ring/dragon-icon-40px.png",
+        "https://eldenring.wiki.fextralife.com/Special+Weaknesses#dragon"
     );
 
     public static readonly WeaknessType AncientDragon = new WeaknessType(
+        503,
         "Ancient Dragon",
-        "/file/Elden-Ring/ancient-dragon-icon-40px.png",
-        "/Special+Weaknesses#ancient-dragon",
-        4
+        "https://eldenring.wiki.fextralife.com/file/Elden-Ring/ancient-dragon-icon-40px.png",
+        "https://eldenring.wiki.fextralife.com/Special+Weaknesses#ancient-dragon"
     );
 
-    private WeaknessType(string name, string src, string href, int order) : base(name, src, href) {
-        this.order = order;
-    }
-
-    private int order;
-
-    public int CompareTo(WeaknessType? other)
-    {
-        return order.CompareTo(other?.order ?? -1);
-    }
+    private WeaknessType(int order, string name, string src, string href) : base(order, name, src, href) {}
 
     public override string ToString()
     {

@@ -5,7 +5,8 @@ public partial class Boss
     public Boss(
         int id,
         string name,
-        string location,
+        string? location = null,
+        string? imageUrl = null,
         IEnumerable<int>? additionalPhases = null,
         bool boss = true,
         bool npc = false,
@@ -21,13 +22,21 @@ public partial class Boss
         bool critable = true,
         IEnumerable<DamageType>? damageTypes = null,
         IEnumerable<StatusType>? statusTypes = null,
+        IEnumerable<IconLink>? strongerVS = null,
+        IEnumerable<IconLink>? weakerVS = null,
         IEnumerable<string>? drops = null,
         string? weakPoint = null,
-        IEnumerable<string>? summonableNPCs = null
+        IEnumerable<string>? summonableNPCs = null,
+
+        // Nightreign-specific attributes
+        bool nightlord = false,
+        IEnumerable<string>? expeditions = null,
+        Game? firstAppearance = null
     ) {
         ID = id;
         Name = name;
         Location = location;
+        ImageUrl = imageUrl;
         ClosestGrace = closestGrace ?? location;
         IsBoss = boss;
         IsNPC = npc;
@@ -38,6 +47,8 @@ public partial class Boss
         CharaInitID = charaInitID;
         if (damageTypes != null) DamageTypes.AddAll(damageTypes);
         if (statusTypes != null) StatusTypes.AddAll(statusTypes);
+        if (strongerVS != null) StrongerVS.AddAll(strongerVS);
+        if (weakerVS != null) WeakerVS.AddAll(weakerVS);
         WeakPoint = weakPoint;
         if (drops != null) Drops.AddAll(drops);
         Backstabbable = backstabbable || npc;
@@ -45,6 +56,9 @@ public partial class Boss
         ParriesPerCrit = parriesPerCrit;
         Critable = critable && (!npc || parriable);
         if (summonableNPCs != null) SummonableNPCs.AddAll(summonableNPCs);
+        Nightlord = nightlord;
+        if (expeditions != null) Expeditions.AddAll(expeditions);
+        if (firstAppearance != null) FirstAppearance = firstAppearance;
 
         if (additionalPhases != null)
         {
@@ -58,8 +72,8 @@ public partial class Boss
     public int ID { get; init; }
     public List<Boss> AdditionalPhases { get; } = [];
     public string Name { get; init; }
-    public string Location { get; init; }
-    public string ClosestGrace { get; init; }
+    public string? Location { get; init; }
+    public string? ClosestGrace { get; init; }
     public bool IsBoss { get; }
     public bool IsNPC { get; }
     public bool Optional { get; init; }
@@ -74,6 +88,8 @@ public partial class Boss
     public bool Critable { get; init; }
     public SortedSet<DamageType> DamageTypes { get; } = [];
     public SortedSet<StatusType> StatusTypes { get; } = [];
+    public SortedSet<IconLink> StrongerVS { get; } = [];
+    public SortedSet<IconLink> WeakerVS { get; } = [];
     public SortedDictionary<DamageType, int> Negations { get; } = [];
     public List<List<int>> HP { get; } = [];
     public List<List<int>> DlcPlusHP { get; } = [];
@@ -85,6 +101,11 @@ public partial class Boss
     public string? WeakPoint { get; }
     public int? WeakPointExtraDamage { get; set; }
     public List<string> SummonableNPCs { get; } = [];
+    public (float, float) MultiplayerHPScaling { get; set; } = (1, 1);
+    public bool Nightlord { get; init; }
+    public string? ImageUrl { get; init; }
+    public List<string> Expeditions { get; } = [];
+    public Game FirstAppearance { get; init; }
     public List<(DamageType, int)> TypeNegationPairs
     {
         get { return Negations.Select((pair) => (pair.Key, pair.Value)).ToList(); }
@@ -126,6 +147,23 @@ public partial class Boss
         }
     }
 
+    public List<List<int>> DuoHP
+    {
+        get
+        {
+            var (scaling, _) = MultiplayerHPScaling;
+            return HPWithScaling(scaling);
+        }
+    }
+    public List<List<int>> TrioHP
+    {
+        get
+        {
+            var (_, scaling) = MultiplayerHPScaling;
+            return HPWithScaling(scaling);
+        }
+    }
+
     public bool HasMultipleResistanceProcs
     {
         get {
@@ -135,6 +173,14 @@ public partial class Boss
     public bool HasNewGameResistances
     {
         get { return Resistance.Values.Any((ngs) => (ngs?.Count ?? 0) > 1); }
+    }
+
+    private List<List<int>> HPWithScaling(float scaling)
+    {
+        return [..(
+            from hps in HP
+            select (from hp in hps select (int)Math.Round(hp * scaling)).ToList()
+        )];
     }
 
     public override string ToString()
