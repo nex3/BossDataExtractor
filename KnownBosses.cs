@@ -663,9 +663,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/gladius-beast-of-night-nightlord-elden-ring-nightreign-wiki-guide.png",
             drops: ["Old Pocketwatch", "Night of the Beast", "Relics"],
             strongerVS: [DamageType.Fire],
-            weakerVS: [
-                DamageType.Holy, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Sleep
-            ],
+            weakerVS: [DamageType.Holy, StatusType.Sleep],
             nightlord: true,
             expeditions: ["Tricephalos"]
         ),
