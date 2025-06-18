@@ -659,13 +659,99 @@ public partial class Boss
 
     public static readonly List<Boss> KnownNRBosses = [
         new Boss(
-            75000000, "Gladius, Beast of Night",
+            75000020, "Gladius, Beast of Night",
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/gladius-beast-of-night-nightlord-elden-ring-nightreign-wiki-guide.png",
             drops: ["Old Pocketwatch", "Night of the Beast", "Relics"],
             strongerVS: [DamageType.Fire],
             weakerVS: [DamageType.Holy, StatusType.Sleep],
             nightlord: true,
             expeditions: ["Tricephalos"]
+        ),
+        new Boss(
+            75100020, "Adel, Baron of Night",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/adel-baron-of-night-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
+            drops: ["Night of the Baron", "Relics"],
+            strongerVS: [DamageType.Fire],
+            weakerVS: [StatusType.Poison, StatusType.ScarletRot, StatusType.Frostbite, StatusType.Sleep],
+            nightlord: true,
+            expeditions: ["Gaping Jaw"]
+        ),
+        new Boss(
+            76000010, "Fulghor, Champion of Nightglow",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/fulghor-champion-of-nightglow-darkdrift-knight-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
+            drops: ["Night of the Champion", "Relics"],
+            strongerVS: [DamageType.Holy],
+            weakerVS: [DamageType.Lightning],
+            nightlord: true,
+            expeditions: ["Darkdrift Knight"]
+        ),
+        new Boss(
+            75200020, "Gnoster, Wisdom of Night (Moth)",
+            drops: ["Night of the Wise", "Relics"],
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Fire, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite],
+            statusTypes: [StatusType.Poison],
+            nightlord: true,
+            expeditions: ["Sentient Pest"]
+        ),
+        new Boss(
+            75300010, "Gnoster, Wisdom of Night (Scorpion)",
+            drops: ["Night of the Wise", "Relics"],
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Fire, DamageType.Strike, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite, StatusType.Sleep],
+            nightlord: true,
+            expeditions: ["Sentient Pest"]
+        ),
+        new Boss(
+            75200010, "Sentient Pest",
+            location: "Random Encounter",
+            drops: ["Integration of Intelligence"],
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Fire, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite],
+            critable: false
+        ),
+        new Boss(
+            75400020, "Maris, Fathom of Night",
+            drops: ["Night of the Fathom", "Relics"],
+            strongerVS: [DamageType.Fire],
+            weakerVS: [DamageType.Lightning],
+            statusTypes: [StatusType.Sleep],
+            nightlord: true,
+            expeditions: ["Augur"]
+        ),
+        new Boss(
+            75600020, "Libra, Creature of Night",
+            drops: ["Night of the Demon", "Relics"],
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Holy, StatusType.Poison, StatusType.ScarletRot, StatusType.Madness],
+            statusTypes: [StatusType.Madness],
+            nightlord: true,
+            expeditions: ["Equilibrious Beast"]
+        ),
+        new Boss(
+            49000010, "Caligo, Miasma of Night",
+            drops: ["Night of the Miasma", "Relics"],
+            strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Holy],
+            weakerVS: [DamageType.Fire],
+            statusTypes: [StatusType.Frostbite],
+            nightlord: true,
+            expeditions: ["Fissure in the Fog"]
+        ),
+        new Boss(
+            75800010, "The Shape of Night",
+            strongerVS: [DamageType.Strike],
+            weakerVS: [DamageType.Holy],
+            nightlord: true,
+            expeditions: ["Night Aspect"]
+        ),
+        new Boss(
+            75802010, "Heolstor the Nightlord",
+            drops: ["Night of the Lord", "Primordial Nightlord's Rune", "Relics"],
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Holy, DamageType.Lightning],
+            statusTypes: [StatusType.BloodLoss, StatusType.Sleep, StatusType.DeathBlight, StatusType.Poison, StatusType.ScarletRot, StatusType.Madness],
+            nightlord: true,
+            expeditions: ["Night Aspect"]
         ),
     ];
 }

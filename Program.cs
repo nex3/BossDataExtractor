@@ -19,7 +19,7 @@ var gamePath = eldenRing
 var gameAbbrev = eldenRing ? "ER" : "NR";
 var smithboxAssetPath = "F:\\Mods\\Smithbox-2-0-5-10-06-2025\\Assets";
 
-var bossName = "Gladius, Beast of Night";
+var bossName = "The Shape of Night";
 int? bossID = null;
 var displayType = Display.Infobox;
 var minify = true;
@@ -568,22 +568,29 @@ void loadBossData(Boss boss)
         }
     }
 
-    var ngRunes = boss.GameAreaID == null
-        ? (uint)bossParams["getSoul"].Value
-        : (uint)gameAreaParam[(int)boss.GameAreaID]["bonusSoul_single"].Value;
-    boss.Runes.Add((int)ngRunes);
-
-    if (ngpScaling is not null)
+    if (!boss.Nightlord)
     {
-        var ngpRunes = ngRunes * (float)ngpScaling["haveSoulRate"].Value;
-        boss.Runes.Add((int)Math.Round(ngpRunes));
-        for (var i = 2; i < 8; i++)
+        var ngRunes = boss.GameAreaID == null
+            ? (uint)bossParams["getSoul"].Value
+            : (uint)gameAreaParam[(int)boss.GameAreaID]["bonusSoul_single"].Value;
+        boss.Runes.Add((int)ngRunes);
+
+        if (ngpScaling is not null)
         {
-            boss.Runes.Add((int)Math.Round(ngpRunes * (float)clearCountParams[i]["SoulRate"].Value));
+            var ngpRunes = ngRunes * (float)ngpScaling["haveSoulRate"].Value;
+            boss.Runes.Add((int)Math.Round(ngpRunes));
+            for (var i = 2; i < 8; i++)
+            {
+                boss.Runes.Add((int)Math.Round(ngpRunes * (float)clearCountParams[i]["SoulRate"].Value));
+            }
         }
     }
+    else
+    {
+        boss.Runes.Add(0);
+    }
 
-    List<PARAM.Row> allSpEffects = [];
+        List<PARAM.Row> allSpEffects = [];
     for (var i = 0; i <= 31; i++)
     {
         var spEffectID = (int)bossParams[$"spEffectID{i}"].Value;

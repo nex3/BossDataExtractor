@@ -8,15 +8,19 @@
 	<li>
 		{% if Boss.IsBoss %}
 			{% if Nightreign %}
-				This is {% if Boss.Nightlord %}the nightlord{% else %}a boss{% endif %} encountered
-				during the
-				{% for expedition in Boss.Expeditions %}
-					{% if forloop.last and Boss.Expeditions.size > 1 %}and{% endif %}
-					<a class="wiki_link" href="/{{ expedition | slugify }}"><!--
-					-->{{ expedition }}<!--
-					--></a>{% unless forloop.last %},{% endunless %}
-				{% endfor %}
-				expedition{% if Boss.Expeditions.size > 1 %}s{% endif %}
+				{% if Boss.Expeditions.size > 0 %}
+					This is {% if Boss.Nightlord %}the nightlord{% else %}a boss{% endif %} encountered
+					during the
+					{% for expedition in Boss.Expeditions %}
+						{% if forloop.last and Boss.Expeditions.size > 1 %}and{% endif %}
+						<a class="wiki_link" href="/{{ expedition | slugify }}"><!--
+						-->{{ expedition }}<!--
+						--></a>{% unless forloop.last %},{% endunless %}
+					{% endfor %}
+					expedition{% if Boss.Expeditions.size > 1 %}s{% endif %}
+				{% else %}
+					This boss may be encountered during any expedition
+				{% endif %}
 			{% else %}
 				This is {% unless Boss.Optional %}not{% endunless %} an optional boss
 			{% endif %}
