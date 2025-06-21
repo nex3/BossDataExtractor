@@ -677,6 +677,15 @@ public partial class Boss
             expeditions: ["Gaping Jaw"]
         ),
         new Boss(
+            75110010, "Adel, Baron of Night (Everdark Sovereign)",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/adel-baron-of-night-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
+            drops: ["Relics", "Sovereign Sigils"],
+            strongerVS: [DamageType.Fire],
+            weakerVS: [StatusType.Poison, StatusType.ScarletRot, StatusType.Frostbite, StatusType.Sleep],
+            nightlord: true,
+            expeditions: ["Gaping Jaw Everdark Sovereign"]
+        ),
+        new Boss(
             76000010, "Fulghor, Champion of Nightglow",
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/fulghor-champion-of-nightglow-darkdrift-knight-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
             drops: ["Night of the Champion", "Relics"],
@@ -752,6 +761,29 @@ public partial class Boss
             statusTypes: [StatusType.BloodLoss, StatusType.Sleep, StatusType.DeathBlight, StatusType.Poison, StatusType.ScarletRot, StatusType.Madness],
             nightlord: true,
             expeditions: ["Night Aspect"]
+        ),
+        new Boss(
+            21300520, "Fell Omen",
+            location: "Tutorial",
+            drops: ["Fell Omen Fetish"],
+            spEffectSetIDs: [99001],
+            firstAppearance: Game.ER
+        ),
+        new Boss(
+            21300010, "Fell Omen",
+            location: "Event",
+            drops: ["Traces of Grace-Given Lord"],
+            spEffectSetIDs: [13910],
+            firstAppearance: Game.ER
+        ),
+        new Boss(
+            21300510, "Fell Omen",
+            location: "Night Boss",
+            drops: ["Dormant Power"],
+            spEffectSetIDs: [15000],
+            nightBoss: NightBossState.Day2,
+            expeditions: ["Tricephalos"],
+            firstAppearance: Game.ER
         ),
     ];
 }

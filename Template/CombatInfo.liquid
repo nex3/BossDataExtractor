@@ -187,22 +187,24 @@
 	{% if UniqueFight %}
         <li>
             Drops
-			{% if Boss.Runes[0] > 0 %}
-				<img
-					title="Runes Icon"
-					alt="Runes Icon"
-					src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-					data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-				>{{Boss.Runes[0] | number}}<!--
-			-->{% endif %}<!--
-			-->{% for drop in Boss.Drops %}<!--
-				-->{% unless forloop.first and Boss.Runes[0] == 0 %},{% endunless %}
+			{% if Nightreign %}
+				{% if Boss.SoloRunes > 0 %}
+					{% include 'Runes', runes: Boss.SoloRunes %} <span style="color: #b4b2b0;">solo</span>,
+					{% include 'Runes', runes: Boss.TrioRunes %} <span style="color: #b4b2b0;">trio</span>
+				{%- endif -%}
+			{%- else -%}
+				{%- include 'Runes', runes: Boss.Runes[0] -%}
+			{%- endif -%}
+			{%- for drop in Boss.Drops -%}
+				{%- unless forloop.first and Boss.Runes[0] == 0 -%}
+				  {%- if Nightreign -%};{%- else -%},{%- endif -%}
+				{%- endunless -%}
 				<a
 					class="wiki_link"
 					href="/{{drop | noXCount | spaceToPlus}}"
-				>{{drop | noXCount}}</a><!--
-				-->{{drop | onlyXCount}}<!--
-			-->{% endfor %}
+				>{{drop | noXCount}}</a>
+				{{- drop | onlyXCount -}}
+			{%- endfor -%}
         </li>
 	{% endif %}
 </ul>

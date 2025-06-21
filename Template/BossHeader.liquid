@@ -9,8 +9,15 @@
 		{% if Boss.IsBoss %}
 			{% if Nightreign %}
 				{% if Boss.Expeditions.size > 0 %}
-					This is {% if Boss.Nightlord %}the nightlord{% else %}a boss{% endif %} encountered
-					during the
+					This is
+					{% if Boss.Nightlord %}
+						the nightlord
+					{% else %}
+						a {% if Boss.IsNightBoss %}night {% endif %}boss
+					{% endif %}
+					encountered during
+					{% if Boss.IsNightBoss %}day {{ Boss.NightBossDayNumber }} of{% endif %}
+					the
 					{% for expedition in Boss.Expeditions %}
 						{% if forloop.last and Boss.Expeditions.size > 1 %}and{% endif %}
 						<a class="wiki_link" href="/{{ expedition | slugify }}"><!--

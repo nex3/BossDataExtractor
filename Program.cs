@@ -1,14 +1,15 @@
 ﻿using Fluid;
-using SoulsFormats;
-using System.Reflection;
-using Microsoft.Extensions.FileProviders;
 using Fluid.Values;
-using WebMarkupMin.Core;
+using Microsoft.Extensions.FileProviders;
+using SoulsFormats;
 using System.IO;
-using System.Windows;
-using System.Text.RegularExpressions;
+using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Windows;
+using WebMarkupMin.Core;
 
 // Elden Ring or Nightreign
 var eldenRing = false;
@@ -19,9 +20,9 @@ var gamePath = eldenRing
 var gameAbbrev = eldenRing ? "ER" : "NR";
 var smithboxAssetPath = "F:\\Mods\\Smithbox-2-0-5-10-06-2025\\Assets";
 
-var bossName = "The Shape of Night";
-int? bossID = null;
-var displayType = Display.Infobox;
+var bossName = "Fell Omen";
+int? bossID = 21300510;
+var displayType = Display.OneEnemyOfMany;
 var minify = true;
 
 var knownBosses = eldenRing ? Boss.KnownERBosses : Boss.KnownNRBosses;
@@ -42,8 +43,9 @@ if (boss == null)
 
 var paramsWeCareAbout = new HashSet<string>([
     "NpcParam", "GameAreaParam", "MultiPlayCorrectionParam", "ResistCorrectParam", "SpEffectParam",
-    "AtkParam_Npc", "ClearCountCorrectParam", "CharaInitParam", "EquipParamProtector",
-    "EquipParamWeapon", "EquipParamCustomWeapon", "EquipParamGem", "EquipParamAccessory", "Magic"
+    "SpEffectSetParam", "AtkParam_Npc", "ClearCountCorrectParam", "CharaInitParam",
+    "EquipParamProtector", "EquipParamWeapon", "EquipParamCustomWeapon", "EquipParamGem",
+    "EquipParamAccessory", "Magic"
 ]);
 
 Console.WriteLine("Loading params...");
@@ -99,6 +101,7 @@ Console.WriteLine("Params loaded!");
 
 var npcs = paramDict["NpcParam"];
 var spEffects = paramDict["SpEffectParam"];
+var spEffectSets = paramDict["SpEffectSetParam"];
 var attacks = paramDict["AtkParam_Npc"];
 var clearCountParams = paramDict["ClearCountCorrectParam"];
 var gameAreaParam = eldenRing ? paramDict["GameAreaParam"] : new PARAM();
@@ -201,7 +204,21 @@ void loadBossData(Boss boss)
 {
     var bossParams = npcs[boss.ID];
 
-    var ngScaling = spEffects[(int)bossParams["spEffectID3"].Value];
+    var ngScaling = new List<PARAM.Row>();
+    for (var i = 0; i < 31; i++)
+    {
+        var id = (int)bossParams["spEffectID" + i].Value;
+        if (id > 0) ngScaling.Add(spEffects[id]);
+    }
+    foreach (var setID in boss.SPEffectSetIDs)
+    {
+        var row = spEffectSets[setID];
+        for (var i = 1; i <= 4; i++)
+        {
+            var id = (int)row["spEffectId" + i].Value;
+            if (id > 0) ngScaling.Add(spEffects[id]);
+        }
+    }
     var ngpScaling = spEffects[(int)bossParams["GameClearSpEffectID"].Value];
     var dlcpId = (int?)bossParams["dlcGameClearSpEffectID"]?.Value ?? -1;
     var dlcpScaling = dlcpId == -1 ? null : spEffects[dlcpId];
@@ -451,7 +468,10 @@ void loadBossData(Boss boss)
 
         List<int> ngDefenses(double statDefense)
         {
-            var ngDefense = (baseDefense + statDefense) * (float)ngScaling["physicsDiffenceRate"].Value;
+            var ngDefense = ngScaling.Aggregate(
+                baseDefense + statDefense,
+                (value, row) => value * (float)row["physicsDiffenceRate"].Value
+            );
             var ngpDefense = ngDefense * (float)ngpScaling["physicsDiffenceRate"].Value;
             List<int> defense = [];
             defense.Add((int)Math.Floor(ngDefense));
@@ -521,7 +541,10 @@ void loadBossData(Boss boss)
         );
     }
 
-    var ngHP = baseHP * (float)ngScaling["maxHpRate"].Value;
+    var ngHP = ngScaling.Aggregate(
+        (float)baseHP,
+        (value, row) => value * (float)row["maxHpRate"].Value
+    );
     boss.HP.Add([(int)Math.Floor(ngHP)]);
 
     float? ngpHP = ngpScaling == null ? null : ngHP * (float)ngpScaling["maxHpRate"].Value;
@@ -553,7 +576,10 @@ void loadBossData(Boss boss)
     // all damage types. Phil's data doesn't have defense as multiplicative between NG and NG+, but
     // that's inconsistent with other stats and leads to a bunch of bosses having less defense in NG+
     // so I think it's wrong.
-    var ngDefense = 100 * (float)ngScaling["physicsDiffenceRate"].Value;
+    var ngDefense = ngScaling.Aggregate(
+        100.0,
+        (value, row) => value * (float)row["physicsDiffenceRate"].Value
+    );
     boss.Defense.Add((int)Math.Floor(ngDefense));
 
     if (ngpScaling is not null)
@@ -573,6 +599,15 @@ void loadBossData(Boss boss)
         var ngRunes = boss.GameAreaID == null
             ? (uint)bossParams["getSoul"].Value
             : (uint)gameAreaParam[(int)boss.GameAreaID]["bonusSoul_single"].Value;
+        ngRunes = (uint)Math.Round(ngScaling.Aggregate(
+            (float)ngRunes,
+            (value, row) => value * (float)row["soulRate"].Value
+        ));
+        ngRunes = ngScaling.Aggregate(
+            ngRunes,
+            (value, row) => value + (uint)(int)row["soul"].Value
+        );
+
         boss.Runes.Add((int)ngRunes);
 
         if (ngpScaling is not null)
@@ -614,7 +649,10 @@ void loadBossData(Boss boss)
         }
 
         var correct = resistCorrectParam[(int)bossParams[correctCell].Value];
-        var ngProc1 = baseValue * (float)ngScaling[rateCell].Value;
+        var ngProc1 = ngScaling.Aggregate(
+            (float)baseValue,
+            (value, row) => value * (float)row[rateCell].Value
+        );
         List<float> firstProcs = [ngProc1];
 
         if (ngpScaling is not null)

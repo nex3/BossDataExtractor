@@ -46,22 +46,22 @@
 					<tr>
 						<td>Drops</td>
 						<td>
-							{% if Boss.Runes[0] > 0 %}
-								<img
-									title="Runes Icon"
-									alt="Runes Icon"
-									src="https://eldenring.wiki.fextralife.com/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-									data-mce-src="/file/Elden-Ring/runes-currency-elden-ring-wiki-guide-18.png"
-								>{{Boss.Runes[0] | number}}<!--
-							-->{% endif %}<!--
-							-->{% for drop in Boss.Drops %}<!--
-								-->{% unless forloop.first and Boss.Runes[0] == 0 %}<br>{% endunless %}<!--
-								--><a
+							{%- if Nightreign -%}
+							    {%- if Boss.SoloRunes > 0 -%}
+								    {% include 'Runes', runes: Boss.SoloRunes %} <span style="color: #b4b2b0;">solo</span><br>
+									{% include 'Runes', runes: Boss.TrioRunes %} <span style="color: #b4b2b0;">trio</span>
+								{%- endif -%}
+							{%- else -%}
+								{%- include 'Runes', runes: Boss.Runes[0] -%}
+							{%- endif -%}
+							{%- for drop in Boss.Drops -%}
+								{%- unless forloop.first and Boss.Runes[0] == 0 %}<br>{% endunless -%}
+								<a
 									class="wiki_link"
 									href="/{{drop | noXCount | spaceToPlus}}"
-								>{{drop | noXCount}}</a><!--
-								-->{{drop | onlyXCount}}<!--
-							-->{% endfor %}
+								>{{drop | noXCount}}</a>
+								{{- drop | onlyXCount -}}
+							{%- endfor -%}
 						</td>
 					</tr>
 				{% endunless %}
@@ -88,36 +88,38 @@
 						{% endif %}
 					</td>
 				</tr>
-				<tr>
-					<td>
-						Stronger VS
-						<div class="lineleft">
-							{% if Boss.StrongerVS %}
-								{% for type in Boss.StrongerVS %}
-									{% include 'IconLink', type: type %}<!--
-									-->{% unless forloop.last %}<br/>{% endunless %}
-								{% endfor %}
-							{% else %}
-								A<br/>
-								B
-							{% endif %}
-						</div>
-					</td>
-					<td>
-						Weak to
-						<div class="lineleft">
-							{% if Boss.WeakerVS %}
-								{% for type in Boss.WeakerVS %}
-									{% include 'IconLink', type: type %}<!--
-									-->{% unless forloop.last %}<br/>{% endunless %}
-								{% endfor %}
-							{% else %}
-								A<br/>
-								B
-							{% endif %}
-						</div>
-					</td>
-				</tr>
+				{% if Display == 'Infobox' %}
+					<tr>
+						<td>
+							Stronger VS
+							<div class="lineleft">
+								{% if Boss.StrongerVS %}
+									{% for type in Boss.StrongerVS %}
+										{% include 'IconLink', type: type %}<!--
+										-->{% unless forloop.last %}<br/>{% endunless %}
+									{% endfor %}
+								{% else %}
+									A<br/>
+									B
+								{% endif %}
+							</div>
+						</td>
+						<td>
+							Weak to
+							<div class="lineleft">
+								{% if Boss.WeakerVS %}
+									{% for type in Boss.WeakerVS %}
+										{% include 'IconLink', type: type %}<!--
+										-->{% unless forloop.last %}<br/>{% endunless %}
+									{% endfor %}
+								{% else %}
+									A<br/>
+									B
+								{% endif %}
+							</div>
+						</td>
+					</tr>
+				{% endif %}
 				{% if Boss.Nightlord %}
 					<tr><td colspan=2><table style="width: 100%; border: none">
 						<tr style="text-align: center">

@@ -12,6 +12,7 @@ public partial class Boss
         bool npc = false,
         int? gameAreaID = null,
         int? charaInitID = null,
+        IEnumerable<int>? spEffectSetIDs = null,
         string? closestGrace = null,
         bool optional = true,
         bool multiplayerAllowed = true,
@@ -30,6 +31,8 @@ public partial class Boss
 
         // Nightreign-specific attributes
         bool nightlord = false,
+        bool everdarkSovereign = false,
+        NightBossState nightBoss = NightBossState.No,
         IEnumerable<string>? expeditions = null,
         Game? firstAppearance = null
     ) {
@@ -45,6 +48,7 @@ public partial class Boss
         SummonsAllowed = summonsAllowed;
         GameAreaID = gameAreaID;
         CharaInitID = charaInitID;
+        if (spEffectSetIDs != null) SPEffectSetIDs.AddAll(spEffectSetIDs);
         if (damageTypes != null) DamageTypes.AddAll(damageTypes);
         if (statusTypes != null) StatusTypes.AddAll(statusTypes);
         if (strongerVS != null) StrongerVS.AddAll(strongerVS);
@@ -81,6 +85,7 @@ public partial class Boss
     public bool SummonsAllowed { get; init; }
     public int? GameAreaID { get; init; }
     public int? CharaInitID { get; init; }
+    public SortedSet<int> SPEffectSetIDs { get; } = [];
     public int Stance { get; set; }
     public bool Parriable { get; init; }
     public bool Backstabbable { get; init; }
@@ -95,6 +100,10 @@ public partial class Boss
     public List<List<int>> DlcPlusHP { get; } = [];
     public List<int> Defense { get; } = [];
     public List<int> Runes { get; } = [];
+    // Solo Nightreign runs get 12x base runes for unclear reasons
+    public int SoloRunes => Runes[0] * 12;
+    // Trio Nightreign runs get 8x base runes because everyone is wearing pants with a rune buff
+    public int TrioRunes => Runes[0] * 8;
     public List<string> Drops { get; } = [];
     public SortedDictionary<StatusType, List<List<int>>?> Resistance { get; } = [];
     public SortedSet<WeaknessType> Weaknesses { get; } = [];
@@ -103,9 +112,17 @@ public partial class Boss
     public List<string> SummonableNPCs { get; } = [];
     public (float, float) MultiplayerHPScaling { get; set; } = (1, 1);
     public bool Nightlord { get; init; }
+    public NightBossState NightBossState { get; init; }
+    public bool IsNightBoss => NightBossState != NightBossState.No;
+    public int? NightBossDayNumber => NightBossState switch
+    {
+        NightBossState.Day1 => 1,
+        NightBossState.Day2 => 2,
+        _ => null
+    };
     public string? ImageUrl { get; init; }
     public List<string> Expeditions { get; } = [];
-    public Game FirstAppearance { get; init; }
+    public Game? FirstAppearance { get; init; }
     public List<(DamageType, int)> TypeNegationPairs
     {
         get { return Negations.Select((pair) => (pair.Key, pair.Value)).ToList(); }
