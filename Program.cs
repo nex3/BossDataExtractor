@@ -1,4 +1,5 @@
-﻿using Fluid;
+﻿using DotNext.Collections.Generic;
+using Fluid;
 using Fluid.Values;
 using Microsoft.Extensions.FileProviders;
 using SoulsFormats;
@@ -20,8 +21,8 @@ var gamePath = eldenRing
 var gameAbbrev = eldenRing ? "ER" : "NR";
 var smithboxAssetPath = "F:\\Mods\\Smithbox-2-0-5-10-06-2025\\Assets";
 
-var bossName = "Fell Omen";
-int? bossID = 21300510;
+var bossName = "Night's Cavalry";
+int? bossID = 35700110;
 var displayType = Display.OneEnemyOfMany;
 var minify = true;
 
@@ -205,11 +206,12 @@ void loadBossData(Boss boss)
     var bossParams = npcs[boss.ID];
 
     var ngScaling = new List<PARAM.Row>();
-    for (var i = 0; i < 31; i++)
+    for (var i = 0; i <= 31; i++)
     {
         var id = (int)bossParams["spEffectID" + i].Value;
         if (id > 0) ngScaling.Add(spEffects[id]);
     }
+    ngScaling.AddAll(boss.SPEffectIDs.Select(id => spEffects[id]));
     foreach (var setID in boss.SPEffectSetIDs)
     {
         var row = spEffectSets[setID];
@@ -728,10 +730,10 @@ void loadBossData(Boss boss)
         loadBossData(phase);
         if (boss.HP[0][0] != phase.HP[0][0])
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < Math.Min(8, phase.HP.Count); i++)
             {
                 boss.HP[i].Add(phase.HP[i][0]);
-                if (i < 7) boss.DlcPlusHP[i].Add(phase.DlcPlusHP[i][0]);
+                if (i < phase.DlcPlusHP.Count) boss.DlcPlusHP[i].Add(phase.DlcPlusHP[i][0]);
             }
         }
     }

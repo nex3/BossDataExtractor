@@ -23,7 +23,7 @@
 			  trio
 			{% endif %}
 		</li>
-		{% unless Boss.IsNPC %}
+		{% unless Boss.IsNPC or Nightreign %}
 			<li>
 				<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Calculating+Damage">Defense</a>:
 				<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
@@ -189,8 +189,8 @@
             Drops
 			{% if Nightreign %}
 				{% if Boss.SoloRunes > 0 %}
-					{% include 'Runes', runes: Boss.SoloRunes %} <span style="color: #b4b2b0;">solo</span>,
-					{% include 'Runes', runes: Boss.TrioRunes %} <span style="color: #b4b2b0;">trio</span>
+					{% include 'Runes', runes: Boss.SoloRunes %} solo,
+					{% include 'Runes', runes: Boss.TrioRunes %} trio
 				{%- endif -%}
 			{%- else -%}
 				{%- include 'Runes', runes: Boss.Runes[0] -%}
@@ -198,7 +198,7 @@
 			{%- for drop in Boss.Drops -%}
 				{%- unless forloop.first and Boss.Runes[0] == 0 -%}
 				  {%- if Nightreign -%};{%- else -%},{%- endif -%}
-				{%- endunless -%}
+				{%- endunless %}
 				<a
 					class="wiki_link"
 					href="/{{drop | noXCount | spaceToPlus}}"

@@ -15,14 +15,18 @@
 					{% else %}
 						a {% if Boss.IsNightBoss %}night {% endif %}boss
 					{% endif %}
-					encountered during
-					{% if Boss.IsNightBoss %}day {{ Boss.NightBossDayNumber }} of{% endif %}
+					encountered
+					{% if Boss.IsNightBoss %}
+					    after day {{ Boss.NightBossDayNumber }} of
+					{% else %}
+					    during
+					{% endif %}
 					the
 					{% for expedition in Boss.Expeditions %}
 						{% if forloop.last and Boss.Expeditions.size > 1 %}and{% endif %}
 						<a class="wiki_link" href="/{{ expedition | slugify }}"><!--
 						-->{{ expedition }}<!--
-						--></a>{% unless forloop.last %},{% endunless %}
+						--></a>{% unless forloop.last or Boss.Expeditions.size == 2 %},{% endunless %}
 					{% endfor %}
 					expedition{% if Boss.Expeditions.size > 1 %}s{% endif %}
 				{% else %}
@@ -63,17 +67,30 @@
 		{% if Boss.SummonableNPCs.size > 0 %}
 			<li>
 				<a class="wiki_link" href="/NPC+Summons">NPC Summons</a>:
-				{% for npc in Boss.SummonableNPCs %}<!--
-					-->{% unless forloop.first %}, {% endunless %}
-					<a href="{{npc | spaceToPlus}}">{{npc}}</a><!--
-				-->{% endfor %}
+				{% for npc in Boss.SummonableNPCs -%}
+					{%- unless forloop.first %}, {% endunless %}
+					<a class="wiki_link" href="{{npc | spaceToPlus}}">{{npc}}</a>
+				{%- endfor %}
 			</li>
 		{% endif %}
+	{% endif %}
+	{% if Boss.Formidable %}
+	    <li>
+			This is a Formidable Great Enemy, and will be marked on the map with a
+			<img
+				style="width: 25px;"
+				title="elden ring nightreign formidable great enemy icon"
+				src="/file/Elden-Ring-Nightreign/formidable-enemy.png"
+				alt="formidable great enemy">
+			icon at the beginning of day 2.
+		</li>
 	{% endif %}
 	{% if Boss.FirstAppearance %}
 		<li>
 			This boss first appeared in
-			<a href="{{ Boss.FirstAppearance.Href }}">{{ Boss.FirstAppearance.Name }}</a>
+			<a class="wiki_link" href="{{ Boss.FirstAppearance.Href }}">
+				{{- Boss.FirstAppearance.Name -}}
+			</a>
 		</li>
 	{% endif %}
 </ul>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -25,6 +25,7 @@
     <None Remove="Template\Resistance.liquid" />
     <None Remove="Template\ResistanceNumbers.liquid" />
     <None Remove="Template\Resistances.liquid" />
+    <None Remove="Template\Runes.liquid" />
     <None Remove="Template\Weapon.liquid" />
   </ItemGroup>
 
@@ -42,6 +43,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\Infobox.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\Runes.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\Weapon.liquid">

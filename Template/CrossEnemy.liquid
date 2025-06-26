@@ -1,10 +1,23 @@
 <h3 class="bonfire">{{Boss.Name}} Combat information</h3>
 
-<div class="row flexrow">
-	<div class="col-sm-6">
-		{% include 'CombatInfo' %}
+{% if Nightreign %}
+	{% include 'CombatInfo' %}
+
+	<div class="row flexrow">
+		<div class="col-sm-6">
+			{% include 'Negations' %}
+		</div>
+		<div class="col-sm-6">
+			{% include 'Resistances' %}
+		</div>
 	</div>
-	<div class="col-sm-6">
-		{% include 'Negations' %}
+{% else %}
+	<div class="row flexrow">
+		<div class="col-sm-6">
+			{% include 'CombatInfo' %}
+		</div>
+		<div class="col-sm-6">
+			{% include 'Negations' %}
+		</div>
 	</div>
-</div>
+{% endif %}

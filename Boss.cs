@@ -13,6 +13,7 @@ public partial class Boss
         int? gameAreaID = null,
         int? charaInitID = null,
         IEnumerable<int>? spEffectSetIDs = null,
+        IEnumerable<int>? spEffectIDs = null,
         string? closestGrace = null,
         bool optional = true,
         bool multiplayerAllowed = true,
@@ -31,10 +32,10 @@ public partial class Boss
 
         // Nightreign-specific attributes
         bool nightlord = false,
-        bool everdarkSovereign = false,
         NightBossState nightBoss = NightBossState.No,
         IEnumerable<string>? expeditions = null,
-        Game? firstAppearance = null
+        Game? firstAppearance = null,
+        bool formidable = false
     ) {
         ID = id;
         Name = name;
@@ -48,6 +49,7 @@ public partial class Boss
         SummonsAllowed = summonsAllowed;
         GameAreaID = gameAreaID;
         CharaInitID = charaInitID;
+        if (spEffectIDs != null) SPEffectIDs.AddAll(spEffectIDs);
         if (spEffectSetIDs != null) SPEffectSetIDs.AddAll(spEffectSetIDs);
         if (damageTypes != null) DamageTypes.AddAll(damageTypes);
         if (statusTypes != null) StatusTypes.AddAll(statusTypes);
@@ -61,8 +63,10 @@ public partial class Boss
         Critable = critable && (!npc || parriable);
         if (summonableNPCs != null) SummonableNPCs.AddAll(summonableNPCs);
         Nightlord = nightlord;
+        NightBossState = nightBoss;
         if (expeditions != null) Expeditions.AddAll(expeditions);
         if (firstAppearance != null) FirstAppearance = firstAppearance;
+        Formidable = formidable;
 
         if (additionalPhases != null)
         {
@@ -86,6 +90,7 @@ public partial class Boss
     public int? GameAreaID { get; init; }
     public int? CharaInitID { get; init; }
     public SortedSet<int> SPEffectSetIDs { get; } = [];
+    public SortedSet<int> SPEffectIDs { get; } = [];
     public int Stance { get; set; }
     public bool Parriable { get; init; }
     public bool Backstabbable { get; init; }
@@ -120,6 +125,7 @@ public partial class Boss
         NightBossState.Day2 => 2,
         _ => null
     };
+    public bool Formidable { get; init; }
     public string? ImageUrl { get; init; }
     public List<string> Expeditions { get; } = [];
     public Game? FirstAppearance { get; init; }
