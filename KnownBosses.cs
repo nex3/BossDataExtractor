@@ -779,7 +779,7 @@ public partial class Boss
         new Boss(
             21300510, "Fell Omen",
             location: "Night Boss",
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             parriable: true,
             spEffectSetIDs: [15000],
             nightBoss: NightBossState.Day2,
@@ -788,7 +788,7 @@ public partial class Boss
         ),
         new Boss(
             77100010, "Centipede Demon",
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/centipede_elden_ring_nightreign_bosses_wiki_guide300px.jpg",
             spEffectSetIDs: [15000],
             nightBoss: NightBossState.Day1,
@@ -803,7 +803,7 @@ public partial class Boss
         ),
         new Boss(
             41301010, "Demi-Human Queen",
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             nightBoss: NightBossState.Day1,
             expeditions: ["Tricephalos", "Night Aspect"],
             firstAppearance: Game.ER
@@ -818,7 +818,7 @@ public partial class Boss
         new Boss(
             32500110, "Draconic Tree Sentinel",
             location: "Night Boss",
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             nightBoss: NightBossState.Day2,
             expeditions: ["Sentient Pest", "Fissure in the Fog", "Night Aspect"],
             parriable: true,
@@ -848,7 +848,7 @@ public partial class Boss
         new Boss(
             46400020, "Ulcerated Tree Spirit",
             location: "Night Boss",
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             expeditions: ["Sentient Pest", "Fissure in the Fog", "Night Aspect"],
             nightBoss: NightBossState.Day1,
             firstAppearance: Game.ER
@@ -862,7 +862,7 @@ public partial class Boss
         new Boss(
             30500010, "Outland Commander",
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/outland-commander-night-boss-nightreign-wiki-guide.jpg",
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             expeditions: ["Gaping Jaw", "Darkdrift Knight", "Night Aspect"],
             parriable: true,
             statusTypes: [StatusType.Frostbite],
@@ -874,7 +874,7 @@ public partial class Boss
         new Boss(
             49500010, "Tibia Mariner",
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/tibia_mariner_bosses_elden_ring_nightreign_wiki_guide300px.jpg",
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             expeditions: ["Sentient Pest", "Equilibrious Beast", "Fissure in the Fog", "Night Aspect"],
             nightBoss: NightBossState.Day1,
             firstAppearance: Game.ER,
@@ -885,7 +885,7 @@ public partial class Boss
         new Boss(
             31000020, "Bell Bearing Hunter",
             location: "Night Boss",
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             expeditions: ["Tricephalos", "Night Aspect"],
             nightBoss: NightBossState.Day1,
             firstAppearance: Game.ER,
@@ -909,7 +909,7 @@ public partial class Boss
         new Boss(
             31500020,  "Night's Cavalry (Glaive)",
             location: "Night Boss",
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             parriable: true,
             backstabbable: true,
             nightBoss: NightBossState.Day1,
@@ -947,7 +947,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/smelter-demon-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Sentient Pest", "Augur", "Fissure in the Fog", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             firstAppearance: Game.DS2,
             strongerVS: [DamageType.Fire],
             weakerVS: [DamageType.Strike, DamageType.Standard]
@@ -958,7 +958,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/dancer-of-the-boreal-valley-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day2,
             expeditions: ["Fissure in the Fog", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             firstAppearance: Game.DS3,
             weakerVS: [DamageType.Holy]
         ),
@@ -968,7 +968,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/duke's-dear-freja-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Gaping Jaw", "Equilibrious Beast", "Fissure in the Fog", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             firstAppearance: Game.DS2,
             strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Holy],
             weakerVS: [DamageType.Strike]
@@ -979,7 +979,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/grafted-monarch-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Augur", "Fissure in the Fog", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Holy],
             weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike, DamageType.Pierce]
@@ -990,7 +990,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/full-grown-fallingstar-beast-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day2,
             expeditions: ["Augur", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike, DamageType.Pierce],
             weakerVS: [DamageType.Fire, DamageType.Magic, DamageType.Lightning, DamageType.Holy]
@@ -1001,7 +1001,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/nox-dragonskin-soldier-nightreign-bosses-wiki-guide_(1)-min.png",
             nightBoss: NightBossState.Day2,
             expeditions: ["Sentient Pest", "Darkdrift Knight", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Lightning],
             weakerVS: [DamageType.Slash]
@@ -1012,7 +1012,6 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/nameless_king_elden_ring_nightreign_bosses_wiki_guide300px.jpg",
             nightBoss: NightBossState.Day2,
             expeditions: ["Darkdrift Knight", "Night Aspect"],
-            drops: ["Dormant Power"],
             strongerVS: [DamageType.Fire],
             weakerVS: [DamageType.Lightning],
             firstAppearance: Game.DS3,
@@ -1021,7 +1020,7 @@ public partial class Boss
         new Boss(
             79000010, "Nameless King (Phase 2)",
             parriable: true,
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             strongerVS: [DamageType.Lightning],
             weakerVS: [DamageType.Holy]
         ),
@@ -1031,7 +1030,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/gaping-dragon-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Gaping Jaw", "Augur", "Darkdrift Knight", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             firstAppearance: Game.DS1,
             strongerVS: [DamageType.Standard, DamageType.Strike, DamageType.Pierce, DamageType.Slash],
             weakerVS: [DamageType.Lightning]
@@ -1042,7 +1041,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/battlefield-commander-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Sentient Pest", "Equilibrious Beast", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             parriable: true,
             firstAppearance: Game.ER,
             statusTypes: [StatusType.ScarletRot],
@@ -1055,7 +1054,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/tree-sentinel-nightreign-bosses-wiki-guide_(1)-min.png",
             nightBoss: NightBossState.Day2,
             expeditions: ["Tricephalos", "Sentient Pest", "Augur", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             parriable: true,
             critable: false,
             firstAppearance: Game.ER
@@ -1074,7 +1073,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/royal-revenant-boss-nightreign-wiki-guide-min.png",
             nightBoss: NightBossState.Day1,
             expeditions: ["Equilibrious Beast", "Darkdrift Knight", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             firstAppearance: Game.ER,
             statusTypes: [StatusType.Poison],
             strongerVS: [DamageType.Holy],
@@ -1093,12 +1092,18 @@ public partial class Boss
             statusTypes: [StatusType.Poison]
         ),
         new Boss(
+            40200030, "Royal Revenant",
+            location: "Noklateo",
+            drops: ["Dormant Power"],
+            statusTypes: [StatusType.Poison]
+        ),
+        new Boss(
             47700020, "Valiant Gargoyle",
             location: "Night Boss",
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/valiant-gargoyle-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Gaping Jaw", "Augur", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             firstAppearance: Game.ER
         ),
         new Boss(
@@ -1112,7 +1117,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/wormface-boss-nightreign-wiki-guide-min.png",
             nightBoss: NightBossState.Day1,
             expeditions: ["Gaping Jaw", "Augur", "Darkdrift Knight", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 1 Boss Reward"],
             statusTypes: [StatusType.DeathBlight],
             firstAppearance: Game.ER
         ),
@@ -1128,13 +1133,13 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/ancient-dragon-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day2,
             expeditions: ["Gaping Jaw", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             firstAppearance: Game.ER
         ),
         new Boss(
             45102010, "Ancient Dragon",
             location: "Evergaol",
-            drops: ["Dormant Power"],
+            drops: ["Strong Evergaol Reward"],
             spEffectIDs: [99150]
         ),
         new Boss(
@@ -1143,7 +1148,7 @@ public partial class Boss
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/crucible-knight-golden-hippopotamus-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day2,
             expeditions: ["Gaping Jaw", "Equilibrious Beast", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             parriable: true,
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Magic, DamageType.Holy],
@@ -1163,7 +1168,7 @@ public partial class Boss
             location: "Night Boss",
             nightBoss: NightBossState.Day2,
             expeditions: ["Equilibrious Beast", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             firstAppearance: Game.ER,
             weakPoint: "Head",
             statusTypes: [StatusType.Frostbite, StatusType.DeathBlight],
@@ -1183,7 +1188,7 @@ public partial class Boss
         new Boss(
             49801030, "Death Rite Bird",
             location: "Evergaol",
-            drops: ["Dormant Power"],
+            drops: ["Strong Evergaol Reward"],
             weakPoint: "Head",
             statusTypes: [StatusType.Frostbite, StatusType.DeathBlight],
             weakerVS: [DamageType.Strike, DamageType.Holy],
@@ -1197,7 +1202,7 @@ public partial class Boss
             parriable: true,
             nightBoss: NightBossState.Day2,
             expeditions: ["Augur", "Equilibrious Beast", "Fissure in the Fog", "Night Aspect"],
-            drops: ["Dormant Power"],
+            drops: ["Night 2 Boss Reward"],
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Fire, DamageType.Holy],
             weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep]
@@ -1216,7 +1221,7 @@ public partial class Boss
             35600110, "Godskin Apostle",
             location: "Evergaol", // The Oldest Gaol
             parriable: true,
-            drops: ["Dormant Power"],
+            drops: ["Strong Evergaol Reward"],
             spEffectIDs: [99150],
             strongerVS: [DamageType.Fire, DamageType.Holy],
             weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep]
@@ -1228,6 +1233,17 @@ public partial class Boss
             spEffectIDs: [99150],
             strongerVS: [DamageType.Strike, DamageType.Fire, DamageType.Holy],
             weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep]
+        ),
+        new Boss(
+            49110010, "Great Wyrm",
+            location: "Night Boss",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/great-wyrm-night-boss-nightreign-wiki-guide.jpg",
+            nightBoss: NightBossState.Day2,
+            expeditions: ["Sentient Pest", "Night Aspect"],
+            drops: ["Night 2 Boss Reward"],
+            firstAppearance: Game.ER,
+            strongerVS: [DamageType.Fire],
+            weakerVS: [DamageType.Standard, DamageType.Strike, DamageType.Pierce]
         ),
     ];
 }

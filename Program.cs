@@ -22,7 +22,7 @@ var gameAbbrev = eldenRing ? "ER" : "NR";
 var smithboxAssetPath = "F:\\Mods\\Smithbox-2-0-5-10-06-2025\\Assets";
 
 var bossName = "Night's Cavalry";
-int? bossID = 35700110;
+int? bossID = 40200030;
 var displayType = Display.OneEnemyOfMany;
 var minify = true;
 
@@ -209,7 +209,11 @@ void loadBossData(Boss boss)
     for (var i = 0; i <= 31; i++)
     {
         var id = (int)bossParams["spEffectID" + i].Value;
-        if (id > 0) ngScaling.Add(spEffects[id]);
+        if (id > 0)
+        {
+            var spEffect = spEffects[id];
+            if (spEffect != null) ngScaling.Add(spEffect);
+        }
     }
     ngScaling.AddAll(boss.SPEffectIDs.Select(id => spEffects[id]));
     foreach (var setID in boss.SPEffectSetIDs)
@@ -627,14 +631,6 @@ void loadBossData(Boss boss)
         boss.Runes.Add(0);
     }
 
-        List<PARAM.Row> allSpEffects = [];
-    for (var i = 0; i <= 31; i++)
-    {
-        var spEffectID = (int)bossParams[$"spEffectID{i}"].Value;
-        if (spEffectID == -1) continue;
-        allSpEffects.Add(spEffects[spEffectID]);
-    }
-
     List<List<int>>? resistances(
         String baseCell,
         String correctCell,
@@ -645,7 +641,7 @@ void loadBossData(Boss boss)
     {
         var baseValue = (ushort)bossParams[baseCell].Value;
         if (baseValue == 999) return [];
-        if (allSpEffects.Any((row) => row.ID != 9642 && (byte)row[disableCell].Value == 1))
+        if (ngScaling.Any((row) => row.ID != 9642 && (byte)row[disableCell].Value == 1))
         {
             return [];
         }
