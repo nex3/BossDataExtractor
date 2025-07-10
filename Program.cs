@@ -21,9 +21,9 @@ var gamePath = eldenRing
 var gameAbbrev = eldenRing ? "ER" : "NR";
 var smithboxAssetPath = "F:\\Mods\\Smithbox-2-0-5-10-06-2025\\Assets";
 
-var bossName = "Night's Cavalry";
-int? bossID = 40200030;
-var displayType = Display.OneEnemyOfMany;
+var bossName = "Crucible Knight";
+int? bossID = 21400210;
+var displayType = Display.Infobox;
 var minify = true;
 
 var knownBosses = eldenRing ? Boss.KnownERBosses : Boss.KnownNRBosses;
@@ -607,7 +607,7 @@ void loadBossData(Boss boss)
             : (uint)gameAreaParam[(int)boss.GameAreaID]["bonusSoul_single"].Value;
         ngRunes = (uint)Math.Round(ngScaling.Aggregate(
             (float)ngRunes,
-            (value, row) => value * (float)row["soulRate"].Value
+            (value, row) => value * (float)row["haveSoulRate"].Value
         ));
         ngRunes = ngScaling.Aggregate(
             ngRunes,

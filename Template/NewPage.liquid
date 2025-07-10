@@ -1,0 +1,100 @@
+{% include 'Infobox' %}
+
+<p>
+	<strong>{{ Boss.Name }}</strong>
+	is a <a href="/Bosses">Boss</a> in
+	{% if Nightreign -%}
+		<a href="https://eldenringnightreign.wiki.fextralife.com/Elden+Ring+Nightreign+Wiki">Nightreign</a>
+	{%- else -%}
+		<a href="https://eldenring.wiki.fextralife.com/Elden+Ring">Elden Ring</a>
+	{%- endif %}.
+	Bosses are unique and challenging
+	<a href="/Enemies">Enemies</a> that can be encountered all over
+	{% if Nightreign -%}
+		the Lands Between
+	{%- else -%}
+		Limveld
+	{%- endif %}.
+	They have unique move sets, weaknesses, resistances, skills, and abilities.
+	{% if Nightreign %}
+		Players have to coordinate attacks to take them down and progress forward.
+	{% else %}
+		This is an optional boss, as players don't need to defeat it in order to advance in Elden
+		Ring.
+	{% endif %}
+</p>
+
+{% include 'Full' %}
+
+<h3 class="titlearea">Elden Ring Nightreign {{ Boss.Name }} Boss Guide</h3>
+
+<div class="row"> 
+ <div class="col-sm-6"> 
+  <h4 class="special">{{ Boss.Name }} Boss Video Guide</h4> 
+  <p>[video coming soon]</p> 
+  <p>&nbsp;</p> 
+  <h4 class="special">{{ Boss.Name }} Fight Strategy</h4> 
+  <p><strong>The Best Tips for {{ Boss.Name }}:</strong></p> 
+  <ul>
+    <li>Use the ?? Spell</li> 
+    <li>Bring ?? Item</li> 
+  </ul> 
+  <p>&nbsp;</p> 
+  <p>Strategy Writeup</p> 
+  <p>&nbsp;</p> 
+ </div> 
+ <div class="col-sm-6"> 
+  <h4 class="special">{{ Boss.Name }} Attacks &amp; Counters</h4> 
+  <div class="table-responsive"> 
+   <table class="wiki_table"> 
+    <thead> 
+     <tr style="text-align: center;"> 
+      <td>Attack</td> 
+      <td>Description</td> 
+      <td>Counter</td> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>&nbsp;</td> 
+      <td>&nbsp;</td> 
+      <td>&nbsp;</td> 
+     </tr> 
+     <tr> 
+      <td>&nbsp;</td> 
+      <td>&nbsp;</td> 
+      <td>&nbsp;</td> 
+     </tr> 
+     <tr> 
+      <td>&nbsp;</td> 
+      <td>&nbsp;</td> 
+      <td>&nbsp;</td> 
+     </tr> 
+     <tr> 
+      <td>&nbsp;</td> 
+      <td>&nbsp;</td> 
+      <td>&nbsp;</td> 
+     </tr> 
+     <tr> 
+      <td>&nbsp;</td> 
+      <td>&nbsp;</td> 
+      <td>&nbsp;</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div> 
+  <h4 class="special">
+      Elden Ring
+      {% if Nightreign %}Nightreign{% endif %}
+      {{ Boss.Name }} Lore, Notes &amp; Other Trivia
+  </h4> 
+  <ul> 
+   <li>Other Notes and Trivia Go Here</li> 
+  </ul> 
+  <p>&nbsp;</p> 
+ </div> 
+</div>
+
+<h3 class="titlearea">{{ Boss.Name }} Image Gallery</h3>
+
+<p>[screenshots and artwork go here]</p>

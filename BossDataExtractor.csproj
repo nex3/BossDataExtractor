@@ -21,6 +21,7 @@
     <None Remove="Template\Negations.liquid" />
     <None Remove="Template\NewGamePlus.liquid" />
     <None Remove="Template\NewGameRow.liquid" />
+    <None Remove="Template\NewPage.liquid" />
 	<None Remove="Template\OneEnemyOfMany.liquid" />
     <None Remove="Template\Resistance.liquid" />
     <None Remove="Template\ResistanceNumbers.liquid" />
@@ -43,6 +44,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\Infobox.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\NewPage.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\Runes.liquid">

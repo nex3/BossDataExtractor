@@ -1,6 +1,6 @@
 ﻿public enum Display
 {
-    Full, Infobox, CrossEnemy, OneEnemyOfMany, ExtraEnemy, NewGamePlus
+    Full, Infobox, CrossEnemy, OneEnemyOfMany, ExtraEnemy, NewGamePlus, NewPage
 }
 
 public class Context

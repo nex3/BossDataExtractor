@@ -704,7 +704,7 @@ public partial class Boss
             expeditions: ["Sentient Pest"]
         ),
         new Boss(
-            75300010, "Gnoster, Wisdom of Night (Scorpion)",
+            75300010, "Faurtis Stoneshield (Scorpion)", // healthbar
             drops: ["Night of the Wise", "Relics"],
             strongerVS: [DamageType.Slash],
             weakerVS: [DamageType.Fire, DamageType.Strike, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite, StatusType.Sleep],
@@ -712,12 +712,48 @@ public partial class Boss
             expeditions: ["Sentient Pest"]
         ),
         new Boss(
-            75200010, "Sentient Pest",
-            location: "Random Encounter",
-            drops: ["Integration of Intelligence"],
+            75200120, "Gnoster, Wisdom of Night (Everdark Sovereign, Phase 1)",
             strongerVS: [DamageType.Magic],
             weakerVS: [DamageType.Fire, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite],
-            critable: false
+            statusTypes: [StatusType.Poison],
+            nightlord: true,
+            expeditions: ["Sentient Pest Everdark Sovereign"]
+        ),
+        new Boss(
+            75200030, "Gnoster, Wisdom of Night (Everdark Sovereign, Phase 2)",
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Fire, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite],
+            statusTypes: [StatusType.Poison],
+            nightlord: true,
+            expeditions: ["Sentient Pest Everdark Sovereign"]
+        ),
+        new Boss(
+            75300120, "Faurtis Stoneshield (Scorpion, Everdark Sovereign, Phase 1)", // healthbar
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Fire, DamageType.Strike, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite, StatusType.Sleep],
+            nightlord: true,
+            expeditions: ["Sentient Pest Everdark Sovereign"]
+        ),
+        new Boss(
+            75300020, "Faurtis Stoneshield (Scorpion, Everdark Sovereign, Phase 2)",
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Fire, DamageType.Strike, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite, StatusType.Sleep],
+            nightlord: true,
+            expeditions: ["Sentient Pest Everdark Sovereign"]
+        ),
+        new Boss(
+            75200120, "Gnoster, Wisdom of Night (Everdark Sovereign, Phase 1)",
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Fire, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite],
+            statusTypes: [StatusType.Poison],
+            nightlord: true,
+            expeditions: ["Sentient Pest Everdark Sovereign"]
+        ),
+        new Boss(
+            75210010, "Animus, Ascendant Light",
+            drops: ["Relics", "Sovereign Sigils"],
+            nightlord: true,
+            expeditions: ["Sentient Pest Everdark Sovereign"]
         ),
         new Boss(
             75400020, "Maris, Fathom of Night",
@@ -841,7 +877,7 @@ public partial class Boss
             32500090, "Draconic Tree Sentinel",
             location: "Field Boss",
             formidable: true,
-            drops: ["Dormant Power"],
+            drops: ["Strong Field Boss Reward"],
             parriable: true,
             critable: false
         ),
@@ -857,7 +893,7 @@ public partial class Boss
             46400010, "Ulcerated Tree Spirit",
             location: "Field Boss",
             formidable: true,
-            drops: ["Dormant Power"]
+            drops: ["Strong Field Boss Reward"]
         ),
         new Boss(
             30500010, "Outland Commander",
@@ -897,13 +933,13 @@ public partial class Boss
             31000010,  "Bell Bearing Hunter",
             location: "Field Boss",
             formidable: true,
-            drops: ["Dormant Power"],
+            drops: ["Strong Field Boss Reward"],
             parriable: true
         ),
         new Boss(
             31000030,  "Bell Bearing Hunter",
             location: "Castle Basement",
-            drops: ["Dormant Power"],
+            drops: ["Strong Field Boss Reward"],
             parriable: true
         ),
         new Boss(
@@ -928,6 +964,7 @@ public partial class Boss
         new Boss(
             31500010,  "Night's Cavalry", // Glaive
             location: "Field Boss",
+            drops: ["Weak Field Boss Reward"],
             parriable: true,
             backstabbable: true
         ),
@@ -1062,7 +1099,7 @@ public partial class Boss
         new Boss(
             32510020, "Tree Sentinel",
             location: "Field Boss",
-            drops: ["Dormant Power"],
+            drops: ["Strong Field Boss Reward"],
             formidable: true,
             parriable: true,
             critable: false
@@ -1082,13 +1119,13 @@ public partial class Boss
         new Boss(
             40210010, "Royal Revenant",
             location: "Field Boss",
-            drops: ["Dormant Power"],
+            drops: ["Weak Field Boss Reward"],
             statusTypes: [StatusType.Poison]
         ),
         new Boss(
             40210030, "Royal Revenant",
             location: "Castle Basement",
-            drops: ["Dormant Power"],
+            drops: ["Strong Field Boss Reward"],
             statusTypes: [StatusType.Poison]
         ),
         new Boss(
@@ -1124,7 +1161,7 @@ public partial class Boss
         new Boss(
             45803020, "Wormface",
             location: "Ruins",
-            drops: ["Dormant Power"],
+            drops: ["Strong Standard Boss Reward"],
             statusTypes: [StatusType.DeathBlight]
         ),
         new Boss(
@@ -1244,6 +1281,246 @@ public partial class Boss
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Fire],
             weakerVS: [DamageType.Standard, DamageType.Strike, DamageType.Pierce]
+        ),
+        new Boss(
+            25000030, "Crucible Knight",
+            location: "Evergaol",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/crucible-knight-boss-elden-ring-nightreign-wiki-guide.png",
+            drops: ["Strong Evergaol Reward"],
+            parriable: true,
+            strongerVS: [DamageType.Magic, DamageType.Holy],
+            weakerVS: [DamageType.Fire, DamageType.Lightning]
+        ),
+        new Boss(
+            25000030, "Crucible Knight",
+            location: "Evergaol",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/crucible-knight-boss-elden-ring-nightreign-wiki-guide.png",
+            drops: ["Strong Evergaol Reward"],
+            parriable: true,
+            strongerVS: [DamageType.Magic, DamageType.Holy],
+            weakerVS: [DamageType.Fire, DamageType.Lightning]
+        ),
+        new Boss(
+            25000040, "Crucible Knight", // sword
+            location: "Castle",
+            parriable: true,
+            strongerVS: [DamageType.Magic, DamageType.Holy],
+            weakerVS: [DamageType.Fire, DamageType.Lightning]
+        ),
+        new Boss(
+            25001030, "Crucible Knight", // spear
+            location: "Castle",
+            drops: ["Dormant Power"],
+            parriable: true,
+            strongerVS: [DamageType.Magic, DamageType.Holy],
+            weakerVS: [DamageType.Fire, DamageType.Lightning]
+        ),
+        new Boss(
+            35600020, "Godskin Apostle",
+            location: "Evergaol",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/godskin-apostle-boss-nightreign-wiki-guide_(1)-min.jpg",
+            drops: ["Strong Evergaol Reward"],
+            parriable: true,
+            strongerVS: [DamageType.Fire, DamageType.Holy],
+            weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep]
+        ),
+        new Boss(
+            35700020, "Godskin Apostle",
+            location: "Evergaol",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/godskin-noble-boss-nightreign-wiki-guide_(1)-min.png",
+            drops: ["Strong Evergaol Reward"],
+            parriable: true,
+            strongerVS: [DamageType.Strike, DamageType.Fire, DamageType.Holy],
+            weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep]
+        ),
+        new Boss(
+            46500210, "Dragonkin Soldier",
+            location: "Evergaol",
+            drops: ["Strong Evergaol Reward"],
+            strongerVS: [DamageType.Lightning],
+            weakerVS: [DamageType.Slash]
+        ),
+        new Boss(
+            46500230, "Dragonkin Soldier",
+            location: "Noklateo",
+            drops: ["Dormant Power"],
+            strongerVS: [DamageType.Lightning],
+            weakerVS: [DamageType.Slash]
+        ),
+        new Boss(
+            30100190, "Banished Knight",
+            location: "Evergaol",
+            drops: ["Weak Evergaol Reward"],
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Lightning],
+            backstabbable: true,
+            parriable: true
+        ),
+        new Boss(
+            30100270, "Banished Knight",
+            location: "Encampment",
+            drops: ["Strong Standard Boss Reward"],
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Lightning],
+            backstabbable: true,
+            parriable: true
+        ),
+        new Boss(
+            30100280, "Banished Knight (Red Eyes)",
+            location: "Castle",
+            drops: ["Castle Miniboss Reward"],
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Lightning],
+            backstabbable: true,
+            parriable: true
+        ),
+        new Boss(
+            30100010, "Banished Knight",
+            location: "Castle",
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Lightning],
+            backstabbable: true,
+            parriable: true
+        ),
+        new Boss(
+            33500010, "Crystalian",
+            location: "Evergaol",
+            drops: ["Weak Evergaol Reward"],
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Standard, DamageType.Strike],
+            parriable: true
+        ),
+        new Boss(
+            33500020, "Crystalian",
+            location: "Fort",
+            drops: ["Weak Affinity Reward"],
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Standard, DamageType.Strike],
+            backstabbable: true,
+            parriable: true
+        ),
+        new Boss(
+            37020030, "Glintstone Sorcerer",
+            location: "Fort",
+            backstabbable: true
+        ),
+        new Boss(
+            39701120, "Beastmen of Farum Azula",
+            location: "Ruins",
+            drops: ["Strong Affinity Reward"],
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Lightning],
+            weakerVS: [DamageType.Fire]
+        ),
+        new Boss(
+            39701110, "Beastmen of Farum Azula",
+            location: "Evergaol",
+            drops: ["Weak Evergaol Reward"],
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Lightning],
+            weakerVS: [DamageType.Fire]
+        ),
+        new Boss(
+            39703010, "Azula Beastman (Curved Sword)",
+            location: "Evergaol",
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Lightning],
+            weakerVS: [DamageType.Fire]
+        ),
+        new Boss(
+            39702310, "Azula Beastman (Shield)",
+            location: "Evergaol",
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Lightning],
+            weakerVS: [DamageType.Fire]
+        ),
+        new Boss(
+            34510040, "Scaly Misbegotten",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/beastly-brigade-boss-nightreign-wiki-guide_(1)-min.jpg",
+            location: "Evergaol",
+            drops: ["Weak Evergaol Reward"],
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Fire]
+        ),
+        new Boss(
+            34500040, "Misbegotten",
+            location: "Evergaol",
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Fire]
+        ),
+        new Boss(
+            34501040, "Misbegotten (Winged)",
+            location: "Evergaol",
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Fire]
+        ),
+        new Boss(
+            33000020, "Nox Warriors", // Monk
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/nox-warriors-bosses-elden-ring-nightrein-wiki-guide.jpg",
+            location: "Evergaol",
+            drops: ["Weak Evergaol Reward"],
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Holy]
+        ),
+        new Boss(
+            33001020, "Nox Swordstress",
+            location: "Evergaol",
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Holy]
+        ),
+        new Boss(
+            36000020, "Stoneskin Lords", // Alabaster
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/stoneskin-lords-boss-nightreign-wiki-guide_(1)-min.jpg",
+            location: "Evergaol",
+            drops: ["Weak Evergaol Reward"],
+            parriable: true,
+            strongerVS: [DamageType.Magic, DamageType.Fire, DamageType.Holy, DamageType.Lightning],
+            weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike, DamageType.Pierce]
+        ),
+        new Boss(
+            36001020, "Onyx Lord",
+            location: "Evergaol",
+            parriable: true,
+            strongerVS: [DamageType.Magic, DamageType.Fire, DamageType.Holy, DamageType.Lightning],
+            weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike, DamageType.Pierce]
+        ),
+        new Boss(
+            42900010, "Bloodhound Knight",
+            location: "Evergaol",
+            drops: ["Weak Evergaol Reward"],
+            parriable: true,
+            strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike],
+            weakerVS: [DamageType.Lightning]
+        ),
+        new Boss(
+            34001010, "Grave Warden Duelist",
+            location: "Evergaol",
+            drops: ["Weak Evergaol Reward"],
+            parriable: true,
+            backstabbable: true,
+            weakerVS: [DamageType.Slash, StatusType.BloodLoss]
+        ),
+        new Boss(
+            21400210, "Omen",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/omen-boss-nightreign-wiki-guide_(1)-min.png",
+            location: "Evergaol",
+            drops: ["Weak Evergaol Reward"],
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Holy],
+            weakerVS: [DamageType.Slash]
         ),
     ];
 }
