@@ -29,6 +29,8 @@ public partial class Boss
         IEnumerable<string>? drops = null,
         string? weakPoint = null,
         IEnumerable<string>? summonableNPCs = null,
+        int? damageBaseline = null,
+        string? damageBaselineName = null,
 
         // Nightreign-specific attributes
         bool nightlord = false,
@@ -67,6 +69,17 @@ public partial class Boss
         if (expeditions != null) Expeditions.AddAll(expeditions);
         if (firstAppearance != null) FirstAppearance = firstAppearance;
         Formidable = formidable;
+        if (damageBaseline is { } baselineId)
+        {
+            DamageBaselineBoss = new Boss(baselineId, name);
+            if (damageBaselineName is null)
+            {
+                throw new ArgumentException(
+                    "damageBaseline must be passed with damageBaselineName"
+                );
+            }
+            DamageBaselineName = damageBaselineName;
+        }
 
         if (additionalPhases != null)
         {
@@ -129,6 +142,12 @@ public partial class Boss
     public string? ImageUrl { get; init; }
     public List<string> Expeditions { get; } = [];
     public Game? FirstAppearance { get; init; }
+    public double DamageMultiplier { get; set; } = 1.0;
+    public double? DamageBaseline { get; set; }
+    public double RelativeDamage =>
+        DamageBaseline is { } baseline ? (DamageMultiplier / baseline) : 1.0;
+    public Boss? DamageBaselineBoss { get; init; }
+    public string? DamageBaselineName { get; init; }
     public List<(DamageType, int)> TypeNegationPairs
     {
         get { return Negations.Select((pair) => (pair.Key, pair.Value)).ToList(); }

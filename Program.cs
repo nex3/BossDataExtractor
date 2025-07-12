@@ -22,8 +22,8 @@ var gameAbbrev = eldenRing ? "ER" : "NR";
 var smithboxAssetPath = "F:\\Mods\\Smithbox-2-0-5-10-06-2025\\Assets";
 
 var bossName = "Crucible Knight";
-int? bossID = 21400210;
-var displayType = Display.Infobox;
+int? bossID = 39701110;
+var displayType = Display.OneEnemyOfMany;
 var minify = true;
 
 var knownBosses = eldenRing ? Boss.KnownERBosses : Boss.KnownNRBosses;
@@ -367,7 +367,7 @@ void loadBossData(Boss boss)
             if (talismanEffect != null) talismanEffects.Add(talismanEffect);
         }
 
-        IEnumerable<T> talismanValues<T>(string field) where T: INumber<T>
+        IEnumerable<T> talismanValues<T>(string field) where T : INumber<T>
         {
             foreach (var effect in talismanEffects)
             {
@@ -587,6 +587,19 @@ void loadBossData(Boss boss)
         (value, row) => value * (float)row["physicsDiffenceRate"].Value
     );
     boss.Defense.Add((int)Math.Floor(ngDefense));
+
+    if (boss.DamageBaselineBoss is { } baselineBoss)
+    {
+        loadBossData(baselineBoss);
+        boss.DamageBaseline = baselineBoss.DamageMultiplier;
+    }
+    boss.DamageMultiplier = ngScaling.Aggregate(
+        1.0,
+        (value, row) =>
+        {
+            return value * (float)row["physicsAttackPowerRate"].Value;
+        }
+    );
 
     if (ngpScaling is not null)
     {

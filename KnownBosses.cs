@@ -683,7 +683,9 @@ public partial class Boss
             strongerVS: [DamageType.Fire],
             weakerVS: [StatusType.Poison, StatusType.ScarletRot, StatusType.Frostbite, StatusType.Sleep],
             nightlord: true,
-            expeditions: ["Gaping Jaw Everdark Sovereign"]
+            expeditions: ["Gaping Jaw Everdark Sovereign"],
+            damageBaseline: 75100020,
+            damageBaselineName: "the standard version"
         ),
         new Boss(
             76000010, "Fulghor, Champion of Nightglow",
@@ -717,7 +719,9 @@ public partial class Boss
             weakerVS: [DamageType.Fire, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite],
             statusTypes: [StatusType.Poison],
             nightlord: true,
-            expeditions: ["Sentient Pest Everdark Sovereign"]
+            expeditions: ["Sentient Pest Everdark Sovereign"],
+            damageBaseline: 75200020,
+            damageBaselineName: "the standard version"
         ),
         new Boss(
             75200030, "Gnoster, Wisdom of Night (Everdark Sovereign, Phase 2)",
@@ -725,29 +729,27 @@ public partial class Boss
             weakerVS: [DamageType.Fire, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite],
             statusTypes: [StatusType.Poison],
             nightlord: true,
-            expeditions: ["Sentient Pest Everdark Sovereign"]
+            expeditions: ["Sentient Pest Everdark Sovereign"],
+            damageBaseline: 75200020,
+            damageBaselineName: "the standard version"
         ),
         new Boss(
             75300120, "Faurtis Stoneshield (Scorpion, Everdark Sovereign, Phase 1)", // healthbar
             strongerVS: [DamageType.Slash],
             weakerVS: [DamageType.Fire, DamageType.Strike, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite, StatusType.Sleep],
             nightlord: true,
-            expeditions: ["Sentient Pest Everdark Sovereign"]
+            expeditions: ["Sentient Pest Everdark Sovereign"],
+            damageBaseline: 75200010,
+            damageBaselineName: "the standard version"
         ),
         new Boss(
             75300020, "Faurtis Stoneshield (Scorpion, Everdark Sovereign, Phase 2)",
             strongerVS: [DamageType.Slash],
             weakerVS: [DamageType.Fire, DamageType.Strike, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite, StatusType.Sleep],
             nightlord: true,
-            expeditions: ["Sentient Pest Everdark Sovereign"]
-        ),
-        new Boss(
-            75200120, "Gnoster, Wisdom of Night (Everdark Sovereign, Phase 1)",
-            strongerVS: [DamageType.Magic],
-            weakerVS: [DamageType.Fire, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite],
-            statusTypes: [StatusType.Poison],
-            nightlord: true,
-            expeditions: ["Sentient Pest Everdark Sovereign"]
+            expeditions: ["Sentient Pest Everdark Sovereign"],
+            damageBaseline: 75200010,
+            damageBaselineName: "the standard version"
         ),
         new Boss(
             75210010, "Animus, Ascendant Light",
@@ -803,14 +805,18 @@ public partial class Boss
             location: "Tutorial",
             drops: ["Fell Omen Fetish"],
             parriable: true,
-            spEffectSetIDs: [99001]
+            spEffectSetIDs: [99001],
+            damageBaseline: 21300510,
+            damageBaselineName: "the night boss"
         ),
         new Boss(
             21300010, "Fell Omen",
             location: "Event",
             drops: ["Traces of Grace-Given Lord"],
             parriable: true,
-            spEffectSetIDs: [13910]
+            spEffectSetIDs: [13910],
+            damageBaseline: 21300510,
+            damageBaselineName: "the night boss"
         ),
         new Boss(
             21300510, "Fell Omen",
@@ -842,14 +848,18 @@ public partial class Boss
             drops: ["Night 1 Boss Reward"],
             nightBoss: NightBossState.Day1,
             expeditions: ["Tricephalos", "Night Aspect"],
-            firstAppearance: Game.ER
+            firstAppearance: Game.ER,
+            damageBaseline: 41300020,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
             58100910, "Demi-Human Swordmaster",
             nightBoss: NightBossState.Day1,
             expeditions: ["Tricephalos", "Night Aspect"],
             parriable: true,
-            firstAppearance: Game.ER
+            firstAppearance: Game.ER,
+            damageBaseline: 58100920,
+            damageBaselineName: "the boss in The Mountaintops"
         ),
         new Boss(
             32500110, "Draconic Tree Sentinel",
@@ -859,7 +869,9 @@ public partial class Boss
             expeditions: ["Sentient Pest", "Fissure in the Fog", "Night Aspect"],
             parriable: true,
             critable: false,
-            firstAppearance: Game.ER
+            firstAppearance: Game.ER,
+            damageBaseline: 32500090,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
             43531110, "Leyndell Knight",
@@ -887,7 +899,9 @@ public partial class Boss
             drops: ["Night 1 Boss Reward"],
             expeditions: ["Sentient Pest", "Fissure in the Fog", "Night Aspect"],
             nightBoss: NightBossState.Day1,
-            firstAppearance: Game.ER
+            firstAppearance: Game.ER,
+            damageBaseline: 46400010,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
             46400010, "Ulcerated Tree Spirit",
@@ -927,20 +941,25 @@ public partial class Boss
             firstAppearance: Game.ER,
             parriable: true,
             strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike, DamageType.Magic, DamageType.Fire, DamageType.Holy],
-            weakerVS: [DamageType.Pierce]
+            weakerVS: [DamageType.Pierce],
+            damageBaseline: 31000010,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
-            31000010,  "Bell Bearing Hunter",
+            31000010, "Bell Bearing Hunter",
             location: "Field Boss",
             formidable: true,
             drops: ["Strong Field Boss Reward"],
             parriable: true
         ),
         new Boss(
-            31000030,  "Bell Bearing Hunter",
+            31000030, "Bell Bearing Hunter",
             location: "Castle Basement",
             drops: ["Strong Field Boss Reward"],
-            parriable: true
+            parriable: true,
+            damageBaseline: 31000010,
+            damageBaselineName: "the field boss",
+            spEffectIDs: [7790]
         ),
         new Boss(
             31500020,  "Night's Cavalry (Glaive)",
@@ -950,7 +969,9 @@ public partial class Boss
             backstabbable: true,
             nightBoss: NightBossState.Day1,
             expeditions: ["Gaping Jaw", "Darkdrift Knight", "Night Aspect"],
-            firstAppearance: Game.ER
+            firstAppearance: Game.ER,
+            damageBaseline: 31500010,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
             31501020,  "Night's Cavalry (Flail)",
@@ -1030,7 +1051,9 @@ public partial class Boss
             drops: ["Night 2 Boss Reward"],
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike, DamageType.Pierce],
-            weakerVS: [DamageType.Fire, DamageType.Magic, DamageType.Lightning, DamageType.Holy]
+            weakerVS: [DamageType.Fire, DamageType.Magic, DamageType.Lightning, DamageType.Holy],
+            damageBaseline: 46801020,
+            damageBaselineName: "the boss in The Crater"
         ),
         new Boss(
             46500010, "Nox Dragonkin Soldier",
@@ -1041,7 +1064,9 @@ public partial class Boss
             drops: ["Night 2 Boss Reward"],
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Lightning],
-            weakerVS: [DamageType.Slash]
+            weakerVS: [DamageType.Slash],
+            damageBaseline: 46500210,
+            damageBaselineName: "the evergaol boss"
         ),
         new Boss(
             79100010, "Nameless King (Phase 1)",
@@ -1092,6 +1117,8 @@ public partial class Boss
             nightBoss: NightBossState.Day2,
             expeditions: ["Tricephalos", "Sentient Pest", "Augur", "Night Aspect"],
             drops: ["Night 2 Boss Reward"],
+            damageBaseline: 32510020,
+            damageBaselineName: "the field boss",
             parriable: true,
             critable: false,
             firstAppearance: Game.ER
@@ -1114,7 +1141,9 @@ public partial class Boss
             firstAppearance: Game.ER,
             statusTypes: [StatusType.Poison],
             strongerVS: [DamageType.Holy],
-            weakerVS: [DamageType.Slash]
+            weakerVS: [DamageType.Slash],
+            damageBaseline: 40210010,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
             40210010, "Royal Revenant",
@@ -1126,13 +1155,18 @@ public partial class Boss
             40210030, "Royal Revenant",
             location: "Castle Basement",
             drops: ["Strong Field Boss Reward"],
-            statusTypes: [StatusType.Poison]
+            statusTypes: [StatusType.Poison],
+            spEffectIDs: [7790],
+            damageBaseline: 40210010,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
             40200030, "Royal Revenant",
             location: "Noklateo",
             drops: ["Dormant Power"],
-            statusTypes: [StatusType.Poison]
+            statusTypes: [StatusType.Poison],
+            damageBaseline: 40210010,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
             47700020, "Valiant Gargoyle",
@@ -1141,7 +1175,9 @@ public partial class Boss
             nightBoss: NightBossState.Day1,
             expeditions: ["Gaping Jaw", "Augur", "Night Aspect"],
             drops: ["Night 1 Boss Reward"],
-            firstAppearance: Game.ER
+            firstAppearance: Game.ER,
+            damageBaseline: 47701030,
+            damageBaselineName: "the boss in The Crater"
         ),
         new Boss(
             47701030, "Valiant Gargoyle",
@@ -1156,7 +1192,9 @@ public partial class Boss
             expeditions: ["Gaping Jaw", "Augur", "Darkdrift Knight", "Night Aspect"],
             drops: ["Night 1 Boss Reward"],
             statusTypes: [StatusType.DeathBlight],
-            firstAppearance: Game.ER
+            firstAppearance: Game.ER,
+            damageBaseline: 45803020,
+            damageBaselineName: "the Ruins boss"
         ),
         new Boss(
             45803020, "Wormface",
@@ -1171,7 +1209,9 @@ public partial class Boss
             nightBoss: NightBossState.Day2,
             expeditions: ["Gaping Jaw", "Night Aspect"],
             drops: ["Night 2 Boss Reward"],
-            firstAppearance: Game.ER
+            firstAppearance: Game.ER,
+            damageBaseline: 45102010,
+            damageBaselineName: "the evergaol boss"
         ),
         new Boss(
             45102010, "Ancient Dragon",
@@ -1189,7 +1229,9 @@ public partial class Boss
             parriable: true,
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Magic, DamageType.Holy],
-            weakerVS: [DamageType.Fire, DamageType.Lightning]
+            weakerVS: [DamageType.Fire, DamageType.Lightning],
+            damageBaseline: 25000030,
+            damageBaselineName: "the evergaol boss"
         ),
         new Boss(
             50110020, "Golden Hippopotamus",
@@ -1198,7 +1240,9 @@ public partial class Boss
             expeditions: ["Gaping Jaw", "Equilibrious Beast", "Night Aspect"],
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Standard, DamageType.Strike, DamageType.Pierce, DamageType.Magic, DamageType.Holy],
-            weakerVS: [DamageType.Fire, DamageType.Lightning]
+            weakerVS: [DamageType.Fire, DamageType.Lightning],
+            damageBaseline: 50110010,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
             49801010, "Death Rite Bird",
@@ -1210,7 +1254,9 @@ public partial class Boss
             weakPoint: "Head",
             statusTypes: [StatusType.Frostbite, StatusType.DeathBlight],
             weakerVS: [DamageType.Strike, DamageType.Holy],
-            strongerVS: [DamageType.Pierce, DamageType.Lightning]
+            strongerVS: [DamageType.Pierce, DamageType.Lightning],
+            damageBaseline: 49801020,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
             49801020, "Death Rite Bird",
@@ -1230,7 +1276,9 @@ public partial class Boss
             statusTypes: [StatusType.Frostbite, StatusType.DeathBlight],
             weakerVS: [DamageType.Strike, DamageType.Holy],
             strongerVS: [DamageType.Pierce, DamageType.Lightning],
-            spEffectIDs: [99152]
+            spEffectIDs: [99152],
+            damageBaseline: 49801020,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
             35600010, "Godskin Apostle",
@@ -1242,7 +1290,9 @@ public partial class Boss
             drops: ["Night 2 Boss Reward"],
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Fire, DamageType.Holy],
-            weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep]
+            weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep],
+            damageBaseline: 35600020,
+            damageBaselineName: "the solo evergaol boss"
         ),
         new Boss(
             35700010, "Godskin Noble",
@@ -1252,7 +1302,9 @@ public partial class Boss
             expeditions: ["Augur", "Equilibrious Beast", "Fissure in the Fog", "Night Aspect"],
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Strike, DamageType.Fire, DamageType.Holy],
-            weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep]
+            weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep],
+            damageBaseline: 35700020,
+            damageBaselineName: "the solo evergaol boss"
         ),
         new Boss(
             35600110, "Godskin Apostle",
@@ -1261,7 +1313,9 @@ public partial class Boss
             drops: ["Strong Evergaol Reward"],
             spEffectIDs: [99150],
             strongerVS: [DamageType.Fire, DamageType.Holy],
-            weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep]
+            weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep],
+            damageBaseline: 35600020,
+            damageBaselineName: "the solo evergaol boss"
         ),
         new Boss(
             35700110, "Godskin Noble",
@@ -1269,7 +1323,9 @@ public partial class Boss
             parriable: true,
             spEffectIDs: [99150],
             strongerVS: [DamageType.Strike, DamageType.Fire, DamageType.Holy],
-            weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep]
+            weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep],
+            damageBaseline: 35700020,
+            damageBaselineName: "the solo evergaol boss"
         ),
         new Boss(
             49110010, "Great Wyrm",
@@ -1280,19 +1336,20 @@ public partial class Boss
             drops: ["Night 2 Boss Reward"],
             firstAppearance: Game.ER,
             strongerVS: [DamageType.Fire],
-            weakerVS: [DamageType.Standard, DamageType.Strike, DamageType.Pierce]
+            weakerVS: [DamageType.Standard, DamageType.Strike, DamageType.Pierce],
+            damageBaseline: 49100190,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
-            25000030, "Crucible Knight",
+            25000030, "Crucible Knight", // sword
             location: "Evergaol",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/crucible-knight-boss-elden-ring-nightreign-wiki-guide.png",
             drops: ["Strong Evergaol Reward"],
             parriable: true,
             strongerVS: [DamageType.Magic, DamageType.Holy],
             weakerVS: [DamageType.Fire, DamageType.Lightning]
         ),
         new Boss(
-            25000030, "Crucible Knight",
+            25001020, "Crucible Knight", // spear
             location: "Evergaol",
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/crucible-knight-boss-elden-ring-nightreign-wiki-guide.png",
             drops: ["Strong Evergaol Reward"],
@@ -1305,7 +1362,9 @@ public partial class Boss
             location: "Castle",
             parriable: true,
             strongerVS: [DamageType.Magic, DamageType.Holy],
-            weakerVS: [DamageType.Fire, DamageType.Lightning]
+            weakerVS: [DamageType.Fire, DamageType.Lightning],
+            damageBaseline: 25000030,
+            damageBaselineName: "the evergaol boss"
         ),
         new Boss(
             25001030, "Crucible Knight", // spear
@@ -1313,7 +1372,9 @@ public partial class Boss
             drops: ["Dormant Power"],
             parriable: true,
             strongerVS: [DamageType.Magic, DamageType.Holy],
-            weakerVS: [DamageType.Fire, DamageType.Lightning]
+            weakerVS: [DamageType.Fire, DamageType.Lightning],
+            damageBaseline: 25001020,
+            damageBaselineName: "the evergaol boss"
         ),
         new Boss(
             35600020, "Godskin Apostle",
@@ -1325,7 +1386,7 @@ public partial class Boss
             weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep]
         ),
         new Boss(
-            35700020, "Godskin Apostle",
+            35700020, "Godskin Noble",
             location: "Evergaol",
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/godskin-noble-boss-nightreign-wiki-guide_(1)-min.png",
             drops: ["Strong Evergaol Reward"],
@@ -1345,7 +1406,9 @@ public partial class Boss
             location: "Noklateo",
             drops: ["Dormant Power"],
             strongerVS: [DamageType.Lightning],
-            weakerVS: [DamageType.Slash]
+            weakerVS: [DamageType.Slash],
+            damageBaseline: 46500210,
+            damageBaselineName: "the evergaol boss"
         ),
         new Boss(
             30100190, "Banished Knight",
@@ -1354,7 +1417,9 @@ public partial class Boss
             strongerVS: [DamageType.Slash],
             weakerVS: [DamageType.Lightning],
             backstabbable: true,
-            parriable: true
+            parriable: true,
+            damageBaseline: 30100270,
+            damageBaselineName: "the Encampment boss"
         ),
         new Boss(
             30100270, "Banished Knight",
@@ -1372,7 +1437,9 @@ public partial class Boss
             strongerVS: [DamageType.Slash],
             weakerVS: [DamageType.Lightning],
             backstabbable: true,
-            parriable: true
+            parriable: true,
+            damageBaseline: 30100270,
+            damageBaselineName: "the Encampment boss"
         ),
         new Boss(
             30100010, "Banished Knight",
@@ -1380,7 +1447,9 @@ public partial class Boss
             strongerVS: [DamageType.Slash],
             weakerVS: [DamageType.Lightning],
             backstabbable: true,
-            parriable: true
+            parriable: true,
+            damageBaseline: 30100270,
+            damageBaselineName: "the Encampment boss"
         ),
         new Boss(
             33500010, "Crystalian",
@@ -1388,7 +1457,9 @@ public partial class Boss
             drops: ["Weak Evergaol Reward"],
             strongerVS: [DamageType.Slash],
             weakerVS: [DamageType.Standard, DamageType.Strike],
-            parriable: true
+            parriable: true,
+            damageBaseline: 33500020,
+            damageBaselineName: "the Fort boss"
         ),
         new Boss(
             33500020, "Crystalian",
@@ -1420,7 +1491,9 @@ public partial class Boss
             parriable: true,
             backstabbable: true,
             strongerVS: [DamageType.Lightning],
-            weakerVS: [DamageType.Fire]
+            weakerVS: [DamageType.Fire],
+            damageBaseline: 39701120,
+            damageBaselineName: "the Ruins boss"
         ),
         new Boss(
             39703010, "Azula Beastman (Curved Sword)",

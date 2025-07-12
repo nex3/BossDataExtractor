@@ -31,6 +31,19 @@
 				</span>
 			</li>
 		{% endunless %}
+		{% if Boss.RelativeDamage != 1 %}
+			<li>
+				This does
+				{% if Boss.RelativeDamage > 1 %}
+					{{ Boss.RelativeDamage | minus: 1 | times: 100 | round }}%
+					more
+				{% else %}
+					{{ 1 | minus: Boss.RelativeDamage | times: 100 | round }}%
+					less
+				{% endif %}
+				damage than {{ Boss.DamageBaselineName }}
+			</li>
+		{% endif %}
 	{% endif %}
 	{% if ShowCrossEnemy %}
 	    <li>
