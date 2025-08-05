@@ -6,7 +6,8 @@ public partial class Boss
         int id,
         string name,
         string? location = null,
-        string? imageUrl = null,
+        Image? image = null,
+        Image? topLevelImage = null,
         IEnumerable<int>? additionalPhases = null,
         bool boss = true,
         bool npc = false,
@@ -44,7 +45,8 @@ public partial class Boss
         ID = id;
         Name = name;
         Location = location;
-        ImageUrl = imageUrl;
+        Image = image ?? Image.None();
+        TopLevelImage = topLevelImage;
         ClosestGrace = closestGrace ?? location;
         IsBoss = boss;
         IsNPC = npc;
@@ -116,6 +118,10 @@ public partial class Boss
         NightBossState == NightBossState.No &&
         Location != "Night Boss Entourage";
 
+    public int? CondemnedSpEffectID { get; set; }
+    public float? CondemnedHPMult { get; set; }
+    public float? CondemnedDamageMult { get; set; }
+
     public int Stance { get; set; }
     public bool Parriable { get; init; }
     public bool Backstabbable { get; init; }
@@ -155,7 +161,10 @@ public partial class Boss
         _ => null
     };
     public bool Formidable { get; init; }
-    public string? ImageUrl { get; init; }
+    public Image Image { get; init; } = Image.None();
+    public string ImageHtml => Image.ToHtml(this);
+    public Image? TopLevelImage { get; init; }
+    public string? TopLevelImageHtml => TopLevelImage?.ToHtml(this);
     public List<string> Expeditions { get; } = [];
     public Game? FirstAppearance { get; init; }
     public double DamageMultiplier { get; set; } = 1.0;

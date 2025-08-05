@@ -29,16 +29,10 @@
 				</tr>
 				<tr>
 					<td style="text-align: center" data-mce-style="text-align: center" colspan=2>
-						{% if Boss.ImageUrl %}
-							<img
-								src="{{ Boss.ImageUrl }}"
-								alt="
-									{{ Boss.Name }}
-									{% if Boss.Nightlord %}Nightlord{% endif %}
-									elden ring nightreign wiki guide
-								">
+						{% if Boss.TopLevelImage and IsTopLevelInfobox %}
+							{{ Boss.TopLevelImageHtml }}
 						{% else %}
-							__image__
+							{{ Boss.ImageHtml }}
 						{% endif %}
 					</td>
 				</tr>

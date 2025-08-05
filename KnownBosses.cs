@@ -660,6 +660,67 @@ public partial class Boss
     public static readonly List<List<Boss>> KnownNRBossGroups = [
         [
             new Boss(
+                31810010, "Red Wolf of the King Consort",
+                location: "Field Boss",
+                drops: ["Weak Field Boss Reward"],
+                topLevelImage: Image.Full4K("red-wolf-field-2-nightreign"),
+                image: Image.Full1080p("red-wolf-field-nightreign"),
+                strongerVS: [DamageType.Magic],
+                weakerVS: [DamageType.Slash]
+            ),
+            new Boss(
+                31810020, "Red Wolf of the King Consort",
+                image: Image.Full4K("red-dog-basement-nightreign"),
+                location: "Castle Basement",
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                drops: ["Strong Field Boss Reward"],
+                strongerVS: [DamageType.Magic],
+                weakerVS: [DamageType.Slash],
+                damageBaseline: 31810010,
+                damageBaselineName: "the field boss",
+                spEffectIDs: [7790]
+            ),
+        ],
+        [
+            new Boss(
+                21000020, "Black Knife Assassin",
+                location: "Field Boss",
+                drops: ["Weak Field Boss Reward"],
+                image: Image.Full4K("black-knife-assassin-field-1-nightreign"),
+                parriable: true,
+                backstabbable: true,
+                strongerVS: [DamageType.Pierce, DamageType.Holy],
+                weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike]
+            ),
+            new Boss(
+                21000030, "Black Knife Assassin",
+                image: Image.Full1080p("black-knife-assassin-basement"),
+                location: "Castle Basement",
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                drops: ["Strong Field Boss Reward"],
+                parriable: true,
+                backstabbable: true,
+                strongerVS: [DamageType.Pierce, DamageType.Holy],
+                weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike],
+                damageBaseline: 21000020,
+                damageBaselineName: "the field boss",
+                spEffectIDs: [7790]
+            ),
+            new Boss(
+                21000040, "Black Knife Assassin",
+                location: "Noklateo",
+                inShiftingEarth: [ShiftingEarth.Noklateo],
+                drops: ["Noklateo Reward"],
+                parriable: true,
+                backstabbable: true,
+                strongerVS: [DamageType.Pierce, DamageType.Holy],
+                weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike],
+                damageBaseline: 21000020,
+                damageBaselineName: "the field boss"
+            ),
+        ],
+        [
+            new Boss(
                 46900010, "Grafted Scion",
                 location: "Field Boss",
                 drops: ["Weak Field Boss Reward"],
@@ -671,7 +732,7 @@ public partial class Boss
                 46900020, "Grafted Scion",
                 location: "Castle Basement",
                 notInShiftingEarth: [ShiftingEarth.Noklateo],
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/grafted-scion-boss-nightreign-wiki-guide-min.jpg",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/grafted-scion-boss-nightreign-wiki-guide-min.jpg",
                 drops: ["Strong Field Boss Reward"],
                 parriable: true,
                 strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Fire, DamageType.Holy],
@@ -742,6 +803,8 @@ public partial class Boss
         [
             new Boss(
                 71000110, "Ancient Hero of Zamor",
+                topLevelImage: Image.Crop4K("ancient-hero-of-zamor-field-2-nightreign"),
+                image: Image.Crop4K("ancient-hero-ruins-2-nightreign"),
                 location: "Ruins",
                 drops: ["Strong Affinity Reward"],
                 parriable: true,
@@ -750,6 +813,7 @@ public partial class Boss
             ),
             new Boss(
                 71000010, "Ancient Hero of Zamor",
+                image: Image.Full4K("ancient-hero-of-zamor-field-1-nightreign"),
                 location: "Field Boss",
                 drops: ["Weak Field Boss Reward"],
                 parriable: true,
@@ -760,6 +824,7 @@ public partial class Boss
             ),
             new Boss(
                 71000020, "Ancient Hero of Zamor",
+                image: Image.Full4K("ancient-hero-basement-nightreign"),
                 location: "Castle Basement",
                 notInShiftingEarth: [ShiftingEarth.Noklateo],
                 drops: ["Strong Field Boss Reward"],
@@ -774,7 +839,7 @@ public partial class Boss
         [
             new Boss(
                 34600010, "Leonine Misbegotten",
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/leonine_misbegotten_bosses_elden_ring__night_reign_wiki-300px.png",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/leonine_misbegotten_bosses_elden_ring__night_reign_wiki-300px.png",
                 location: "Encampment",
                 drops: ["Strong Standard Reward"],
                 parriable: true,
@@ -807,7 +872,7 @@ public partial class Boss
         [
             new Boss(
                 42700030, "Elder Lion",
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/elder_lion_boss_elden_ring_night_reign_wiki_300px.jpg",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/elder_lion_boss_elden_ring_night_reign_wiki_300px.jpg",
                 location: "Encampment",
                 drops: ["Strong Standard Reward"],
                 weakerVS: [DamageType.Fire]
@@ -834,7 +899,7 @@ public partial class Boss
             new Boss(
                 41300020, "Demi-Human Queen",
                 location: "Field Boss",
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/demi-human_queen-boss-nightreign-wiki-guide-min.jpg",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/demi-human_queen-boss-nightreign-wiki-guide-min.jpg",
                 drops: ["Weak Field Boss Reward"],
                 weakerVS: [DamageType.Fire, StatusType.Poison, StatusType.ScarletRot],
                 damageBaseline: 41300020,
@@ -863,7 +928,7 @@ public partial class Boss
             new Boss(
                 44800020, "Miranda Blossom",
                 location: "Field Boss",
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/miranda_blossom_boss_elden_ring_nightrein_wiki(1).jpg",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/miranda_blossom_boss_elden_ring_nightrein_wiki(1).jpg",
                 statusTypes: [StatusType.Poison],
                 strongerVS: [DamageType.Strike, DamageType.Lightning, DamageType.Holy],
                 weakerVS: [DamageType.Slash, DamageType.Fire],
@@ -874,7 +939,7 @@ public partial class Boss
             new Boss(
                 45000010, "Flying Dragon",
                 location: "Field Boss",
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/flying_dragon-boss-nightreign-wiki-guide-min.jpg",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/flying_dragon-boss-nightreign-wiki-guide-min.jpg",
                 weakerVS: [DamageType.Pierce],
                 drops: ["Strong Field Boss Reward"],
                 weakPoint: "Head"
@@ -903,7 +968,7 @@ public partial class Boss
                 48100010, "Erdtree Avatar",
                 location: "Field Boss",
                 drops: ["Strong Field Boss Reward"],
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/erdtree-avatar-bosses-nightreign-wiki-guide_(1)-min.png",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/erdtree-avatar-bosses-nightreign-wiki-guide_(1)-min.png",
                 strongerVS: [DamageType.Holy],
                 weakerVS: [DamageType.Fire]
             ),
@@ -961,7 +1026,7 @@ public partial class Boss
                 location: "The Crater",
                 drops: ["Dormant Power", "Special Armament Strenghtening"],
                 weakPoint: "Head",
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/magma-wyrm-nightreign-bosses-wiki-guide.png",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/magma-wyrm-nightreign-bosses-wiki-guide.png",
                 inShiftingEarth: [ShiftingEarth.Crater],
                 weakerVS: [DamageType.Standard, DamageType.Strike, DamageType.Pierce],
                 strongerVS: [DamageType.Fire],
@@ -974,7 +1039,7 @@ public partial class Boss
                 32520010, "Royal Carian Knight",
                 location: "Field Boss",
                 drops: ["Strong Field Boss Reward"],
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/royal-carian-knight-boss-nightreign-wiki-guide_(1)-min.png",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/royal-carian-knight-boss-nightreign-wiki-guide_(1)-min.png",
                 parriable: true,
                 critable: false,
                 strongerVS: [DamageType.Magic, DamageType.Fire],
@@ -1021,7 +1086,7 @@ public partial class Boss
                 46600030, "Guardian Golem",
                 location: "Great Church",
                 drops: ["Weak Standard Reward"],
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/guardian-golem-boss-nightreign-wiki-guide_(1)-min.png",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/guardian-golem-boss-nightreign-wiki-guide_(1)-min.png",
                 strongerVS: [DamageType.Fire, DamageType.Lightning, DamageType.Holy],
                 weakerVS: [DamageType.Strike]
             ),
@@ -1040,7 +1105,7 @@ public partial class Boss
                 43550020, "Mausoleum Knight",
                 location: "Great Church",
                 drops: ["Weak Standard Reward"],
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/mausoleum-knight-nightreign-bosses-wiki-guide_(1)-min.png",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/mausoleum-knight-nightreign-bosses-wiki-guide_(1)-min.png",
                 parriable: true,
                 backstabbable: true,
                 strongerVS: [DamageType.Slash],
@@ -1076,7 +1141,7 @@ public partial class Boss
                 39000020, "Fire Monk",
                 location: "Great Church",
                 drops: ["Weak Affinity Reward"],
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/fire-monk-location-boss-elden-ring-nightreign-wiki-guide-300px.jpg",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/fire-monk-location-boss-elden-ring-nightreign-wiki-guide-300px.jpg",
                 parriable: true,
                 backstabbable: true,
                 strongerVS: [DamageType.Fire],
@@ -1099,7 +1164,7 @@ public partial class Boss
                 43510020, "Lordsworn Captain",
                 location: "Fort",
                 drops: ["Weak Standard Reward"],
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/lordsworn-captain-boss-nightreign-wiki-guide_(1)-min.png",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/lordsworn-captain-boss-nightreign-wiki-guide_(1)-min.png",
                 parriable: true,
                 backstabbable: true,
                 strongerVS: [DamageType.Slash],
@@ -1147,7 +1212,7 @@ public partial class Boss
                 location: "Tunnel",
                 drops: ["Tunnel Reward"],
                 notInShiftingEarth: [ShiftingEarth.Woods],
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/troll_enemies_elden_ring_nightreign_wiki_600px.jpg",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/troll_enemies_elden_ring_nightreign_wiki_600px.jpg",
                 weakerVS: [DamageType.Slash]
             ),
             new Boss(
@@ -1182,7 +1247,7 @@ public partial class Boss
                 42600610, "Erdtree Burial Watchdogs", // sword, staff is 42601610
                 location: "Ruins",
                 drops: ["Strong Standard Reward"],
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/burial-watchdog-boss-nightreign-wiki-guide_(1)-min.png",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/burial-watchdog-boss-nightreign-wiki-guide_(1)-min.png",
                 parriable: true,
                 weakerVS: [DamageType.Strike]
             ),
@@ -1201,7 +1266,7 @@ public partial class Boss
                 31700040, "Albinauric Archers",
                 location: "Ruins",
                 drops: ["Strong Standard Reward"],
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/albinauric_archer-boss-nightreign-wiki-guide-min.jpg",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/albinauric_archer-boss-nightreign-wiki-guide-min.jpg",
                 strongerVS: [DamageType.Magic],
                 weakerVS: [DamageType.Holy]
             ),
@@ -1242,7 +1307,7 @@ public partial class Boss
                 location: "Mountaintops South",
                 drops: ["Dormant Power"],
                 inShiftingEarth: [ShiftingEarth.Mountaintops],
-                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/snowfield-trolls-boss-nightreign-wiki-guide_(1)-min.jpg",
+                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/snowfield-trolls-boss-nightreign-wiki-guide_(1)-min.jpg",
                 weakerVS: [DamageType.Fire],
                 damageBaseline: 46000110,
                 damageBaselineName: "the Tunnel boss"
@@ -1263,7 +1328,7 @@ public partial class Boss
         ..KnownNRBossGroups.SelectMany(group => group),
         new Boss(
             75000020, "Gladius, Beast of Night",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/gladius-beast-of-night-nightlord-elden-ring-nightreign-wiki-guide.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/gladius-beast-of-night-nightlord-elden-ring-nightreign-wiki-guide.png",
             drops: ["Old Pocketwatch", "Night of the Beast", "Relics"],
             strongerVS: [DamageType.Fire],
             weakerVS: [DamageType.Holy, StatusType.Sleep],
@@ -1272,7 +1337,7 @@ public partial class Boss
         ),
         new Boss(
             75100020, "Adel, Baron of Night",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/adel-baron-of-night-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/adel-baron-of-night-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
             drops: ["Night of the Baron", "Relics"],
             strongerVS: [DamageType.Fire],
             weakerVS: [StatusType.Poison, StatusType.ScarletRot, StatusType.Frostbite, StatusType.Sleep],
@@ -1281,7 +1346,7 @@ public partial class Boss
         ),
         new Boss(
             75110010, "Adel, Baron of Night (Everdark Sovereign)",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/adel-baron-of-night-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/adel-baron-of-night-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
             drops: ["Relics", "Sovereign Sigils"],
             strongerVS: [DamageType.Fire],
             weakerVS: [StatusType.Poison, StatusType.ScarletRot, StatusType.Frostbite, StatusType.Sleep],
@@ -1292,7 +1357,7 @@ public partial class Boss
         ),
         new Boss(
             76000010, "Fulghor, Champion of Nightglow",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/fulghor-champion-of-nightglow-darkdrift-knight-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/fulghor-champion-of-nightglow-darkdrift-knight-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
             drops: ["Night of the Champion", "Relics"],
             strongerVS: [DamageType.Holy],
             weakerVS: [DamageType.Lightning],
@@ -1367,7 +1432,7 @@ public partial class Boss
         ),
         new Boss(
             75400020, "Maris, Fathom of Night",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/maris-fathom-of-night-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/maris-fathom-of-night-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
             drops: ["Night of the Fathom", "Relics"],
             strongerVS: [DamageType.Fire],
             weakerVS: [DamageType.Lightning],
@@ -1440,7 +1505,7 @@ public partial class Boss
         new Boss(
             77100010, "Centipede Demon",
             drops: ["Night 1 Boss Reward"],
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/centipede_elden_ring_nightreign_bosses_wiki_guide300px.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/centipede_elden_ring_nightreign_bosses_wiki_guide300px.jpg",
             spEffectSetIDs: [15000],
             nightBoss: NightBossState.Day1,
             expeditions: ["Sentient Pest", "Equilibrious Beast", "Darkdrift Knight", "Night Aspect"],
@@ -1540,7 +1605,7 @@ public partial class Boss
         ),
         new Boss(
             30500010, "Outland Commander",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/outland-commander-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/outland-commander-night-boss-nightreign-wiki-guide.jpg",
             drops: ["Night 2 Boss Reward"],
             expeditions: ["Gaping Jaw", "Darkdrift Knight", "Night Aspect"],
             parriable: true,
@@ -1552,7 +1617,7 @@ public partial class Boss
         ),
         new Boss(
             49500010, "Tibia Mariner",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/tibia_mariner_bosses_elden_ring_nightreign_wiki_guide300px.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/tibia_mariner_bosses_elden_ring_nightreign_wiki_guide300px.jpg",
             drops: ["Night 1 Boss Reward"],
             expeditions: ["Sentient Pest", "Equilibrious Beast", "Fissure in the Fog", "Night Aspect"],
             nightBoss: NightBossState.Day1,
@@ -1642,7 +1707,7 @@ public partial class Boss
         new Boss(
             78200010,  "Smelter Demon",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/smelter-demon-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/smelter-demon-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Sentient Pest", "Augur", "Fissure in the Fog", "Night Aspect"],
             drops: ["Night 1 Boss Reward"],
@@ -1653,7 +1718,7 @@ public partial class Boss
         new Boss(
             79200010,  "Dancer of the Boreal Valley",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/dancer-of-the-boreal-valley-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/dancer-of-the-boreal-valley-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day2,
             expeditions: ["Fissure in the Fog", "Night Aspect"],
             drops: ["Night 2 Boss Reward"],
@@ -1663,7 +1728,7 @@ public partial class Boss
         new Boss(
             78000010,  "The Duke's Dear Freya",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/duke's-dear-freja-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/duke's-dear-freja-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Gaping Jaw", "Equilibrious Beast", "Fissure in the Fog", "Night Aspect"],
             drops: ["Night 1 Boss Reward"],
@@ -1674,7 +1739,7 @@ public partial class Boss
         new Boss(
             47509010, "Grafted Monarch",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/grafted-monarch-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/grafted-monarch-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Augur", "Fissure in the Fog", "Night Aspect"],
             drops: ["Night 1 Boss Reward"],
@@ -1685,7 +1750,7 @@ public partial class Boss
         new Boss(
             46809010, "Full-Grown Fallingstar Beast",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/full-grown-fallingstar-beast-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/full-grown-fallingstar-beast-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day2,
             expeditions: ["Augur", "Night Aspect"],
             drops: ["Night 2 Boss Reward"],
@@ -1698,7 +1763,7 @@ public partial class Boss
         new Boss(
             46500010, "Nox Dragonkin Soldier",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/nox-dragonskin-soldier-nightreign-bosses-wiki-guide_(1)-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/nox-dragonskin-soldier-nightreign-bosses-wiki-guide_(1)-min.png",
             nightBoss: NightBossState.Day2,
             expeditions: ["Sentient Pest", "Darkdrift Knight", "Night Aspect"],
             drops: ["Night 2 Boss Reward"],
@@ -1711,7 +1776,7 @@ public partial class Boss
         new Boss(
             79100010, "Nameless King (Phase 1)",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/nameless_king_elden_ring_nightreign_bosses_wiki_guide300px.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/nameless_king_elden_ring_nightreign_bosses_wiki_guide300px.jpg",
             nightBoss: NightBossState.Day2,
             expeditions: ["Darkdrift Knight", "Night Aspect"],
             strongerVS: [DamageType.Fire],
@@ -1729,7 +1794,7 @@ public partial class Boss
         new Boss(
             77000010, "Gaping Dragon",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/gaping-dragon-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/gaping-dragon-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Gaping Jaw", "Augur", "Darkdrift Knight", "Night Aspect"],
             drops: ["Night 1 Boss Reward"],
@@ -1740,7 +1805,7 @@ public partial class Boss
         new Boss(
             30500110, "Battlefield Commander",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/battlefield-commander-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/battlefield-commander-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Sentient Pest", "Equilibrious Beast", "Night Aspect"],
             drops: ["Night 1 Boss Reward"],
@@ -1753,7 +1818,7 @@ public partial class Boss
         new Boss(
             32510110, "Tree Sentinel",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/tree-sentinel-nightreign-bosses-wiki-guide_(1)-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/tree-sentinel-nightreign-bosses-wiki-guide_(1)-min.png",
             nightBoss: NightBossState.Day2,
             expeditions: ["Tricephalos", "Sentient Pest", "Augur", "Night Aspect"],
             drops: ["Night 2 Boss Reward"],
@@ -1785,7 +1850,7 @@ public partial class Boss
         new Boss(
             40210020, "Royal Revenant",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/royal-revenant-boss-nightreign-wiki-guide-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/royal-revenant-boss-nightreign-wiki-guide-min.png",
             nightBoss: NightBossState.Day1,
             expeditions: ["Equilibrious Beast", "Darkdrift Knight", "Night Aspect"],
             drops: ["Night 1 Boss Reward"],
@@ -1824,7 +1889,7 @@ public partial class Boss
         new Boss(
             47700020, "Valiant Gargoyle",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/valiant-gargoyle-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/valiant-gargoyle-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day1,
             expeditions: ["Gaping Jaw", "Augur", "Night Aspect"],
             drops: ["Night 1 Boss Reward"],
@@ -1840,7 +1905,7 @@ public partial class Boss
         new Boss(
             45803010, "Wormface",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/wormface-boss-nightreign-wiki-guide-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/wormface-boss-nightreign-wiki-guide-min.png",
             nightBoss: NightBossState.Day1,
             expeditions: ["Gaping Jaw", "Augur", "Darkdrift Knight", "Night Aspect"],
             drops: ["Night 1 Boss Reward"],
@@ -1858,7 +1923,7 @@ public partial class Boss
         new Boss(
             45101110, "Ancient Dragon",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/ancient-dragon-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/ancient-dragon-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day2,
             expeditions: ["Gaping Jaw", "Night Aspect"],
             drops: ["Night 2 Boss Reward"],
@@ -1874,7 +1939,7 @@ public partial class Boss
         new Boss(
             25000020, "Crucible Knight",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/crucible-knight-golden-hippopotamus-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/crucible-knight-golden-hippopotamus-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day2,
             expeditions: ["Gaping Jaw", "Equilibrious Beast", "Night Aspect"],
             drops: ["Night 2 Boss Reward"],
@@ -1947,7 +2012,7 @@ public partial class Boss
         new Boss(
             35600010, "Godskin Apostle",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/godskin-duo-evergaol-boss-elden-ring-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/godskin-duo-evergaol-boss-elden-ring-nightreign-wiki-guide.jpg",
             parriable: true,
             nightBoss: NightBossState.Day2,
             expeditions: ["Augur", "Equilibrious Beast", "Fissure in the Fog", "Night Aspect"],
@@ -1992,7 +2057,7 @@ public partial class Boss
         new Boss(
             49110010, "Great Wyrm",
             location: "Night Boss",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/great-wyrm-night-boss-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/great-wyrm-night-boss-nightreign-wiki-guide.jpg",
             nightBoss: NightBossState.Day2,
             expeditions: ["Sentient Pest", "Night Aspect"],
             drops: ["Night 2 Boss Reward"],
@@ -2013,7 +2078,7 @@ public partial class Boss
         new Boss(
             25001020, "Crucible Knight", // spear
             location: "Evergaol",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/crucible-knight-boss-elden-ring-nightreign-wiki-guide.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/crucible-knight-boss-elden-ring-nightreign-wiki-guide.png",
             drops: ["Strong Evergaol Reward"],
             parriable: true,
             strongerVS: [DamageType.Magic, DamageType.Holy],
@@ -2043,7 +2108,7 @@ public partial class Boss
         new Boss(
             35600020, "Godskin Apostle",
             location: "Evergaol",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/godskin-apostle-boss-nightreign-wiki-guide_(1)-min.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/godskin-apostle-boss-nightreign-wiki-guide_(1)-min.jpg",
             drops: ["Strong Evergaol Reward"],
             parriable: true,
             strongerVS: [DamageType.Fire, DamageType.Holy],
@@ -2052,7 +2117,7 @@ public partial class Boss
         new Boss(
             35700020, "Godskin Noble",
             location: "Evergaol",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/godskin-noble-boss-nightreign-wiki-guide_(1)-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/godskin-noble-boss-nightreign-wiki-guide_(1)-min.png",
             drops: ["Strong Evergaol Reward"],
             parriable: true,
             strongerVS: [DamageType.Strike, DamageType.Fire, DamageType.Holy],
@@ -2179,7 +2244,7 @@ public partial class Boss
         ),
         new Boss(
             34510040, "Scaly Misbegotten",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/beastly-brigade-boss-nightreign-wiki-guide_(1)-min.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/beastly-brigade-boss-nightreign-wiki-guide_(1)-min.jpg",
             location: "Evergaol",
             drops: ["Weak Evergaol Reward"],
             parriable: true,
@@ -2203,7 +2268,7 @@ public partial class Boss
         ),
         new Boss(
             33000020, "Nox Warriors", // Monk
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/nox-warriors-bosses-elden-ring-nightrein-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/nox-warriors-bosses-elden-ring-nightrein-wiki-guide.jpg",
             location: "Evergaol",
             drops: ["Weak Evergaol Reward"],
             parriable: true,
@@ -2221,7 +2286,7 @@ public partial class Boss
         ),
         new Boss(
             36000020, "Stoneskin Lords", // Alabaster
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/stoneskin-lords-boss-nightreign-wiki-guide_(1)-min.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/stoneskin-lords-boss-nightreign-wiki-guide_(1)-min.jpg",
             location: "Evergaol",
             drops: ["Weak Evergaol Reward"],
             parriable: true,
@@ -2253,7 +2318,7 @@ public partial class Boss
         ),
         new Boss(
             21400210, "Omen",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/omen-boss-nightreign-wiki-guide_(1)-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/omen-boss-nightreign-wiki-guide_(1)-min.png",
             location: "Evergaol",
             drops: ["Weak Evergaol Reward"],
             parriable: true,
@@ -2262,64 +2327,10 @@ public partial class Boss
             weakerVS: [DamageType.Slash]
         ),
         new Boss(
-            21000020, "Black Knife Assassin",
-            location: "Field Boss",
-            drops: ["Weak Field Boss Reward"],
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/black-knife-assassin-boss-nightreign-wiki-guide_(1)-min.png",
-            parriable: true,
-            backstabbable: true,
-            strongerVS: [DamageType.Pierce, DamageType.Holy],
-            weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike]
-        ),
-        new Boss(
-            21000030, "Black Knife Assassin",
-            location: "Castle Basement",
-            notInShiftingEarth: [ShiftingEarth.Noklateo],
-            drops: ["Strong Field Boss Reward"],
-            parriable: true,
-            backstabbable: true,
-            strongerVS: [DamageType.Pierce, DamageType.Holy],
-            weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike],
-            damageBaseline: 21000020,
-            damageBaselineName: "the field boss",
-            spEffectIDs: [7790]
-        ),
-        new Boss(
-            21000040, "Black Knife Assassin",
-            location: "Noklateo",
-            inShiftingEarth: [ShiftingEarth.Noklateo],
-            drops: ["Noklateo Reward"],
-            parriable: true,
-            backstabbable: true,
-            strongerVS: [DamageType.Pierce, DamageType.Holy],
-            weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike],
-            damageBaseline: 21000020,
-            damageBaselineName: "the field boss"
-        ),
-        new Boss(
-            31810010, "Red Wolf of the King Consort",
-            location: "Field Boss",
-            drops: ["Weak Field Boss Reward"],
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/red-wolf-of-the-king-nightreign-bosses-wiki-guide-min.png",
-            strongerVS: [DamageType.Magic],
-            weakerVS: [DamageType.Slash]
-        ),
-        new Boss(
-            31810020, "Red Wolf of the King Consort",
-            location: "Castle Basement",
-            notInShiftingEarth: [ShiftingEarth.Noklateo],
-            drops: ["Strong Field Boss Reward"],
-            strongerVS: [DamageType.Magic],
-            weakerVS: [DamageType.Slash],
-            damageBaseline: 31810010,
-            damageBaselineName: "the field boss",
-            spEffectIDs: [7790]
-        ),
-        new Boss(
             50110010, "Golden Hippopotamus",
             location: "Field Boss",
             drops: ["Weak Field Boss Reward"],
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/XElden-Ring-Nightreign/golden-hippopotamus-boss-nightreign-wiki-guide_(1)-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/XElden-Ring-Nightreign/golden-hippopotamus-boss-nightreign-wiki-guide_(1)-min.png",
             weakerVS: [DamageType.Fire, DamageType.Lightning]
         ),
         new Boss(
@@ -2331,7 +2342,7 @@ public partial class Boss
             36200010, "Oracle Envoy",
             location: "Great Church",
             drops: ["Weak Affinity Reward"],
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/oracle_envoy-boss-nightreign-wiki-guide-min.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/oracle_envoy-boss-nightreign-wiki-guide-min.jpg",
             backstabbable: true,
             strongerVS: [DamageType.Fire, DamageType.Lightning, DamageType.Holy],
             weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Pierce]
@@ -2340,7 +2351,7 @@ public partial class Boss
             44700010, "Abductor Virgin",
             location: "Fort",
             drops: ["Weak Standard Reward"],
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/abductor-virgin-boss-nightreign-wiki-guide-min.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/abductor-virgin-boss-nightreign-wiki-guide-min.jpg",
             critable: false,
             weakPoint: "Interior",
             weakerVS: [DamageType.Lightning],
@@ -2350,7 +2361,7 @@ public partial class Boss
             37040020, "Battlemages",
             location: "Ruins",
             drops: ["Dormant Power"],
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/battlemage-boss-nightreign-wiki-guide-min.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/battlemage-boss-nightreign-wiki-guide-min.jpg",
             parriable: true,
             backstabbable: true,
             strongerVS: [DamageType.Magic],
@@ -2360,7 +2371,7 @@ public partial class Boss
             34715310, "Albinaurics",
             location: "Ruins",
             drops: ["Strong Affinity Reward"],
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/albinaurics-field-boss-elden-ring-nightreign-wiki-guide.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/albinaurics-field-boss-elden-ring-nightreign-wiki-guide.jpg",
             parriable: true,
             backstabbable: true,
             weakerVS: [DamageType.Holy],
@@ -2370,7 +2381,7 @@ public partial class Boss
             35500010, "Sanguine Noble",
             location: "Ruins",
             drops: ["Strong Affinity Reward"],
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/sanguine-noble-boss-elden-ring-nightreign-wiki-guide-300px.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/sanguine-noble-boss-elden-ring-nightreign-wiki-guide-300px.jpg",
             parriable: true,
             backstabbable: true,
             statusTypes: [StatusType.BloodLoss],
@@ -2394,7 +2405,7 @@ public partial class Boss
         new Boss(
             37000010, "Depraved Perfumer",
             location: "Ruins",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/depraved-perfumer-boss-nightreign-wiki-guide_(1)-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/depraved-perfumer-boss-nightreign-wiki-guide_(1)-min.png",
             drops: ["Strong Affinity Reward"],
             backstabbable: true,
             statusTypes: [StatusType.Poison],
@@ -2404,7 +2415,7 @@ public partial class Boss
         new Boss(
             43541010, "Redmane Knights",
             location: "Encampment",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/redmane-knight-boss-nightreign-wiki-guide-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/redmane-knight-boss-nightreign-wiki-guide-min.png",
             drops: ["Strong Affinity Reward"],
             parriable: true,
             backstabbable: true,
@@ -2416,7 +2427,7 @@ public partial class Boss
         new Boss(
             44600010, "Flame Chariots",
             location: "Encampment",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/flame-chariots-boss-nightreign-wiki-guide_(1)-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/flame-chariots-boss-nightreign-wiki-guide_(1)-min.png",
             drops: ["Strong Affinity Reward"],
             backstabbable: true,
             strongerVS: [DamageType.Fire],
@@ -2425,7 +2436,7 @@ public partial class Boss
         new Boss(
             43530030, "Royal Army Knights",
             location: "Encampment",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/royal-army-knights-boss-nightreign-wiki-guide_(1)-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/royal-army-knights-boss-nightreign-wiki-guide_(1)-min.png",
             drops: ["Strong Affinity Reward"],
             parriable: true,
             backstabbable: true,
@@ -2437,7 +2448,7 @@ public partial class Boss
         new Boss(
             46004010, "Frenzied Flame Troll",
             location: "Encampment",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/frenzied-flame-troll-boss-nightreign-wiki-guide_(1)-min.png",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/frenzied-flame-troll-boss-nightreign-wiki-guide_(1)-min.png",
             drops: ["Dormant Power"],
             damageBaseline: 46000110,
             damageBaselineName: "the Tunnel boss",
@@ -2456,7 +2467,7 @@ public partial class Boss
         new Boss(
             58100920, "Demi-Human Swordmaster",
             location: "The Mountaintops",
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/demi-human-swordmaster-boss-nightreign-wiki-guide_(1)-min.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/demi-human-swordmaster-boss-nightreign-wiki-guide_(1)-min.jpg",
             inShiftingEarth: [ShiftingEarth.Mountaintops],
             damageBaseline: 58100910,
             damageBaselineName: "the Night Boss",
@@ -2625,7 +2636,7 @@ public partial class Boss
         ),
         new Boss(
             75200010, "Sentient Pest", // Event Boss
-            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/sentient-pest-boss-nightreign-wiki-guide_(1)-min.jpg",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/sentient-pest-boss-nightreign-wiki-guide_(1)-min.jpg",
             strongerVS: [DamageType.Magic],
             weakerVS: [DamageType.Fire],
             statusTypes: [StatusType.Poison],
