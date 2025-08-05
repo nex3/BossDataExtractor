@@ -100,6 +100,19 @@ public partial class Boss
     public List<Boss> AdditionalPhases { get; } = [];
     public string Name { get; init; }
     public string? Location { get; init; }
+
+    public string? LocationForLink
+    {
+        get
+        {
+            if (Location == "Field Boss") return null;
+            if (Location == "Night Boss") return null;
+            if (Location == "Night Boss Entourage") return null;
+            if (Location == "Castle Basement") return "Castle";
+            return Location;
+        }
+    }
+
     public string? ClosestGrace { get; init; }
     public bool IsBoss { get; }
     public bool IsNPC { get; }

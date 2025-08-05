@@ -18,11 +18,13 @@
 						</h2>
 						{% unless Display == 'ExtraEnemy' or IsTopLevelInfobox %}
 							<h4>
-								<a
-									href="https://eldenring.wiki.fextralife.com/{{
-										Boss.Location | spaceToPlus
-									}}"
-								>{{Boss.Location}}</a>
+								{%- if Boss.LocationForLink -%}
+									<a href="/{{Boss.LocationForLink | spaceToPlus}}">
+										{{- Boss.Location -}}
+									</a>
+								{%- else -%}
+									{{ Boss.Location }}
+								{%- endif -%}
 							</h4>
 						{% endunless %}
 					</th>

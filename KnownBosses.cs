@@ -664,7 +664,7 @@ public partial class Boss
                 location: "Field Boss",
                 drops: ["Weak Field Boss Reward"],
                 topLevelImage: Image.Full4K("red-wolf-field-2-nightreign"),
-                image: Image.Full1080p("red-wolf-field-nightreign"),
+                image: Image.Full4K("red-wolf-field-nightreign"),
                 strongerVS: [DamageType.Magic],
                 weakerVS: [DamageType.Slash]
             ),
@@ -708,7 +708,7 @@ public partial class Boss
             ),
             new Boss(
                 21000040, "Black Knife Assassin",
-                location: "Noklateo",
+                location: "Noklateo, the Shrouded City",
                 inShiftingEarth: [ShiftingEarth.Noklateo],
                 drops: ["Noklateo Reward"],
                 parriable: true,
