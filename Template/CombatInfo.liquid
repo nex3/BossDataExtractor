@@ -11,7 +11,16 @@
 				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
 			-->{% endfor %}
 			{% if Nightreign %}
-			  solo;
+				solo;
+				{% for hp in Boss.DuoHP[0] %}<!--
+					-->{% unless forloop.first %}, {% endunless %}
+					<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+						<strong>{{hp | number}}</strong>
+						HP
+					</span>
+				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
+				-->{% endfor %}
+				duo;
 				{% for hp in Boss.TrioHP[0] %}<!--
 					-->{% unless forloop.first %}, {% endunless %}
 					<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
@@ -19,8 +28,8 @@
 						HP
 					</span>
 				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
-			  -->{% endfor %}
-			  trio
+				-->{% endfor %}
+				trio
 			{% endif %}
 		</li>
 		{% unless Boss.IsNPC or Nightreign %}
@@ -31,17 +40,54 @@
 				</span>
 			</li>
 		{% endunless %}
-		{% if Boss.RelativeDamage != 1 %}
+		{% if Boss.ShowDay2 %}
+			<li>
+				Day 2:
+				{% if Boss.Day2HPMult == 1 and Boss.Day2DamageMult == 1 %}
+				    no change
+				{% else %}
+					{% if Boss.Day2HPMult == 1 %}
+						same
+					{% else %}
+						+{{ Boss.Day2HPMult | minus: 1 | times: 100 | round }}%
+					{% endif %}
+					HP,
+					{% if Boss.Day2DamageMult == 1 %}
+						same
+					{% else %}
+						+{{ Boss.Day2DamageMult | minus: 1 | times: 100 | round }}%
+					{% endif %}
+					damage
+				{% endif %}
+			</li>
+		{% endif %}
+		{% if Boss.DamageBaselineName %}
 			<li>
 				This does
-				{% if Boss.RelativeDamage > 1 %}
-					{{ Boss.RelativeDamage | minus: 1 | times: 100 | round }}%
-					more
+				{% if Boss.RelativeDamage == 1 %}
+					the same damage as
 				{% else %}
-					{{ 1 | minus: Boss.RelativeDamage | times: 100 | round }}%
-					less
+					{% if Boss.RelativeDamage > 1 %}
+						{{ Boss.RelativeDamage | minus: 1 | times: 100 | round }}%
+						more
+					{% else %}
+						{{ 1 | minus: Boss.RelativeDamage | times: 100 | round }}%
+						less
+					{% endif %}
+					damage than
 				{% endif %}
-				damage than {{ Boss.DamageBaselineName }}
+				{{ Boss.DamageBaselineName }}
+			</li>
+		{% endif %}
+		{% if Boss.Location == "Evergaol" %}
+			<li>
+				Because this is an
+				<a class="wiki_link" href="https://eldenringnightreign.wiki.fextralife.com/Evergaol">evergaol</a>
+				boss, it will be weaker if its gaol is opened earlier in the run. The HP
+				{% if Boss.RelativeDamage != 1 %}and damage{% endif %}
+				listed here
+				{% if Boss.RelativeDamage != 1 %}is{% else %}are{% endif %}
+				for late day 2, when it's at full power
 			</li>
 		{% endif %}
 	{% endif %}
@@ -62,10 +108,12 @@
 				</span>
 			</li>
 		{% elsif Boss.IsNPC %}
-			<li>
-				Does not carry a
-				<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Flask+of+Crimson+Tears">Flask of Crimson Tears</a>
-			</li>
+			{% unless Nightreign %}
+				<li>
+					Does not carry a
+					<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Flask+of+Crimson+Tears">Flask of Crimson Tears</a>
+				</li>
+			{% endunless %}
 		{% endif %}
         <li>
             <a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Parrying">Parryable</a>:
@@ -179,13 +227,15 @@
 			</li>
 		{% endif %}
 		{% if Boss.NamedArmor.size > 0 %}
-			<li>
-				Armor:
-				{% for armor in Boss.NamedArmor %}<!--
-					-->{% unless forloop.first %}, {% endunless %}
-					<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/{{armor.Name | spaceToPlus}}">{{armor.Name}}</a><!--
-				-->{% endfor %}
-			</li>
+			{% unless Nightreign %}
+				<li>
+					Armor:
+					{% for armor in Boss.NamedArmor %}<!--
+						-->{% unless forloop.first %}, {% endunless %}
+						<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/{{armor.Name | spaceToPlus}}">{{armor.Name}}</a><!--
+					-->{% endfor %}
+				</li>
+			{% endunless %}
 		{% endif %}
 		{% if Boss.Spells.size > 0 %}
 			<li>
@@ -197,12 +247,13 @@
 			</li>
 		{% endif %}
 	{% endif %}
-	{% if UniqueFight or Nightreign %}
+	{% if UniqueFight %}
         <li>
             Drops
 			{% if Nightreign %}
 				{% if Boss.SoloRunes > 0 %}
 					{% include 'Runes', runes: Boss.SoloRunes %} solo,
+					{% include 'Runes', runes: Boss.DuoRunes %} duo,
 					{% include 'Runes', runes: Boss.TrioRunes %} trio
 				{%- endif -%}
 			{%- else -%}

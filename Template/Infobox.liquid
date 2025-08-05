@@ -1,5 +1,5 @@
-{% unless Display == 'Infobox' %}<hr style="clear: both">{% endunless %}
-<div {% if Display == 'Infobox' %}id="infobox"{% endif %} class="infobox">
+{% unless IsTopLevelInfobox %}<hr style="clear: both">{% endunless %}
+<div {% if IsTopLevelInfobox %}id="infobox"{% endif %} class="infobox">
 	<div class="table-responsive">
 		<table class="wiki_table">
 			<tbody>
@@ -11,12 +11,12 @@
 							{% else %}
 								{% assign slug = Boss.Name %}
 							{% endif %}
-							{% unless Display == 'Infobox' %}
+							{% unless IsTopLevelInfobox %}
 								<a id="{{slug | slugify}}" class="mce-item-anchor"></a><!--
 							-->{% endunless %}<!--
 							-->{{Boss.Name}}
 						</h2>
-						{% unless Display == 'ExtraEnemy' or Nightreign %}
+						{% unless Display == 'ExtraEnemy' or IsTopLevelInfobox %}
 							<h4>
 								<a
 									href="https://eldenring.wiki.fextralife.com/{{
@@ -42,79 +42,82 @@
 						{% endif %}
 					</td>
 				</tr>
-				{% unless Display == 'ExtraEnemy' %}
-					<tr>
+				{% unless IsTopLevelInfobox and BossGroup.size > 0 or Display == 'ExtraEnemy' %}
+				<tr>
 						<td>Drops</td>
-						<td>
-							{%- if Nightreign -%}
-							    {%- if Boss.SoloRunes > 0 -%}
-								    {% include 'Runes', runes: Boss.SoloRunes %} <span style="color: #b4b2b0;">solo</span><br>
-									{% include 'Runes', runes: Boss.TrioRunes %} <span style="color: #b4b2b0;">trio</span>
-								{%- endif -%}
-							{%- else -%}
-								{%- include 'Runes', runes: Boss.Runes[0] -%}
-							{%- endif -%}
-							{%- for drop in Boss.Drops -%}
-								{%- unless forloop.first and Boss.Runes[0] == 0 %}<br>{% endunless -%}
-								<a
-									class="wiki_link"
-									href="/{{drop | noXCount | spaceToPlus}}"
-								>{{drop | noXCount}}</a>
-								{{- drop | onlyXCount -}}
-							{%- endfor -%}
-						</td>
+						<td>{% include 'InfoboxDrops' %}</td>
 					</tr>
 				{% endunless %}
-				<tr>
-					<td>HP</td>
-					<td>
-						{% for hp in Boss.HP[0] %}
-							{% unless forloop.first %}<br>{% endunless %}
-							{{hp | number}}
-							{% if forloop.length > 1 %}
-								<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
-							{% endif %}
-						{% endfor %}
-						{% if Nightreign %}
-						    <span style="color: #b4b2b0">solo</span><br/>
-							{% for hp in Boss.TrioHP[0] %}
+				{% if IsTopLevelInfobox and BossGroup.size > 0 %}
+					<tr><td colspan=2 style="text-align: center">Locations &amp; Drops</td></tr>
+					<tr>
+						<td colspan="2">
+							{% for boss in BossGroup %}
+								<p>
+									<strong>{{ boss.Location }}:</strong><br>
+									{% include 'InfoboxDrops', Boss: boss %}
+								</p>
+							{% endfor %}
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td>HP</td>
+						<td>
+							{% for hp in Boss.HP[0] %}
 								{% unless forloop.first %}<br>{% endunless %}
 								{{hp | number}}
 								{% if forloop.length > 1 %}
 									<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
 								{% endif %}
 							{% endfor %}
-						    <span style="color: #b4b2b0">trio</span>
-						{% endif %}
-					</td>
-				</tr>
-				{% if Display == 'Infobox' or Display == 'NewPage' %}
+							{% if Nightreign %}
+								<span style="color: #b4b2b0">solo</span><br/>
+								{% for hp in Boss.DuoHP[0] %}
+									{% unless forloop.first %}<br>{% endunless %}
+									{{hp | number}}
+									{% if forloop.length > 1 %}
+										<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
+									{% endif %}
+								{% endfor %}
+								<span style="color: #b4b2b0">duo</span><br/>
+								{% for hp in Boss.TrioHP[0] %}
+									{% unless forloop.first %}<br>{% endunless %}
+									{{hp | number}}
+									{% if forloop.length > 1 %}
+										<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
+									{% endif %}
+								{% endfor %}
+								<span style="color: #b4b2b0">trio</span>
+							{% endif %}
+						</td>
+					</tr>
+				{% endif %}
+				{% if IsTopLevelInfobox or Display == 'NewPage' %}
 					<tr>
 						<td>
 							Stronger VS
 							<div class="lineleft">
-								{% if Boss.StrongerVS %}
+								{% if Boss.StrongerVS.size > 0 %}
 									{% for type in Boss.StrongerVS %}
-										{% include 'IconLink', type: type %}<!--
-										-->{% unless forloop.last %}<br/>{% endunless %}
+										{% include 'IconLink', type: type -%}
+										{%- unless forloop.last %}<br/>{% endunless %}
 									{% endfor %}
 								{% else %}
-									A<br/>
-									B
+									-
 								{% endif %}
 							</div>
 						</td>
 						<td>
 							Weak to
 							<div class="lineleft">
-								{% if Boss.WeakerVS %}
+								{% if Boss.WeakerVS.size > 0 %}
 									{% for type in Boss.WeakerVS %}
-										{% include 'IconLink', type: type %}<!--
-										-->{% unless forloop.last %}<br/>{% endunless %}
+										{% include 'IconLink', type: type -%}
+										{%- unless forloop.last %}<br/>{% endunless %}
 									{% endfor %}
 								{% else %}
-									A<br/>
-									B
+									-
 								{% endif %}
 							</div>
 						</td>

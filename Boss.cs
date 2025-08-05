@@ -37,7 +37,9 @@ public partial class Boss
         NightBossState nightBoss = NightBossState.No,
         IEnumerable<string>? expeditions = null,
         Game? firstAppearance = null,
-        bool formidable = false
+        bool formidable = false,
+        IEnumerable<ShiftingEarth>? inShiftingEarth = null,
+        IEnumerable<ShiftingEarth>? notInShiftingEarth = null
     ) {
         ID = id;
         Name = name;
@@ -57,6 +59,8 @@ public partial class Boss
         if (statusTypes != null) StatusTypes.AddAll(statusTypes);
         if (strongerVS != null) StrongerVS.AddAll(strongerVS);
         if (weakerVS != null) WeakerVS.AddAll(weakerVS);
+        if (inShiftingEarth != null) InShiftingEarth.AddAll(inShiftingEarth);
+        if (notInShiftingEarth != null) NotInShiftingEarth.AddAll(notInShiftingEarth);
         WeakPoint = weakPoint;
         if (drops != null) Drops.AddAll(drops);
         Backstabbable = backstabbable || npc;
@@ -104,6 +108,14 @@ public partial class Boss
     public int? CharaInitID { get; init; }
     public SortedSet<int> SPEffectSetIDs { get; } = [];
     public SortedSet<int> SPEffectIDs { get; } = [];
+    public float? Day2HPMult { get; set; }
+    public float? Day2DamageMult { get; set; }
+
+    public bool ShowDay2 =>
+        (Day2HPMult != null || Day2DamageMult != null) &&
+        NightBossState == NightBossState.No &&
+        Location != "Night Boss Entourage";
+
     public int Stance { get; set; }
     public bool Parriable { get; init; }
     public bool Backstabbable { get; init; }
@@ -114,12 +126,16 @@ public partial class Boss
     public SortedSet<IconLink> StrongerVS { get; } = [];
     public SortedSet<IconLink> WeakerVS { get; } = [];
     public SortedDictionary<DamageType, int> Negations { get; } = [];
+    public SortedSet<ShiftingEarth> InShiftingEarth { get; } = [];
+    public SortedSet<ShiftingEarth> NotInShiftingEarth { get; } = [];
     public List<List<int>> HP { get; } = [];
     public List<List<int>> DlcPlusHP { get; } = [];
     public List<int> Defense { get; } = [];
     public List<int> Runes { get; } = [];
-    // Solo Nightreign runs get 12x base runes for unclear reasons
+    // Solo/Duo Nightreign runs get 12x/10.4x base runes from an SpEffect that's applied probably in event code
     public int SoloRunes => Runes[0] * 12;
+
+    public int DuoRunes => (int)Math.Round(Runes[0] * 10.4);
     // Trio Nightreign runs get 8x base runes because everyone is wearing pants with a rune buff
     public int TrioRunes => Runes[0] * 8;
     public List<string> Drops { get; } = [];

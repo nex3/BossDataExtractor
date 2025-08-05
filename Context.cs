@@ -1,4 +1,6 @@
-﻿public enum Display
+﻿using DotNext.Collections.Generic;
+
+public enum Display
 {
     Full, Infobox, CrossEnemy, OneEnemyOfMany, ExtraEnemy, NewGamePlus, NewPage
 }
@@ -7,10 +9,11 @@ public class Context
 {
     private Display displayEnum;
 
-    public Context(Display display, Boss boss, bool eldenRing)
+    public Context(Display display, Boss boss, List<Boss>? bossGroup, bool eldenRing)
     {
         displayEnum = display;
         Boss = boss;
+        if (bossGroup != null) BossGroup.AddAll(bossGroup);
         EldenRing = eldenRing;
     }
 
@@ -20,6 +23,8 @@ public class Context
     }
 
     public Boss Boss { get; init; }
+
+    public List<Boss> BossGroup { get; } = [];
 
     public bool EldenRing { get; init; }
 
@@ -42,10 +47,14 @@ public class Context
         get { return displayEnum != global::Display.OneEnemyOfMany; }
     }
 
+    public bool IsTopLevelInfobox =>
+        displayEnum == global::Display.Infobox || displayEnum == global::Display.NewPage;
+
     public bool UniqueFight
     {
         get {
-            return displayEnum == global::Display.Full ||
+            return displayEnum == global::Display.NewPage ||
+                displayEnum == global::Display.Full ||
                 displayEnum == global::Display.Infobox ||
                 displayEnum == global::Display.OneEnemyOfMany ||
                 displayEnum == global::Display.NewGamePlus;

@@ -1,3 +1,16 @@
+{% if BossGroup.size > 0 %}
+	<h3 class="bonfire">Where to find Elden Ring {% if Nightreign %}Nightreign{% endif %} {{Boss.Name}}</h3>
+
+	<ul>
+		{% for boss in BossGroup %}
+			<li>
+				{{ boss.Location }}
+				[<a class="wiki_link" href="/{{boss.Name | spaceToPlus}}#{{ boss.Location | slugify }}">More Info ↓</a>]
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+
 <h3 class="bonfire">{{Boss.Name}} Combat information</h3>
 
 {% if Nightreign %}

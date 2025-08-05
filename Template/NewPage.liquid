@@ -24,7 +24,11 @@
 	{% endif %}
 </p>
 
-{% include 'Full' %}
+{% if BossGroup.size > 0 %}
+    {% include 'CrossEnemy' %}
+{% else %}
+    {% include 'Full' %}
+{% endif %}
 
 <h3 class="titlearea">Elden Ring Nightreign {{ Boss.Name }} Boss Guide</h3>
 
@@ -98,3 +102,24 @@
 <h3 class="titlearea">{{ Boss.Name }} Image Gallery</h3>
 
 <p>[screenshots and artwork go here]</p>
+
+<table class="wiki_table">
+    <tbody>
+        <tr>
+            <th style="text-align:center">
+                <a
+                        class="wiki_link"
+                        title="Elden Ring {% if Nightreign %}Nightreign{% endif %} Bosses"
+                        href="/Bosses">
+                    All Elden Ring {% if Nightreign %}Nightreign{% endif %} Bosses
+                </a>
+            </th>
+        </tr>
+        <tr>
+            <td style="text-align:center">
+                <img class="embedded-tags" src="/images/include-page.png" data-tags="bosses">
+            </td>
+        </tr>
+    </tbody>
+</table>
+

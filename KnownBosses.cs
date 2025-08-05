@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Net.WebRequestMethods;
 
 public partial class Boss
 {
@@ -656,8 +657,610 @@ public partial class Boss
         )
     ];
 
+    public static readonly List<List<Boss>> KnownNRBossGroups = [
+        [
+            new Boss(
+                46900010, "Grafted Scion",
+                location: "Field Boss",
+                drops: ["Weak Field Boss Reward"],
+                parriable: true,
+                strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Fire, DamageType.Holy],
+                weakerVS: [DamageType.Slash]
+            ),
+            new Boss(
+                46900020, "Grafted Scion",
+                location: "Castle Basement",
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/grafted-scion-boss-nightreign-wiki-guide-min.jpg",
+                drops: ["Strong Field Boss Reward"],
+                parriable: true,
+                strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Fire, DamageType.Holy],
+                weakerVS: [DamageType.Slash],
+                damageBaseline: 46900010,
+                damageBaselineName: "the field boss",
+                spEffectIDs: [7790]
+            ),
+        ],
+        [
+            new Boss(
+                46300210, "Runebear (Silver)",
+                location: "Ruins",
+                drops: ["Strong Affinity Reward"],
+                weakerVS: [DamageType.Fire]
+            ),
+            new Boss(
+                46300210, "Runebear (Brown)",
+                location: "Ruins",
+                drops: ["Dormant Power"],
+                weakerVS: [DamageType.Fire],
+                damageBaseline: 46300210,
+                damageBaselineName: "the silver Runebear"
+            ),
+        ],
+        [
+            new Boss(
+                46801020, "Fallingstar Beast",
+                location: "The Crater",
+                inShiftingEarth: [ShiftingEarth.Crater],
+                drops: ["Strong Crater Reward"],
+                strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike, DamageType.Pierce],
+                weakerVS: [DamageType.Fire, DamageType.Magic, DamageType.Lightning, DamageType.Holy]
+            ),
+            new Boss(
+                46801010, "Fallingstar Beast",
+                location: "Meteor Strike",
+                expeditions: ["Tricephalos", "Gaping Jaw", "Fissure in the Fog"],
+                drops: ["Strong Field Boss Reward"],
+                strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike, DamageType.Pierce],
+                weakerVS: [DamageType.Fire, DamageType.Magic, DamageType.Lightning, DamageType.Holy],
+                damageBaseline: 46801020,
+                damageBaselineName: "the boss in The Crater"
+            ),
+        ],
+        [
+            new Boss(
+                37010030, "Perfumer",
+                location: "Ruins",
+                drops: ["Strong Affinity Reward"],
+                backstabbable: true,
+                statusTypes: [StatusType.Poison],
+                strongerVS: [DamageType.Magic, DamageType.Fire, DamageType.Lightning],
+                weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Pierce, DamageType.Holy]
+            ),
+            new Boss(
+                37011020, "Perfumer",
+                location: "Night Boss Entourage",
+                backstabbable: true,
+                expeditions: ["Tricephalos", "Sentient Pest", "Augur", "Night Aspect"],
+                statusTypes: [StatusType.Poison],
+                strongerVS: [DamageType.Magic, DamageType.Fire, DamageType.Lightning],
+                weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Pierce, DamageType.Holy],
+                damageBaseline: 37010030,
+                damageBaselineName: "the Ruins boss"
+            ),
+        ],
+        [
+            new Boss(
+                71000110, "Ancient Hero of Zamor",
+                location: "Ruins",
+                drops: ["Strong Affinity Reward"],
+                parriable: true,
+                weakerVS: [DamageType.Fire, DamageType.Lightning],
+                strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Pierce]
+            ),
+            new Boss(
+                71000010, "Ancient Hero of Zamor",
+                location: "Field Boss",
+                drops: ["Weak Field Boss Reward"],
+                parriable: true,
+                weakerVS: [DamageType.Fire, DamageType.Lightning],
+                strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Pierce],
+                damageBaseline: 71000110,
+                damageBaselineName: "the Ruins boss"
+            ),
+            new Boss(
+                71000020, "Ancient Hero of Zamor",
+                location: "Castle Basement",
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                drops: ["Strong Field Boss Reward"],
+                parriable: true,
+                weakerVS: [DamageType.Fire, DamageType.Lightning],
+                strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Pierce],
+                damageBaseline: 71000110,
+                damageBaselineName: "the Ruins boss",
+                spEffectIDs: [7790]
+            ),
+        ],
+        [
+            new Boss(
+                34600010, "Leonine Misbegotten",
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/leonine_misbegotten_bosses_elden_ring__night_reign_wiki-300px.png",
+                location: "Encampment",
+                drops: ["Strong Standard Reward"],
+                parriable: true,
+                weakerVS: [DamageType.Slash, DamageType.Fire],
+                strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Holy]
+            ),
+            new Boss(
+                34600020, "Leonine Misbegotten",
+                location: "Field Boss",
+                drops: ["Weak Field Boss Reward"],
+                parriable: true,
+                weakerVS: [DamageType.Slash, DamageType.Fire],
+                strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Holy],
+                damageBaseline: 34600010,
+                damageBaselineName: "the Encampment boss"
+            ),
+            new Boss(
+                34600040, "Leonine Misbegotten",
+                location: "Castle Basement",
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                weakerVS: [DamageType.Slash, DamageType.Fire],
+                strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Holy],
+                drops: ["Strong Field Boss Reward"],
+                parriable: true,
+                damageBaseline: 34600010,
+                damageBaselineName: "the Encampment boss",
+                spEffectIDs: [7790]
+            ),
+        ],
+        [
+            new Boss(
+                42700030, "Elder Lion",
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/elder_lion_boss_elden_ring_night_reign_wiki_300px.jpg",
+                location: "Encampment",
+                drops: ["Strong Standard Reward"],
+                weakerVS: [DamageType.Fire]
+            ),
+            new Boss(
+                42700020, "Elder Lion",
+                location: "Field Boss",
+                drops: ["Weak Field Boss Reward"],
+                weakerVS: [DamageType.Fire],
+                damageBaseline: 42700030,
+                damageBaselineName: "the Encampment boss"
+            ),
+            new Boss(
+                42700040, "Elder Lion",
+                location: "Castle Courtyard",
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                drops: ["Castle Miniboss Reward"],
+                weakerVS: [DamageType.Fire],
+                damageBaseline: 42700030,
+                damageBaselineName: "the Encampment boss"
+            ),
+        ],
+        [
+            new Boss(
+                41300020, "Demi-Human Queen",
+                location: "Field Boss",
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/demi-human_queen-boss-nightreign-wiki-guide-min.jpg",
+                drops: ["Weak Field Boss Reward"],
+                weakerVS: [DamageType.Fire, StatusType.Poison, StatusType.ScarletRot],
+                damageBaseline: 41300020,
+                damageBaselineName: "the field boss"
+            ),
+            new Boss(
+                41300030, "Demi-Human Queen",
+                location: "The Crater",
+                inShiftingEarth: [ShiftingEarth.Crater],
+                drops: ["Weak Crater Reward"],
+                weakerVS: [DamageType.Fire, StatusType.Poison, StatusType.ScarletRot],
+                damageBaseline: 41300020,
+                damageBaselineName: "the field boss"
+            ),
+        ],
+        [
+            new Boss(
+                44800410, "Miranda Blossom",
+                location: "Ruins",
+                statusTypes: [StatusType.Poison],
+                strongerVS: [DamageType.Strike, DamageType.Lightning, DamageType.Holy],
+                weakerVS: [DamageType.Slash, DamageType.Fire],
+                damageBaseline: 44800020,
+                damageBaselineName: "the field boss"
+            ),
+            new Boss(
+                44800020, "Miranda Blossom",
+                location: "Field Boss",
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/miranda_blossom_boss_elden_ring_nightrein_wiki(1).jpg",
+                statusTypes: [StatusType.Poison],
+                strongerVS: [DamageType.Strike, DamageType.Lightning, DamageType.Holy],
+                weakerVS: [DamageType.Slash, DamageType.Fire],
+                drops: ["Weak Field Boss Reward"]
+            ),
+        ],
+        [
+            new Boss(
+                45000010, "Flying Dragon",
+                location: "Field Boss",
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/flying_dragon-boss-nightreign-wiki-guide-min.jpg",
+                weakerVS: [DamageType.Pierce],
+                drops: ["Strong Field Boss Reward"],
+                weakPoint: "Head"
+            ),
+            new Boss(
+                45050020, "Flying Dragon",
+                location: "Night Boss Entourage",
+                weakerVS: [DamageType.Pierce],
+                weakPoint: "Head",
+                damageBaseline: 45000010,
+                damageBaselineName: "the field boss"
+            ),
+            new Boss(
+                45050040, "Flying Dragon",
+                location: "The Mountaintops",
+                weakerVS: [DamageType.Pierce],
+                drops: ["Mountaintops Reward"],
+                weakPoint: "Head",
+                inShiftingEarth: [ShiftingEarth.Mountaintops],
+                damageBaseline: 45000010,
+                damageBaselineName: "the field boss"
+            ),
+        ],
+        [
+            new Boss(
+                48100010, "Erdtree Avatar",
+                location: "Field Boss",
+                drops: ["Strong Field Boss Reward"],
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/erdtree-avatar-bosses-nightreign-wiki-guide_(1)-min.png",
+                strongerVS: [DamageType.Holy],
+                weakerVS: [DamageType.Fire]
+            ),
+            new Boss(
+                48100010, "Erdtree Avatar",
+                location: "Castle Rooftop",
+                drops: ["Strong Field Boss Reward"],
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                strongerVS: [DamageType.Holy],
+                weakerVS: [DamageType.Fire],
+                spEffectIDs: [7791],
+                damageBaseline: 48100010,
+                damageBaselineName: "the field boss"
+            ),
+        ],
+        [
+            new Boss(
+                46700010, "Ancestor Spirit",
+                location: "Field Boss",
+                drops: ["Strong Field Boss Reward"],
+                strongerVS: [DamageType.Magic],
+                weakerVS: [DamageType.Fire, DamageType.Holy]
+            ),
+            new Boss(
+                46700010, "Ancestor Spirit",
+                location: "Castle Rooftop",
+                drops: ["Strong Field Boss Reward"],
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                spEffectIDs: [7791],
+                strongerVS: [DamageType.Magic],
+                weakerVS: [DamageType.Fire, DamageType.Holy],
+                damageBaseline: 48100010,
+                damageBaselineName: "the field boss"
+            ),
+        ],
+        [
+            new Boss(
+                49100190, "Magma Wyrm",
+                location: "Field Boss",
+                drops: ["Strong Field Boss Reward"],
+                weakPoint: "Head"
+            ),
+            new Boss(
+                49100190, "Magma Wyrm",
+                location: "Castle Rooftop",
+                drops: ["Strong Field Boss Reward"],
+                weakPoint: "Head",
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                spEffectIDs: [7791],
+                damageBaseline: 49100190,
+                damageBaselineName: "the field boss"
+            ),
+            new Boss(
+                49100120, "Magma Wyrm",
+                location: "The Crater",
+                drops: ["Dormant Power", "Special Armament Strenghtening"],
+                weakPoint: "Head",
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/magma-wyrm-nightreign-bosses-wiki-guide.png",
+                inShiftingEarth: [ShiftingEarth.Crater],
+                weakerVS: [DamageType.Standard, DamageType.Strike, DamageType.Pierce],
+                strongerVS: [DamageType.Fire],
+                damageBaseline: 49100190,
+                damageBaselineName: "the field boss"
+            ),
+        ],
+        [
+            new Boss(
+                32520010, "Royal Carian Knight",
+                location: "Field Boss",
+                drops: ["Strong Field Boss Reward"],
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/royal-carian-knight-boss-nightreign-wiki-guide_(1)-min.png",
+                parriable: true,
+                critable: false,
+                strongerVS: [DamageType.Magic, DamageType.Fire],
+                weakerVS: [DamageType.Lightning]
+            ),
+            new Boss(
+                32520010, "Royal Carian Knight",
+                location: "Castle Rooftop",
+                drops: ["Strong Field Boss Reward"],
+                parriable: true,
+                critable: false,
+                strongerVS: [DamageType.Magic, DamageType.Fire],
+                weakerVS: [DamageType.Lightning],
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                spEffectIDs: [7791],
+                damageBaseline: 32520010,
+                damageBaselineName: "the field boss"
+            ),
+        ],
+        [
+            new Boss(
+                47701210, "Black Blade Kindred",
+                location: "Field Boss",
+                drops: ["Strong Field Boss Reward"],
+                weakPoint: "Head",
+                strongerVS: [DamageType.Holy],
+                weakerVS: [DamageType.Strike]
+            ),
+            new Boss(
+                47701210, "Black Blade Kindred",
+                location: "Castle Rooftop",
+                drops: ["Strong Field Boss Reward"],
+                weakPoint: "Head",
+                strongerVS: [DamageType.Holy],
+                weakerVS: [DamageType.Strike],
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                spEffectIDs: [7791],
+                damageBaseline: 47701210,
+                damageBaselineName: "the field boss"
+            ),
+        ],
+        [
+            new Boss(
+                46600030, "Guardian Golem",
+                location: "Great Church",
+                drops: ["Weak Standard Reward"],
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/guardian-golem-boss-nightreign-wiki-guide_(1)-min.png",
+                strongerVS: [DamageType.Fire, DamageType.Lightning, DamageType.Holy],
+                weakerVS: [DamageType.Strike]
+            ),
+            new Boss(
+                46601010, "Guardian Golem",
+                location: "Fort",
+                drops: ["Dormant Power"],
+                damageBaseline: 46600030,
+                damageBaselineName: "the Great Church boss",
+                strongerVS: [DamageType.Fire, DamageType.Lightning, DamageType.Holy],
+                weakerVS: [DamageType.Strike]
+            ),
+        ],
+        [
+            new Boss(
+                43550020, "Mausoleum Knight",
+                location: "Great Church",
+                drops: ["Weak Standard Reward"],
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/mausoleum-knight-nightreign-bosses-wiki-guide_(1)-min.png",
+                parriable: true,
+                backstabbable: true,
+                strongerVS: [DamageType.Slash],
+                weakerVS: [DamageType.Pierce, DamageType.Lightning, DamageType.Holy]
+            ),
+            new Boss(
+                43550010, "Mausoleum Knight", // Normal
+                location: "Noklateo, the Shifting City",
+                inShiftingEarth: [ShiftingEarth.Noklateo],
+                damageBaseline: 43550020,
+                damageBaselineName: "the Great Church boss",
+                parriable: true,
+                backstabbable: true,
+                strongerVS: [DamageType.Slash],
+                weakerVS: [DamageType.Pierce, DamageType.Lightning, DamageType.Holy]
+            ),
+            new Boss(
+                43551020, "Mausoleum Knight", // Flaming Sword
+                location: "Noklateo, the Shifting City",
+                inShiftingEarth: [ShiftingEarth.Noklateo],
+                drops: ["Dormant Power"],
+                damageBaseline: 43550020,
+                damageBaselineName: "the Great Church boss",
+                parriable: true,
+                backstabbable: true,
+                statusTypes: [StatusType.DeathBlight],
+                strongerVS: [DamageType.Slash],
+                weakerVS: [DamageType.Pierce, DamageType.Lightning, DamageType.Holy]
+            ),
+        ],
+        [
+            new Boss(
+                39000020, "Fire Monk",
+                location: "Great Church",
+                drops: ["Weak Affinity Reward"],
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/fire-monk-location-boss-elden-ring-nightreign-wiki-guide-300px.jpg",
+                parriable: true,
+                backstabbable: true,
+                strongerVS: [DamageType.Fire],
+                weakerVS: [DamageType.Holy]
+            ),
+            new Boss(
+                39001010, "Fire Monk",
+                location: "The Crater",
+                parriable: true,
+                backstabbable: true,
+                inShiftingEarth: [ShiftingEarth.Crater],
+                strongerVS: [DamageType.Fire],
+                weakerVS: [DamageType.Holy],
+                damageBaseline: 39000020,
+                damageBaselineName: "the Great Church boss"
+            ),
+        ],
+        [
+            new Boss(
+                43510020, "Lordsworn Captain",
+                location: "Fort",
+                drops: ["Weak Standard Reward"],
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/lordsworn-captain-boss-nightreign-wiki-guide_(1)-min.png",
+                parriable: true,
+                backstabbable: true,
+                strongerVS: [DamageType.Slash],
+                weakerVS: [DamageType.Pierce, DamageType.Lightning]
+            ),
+            new Boss(
+                43511120, "Lordsworn Captain",
+                location: "Tunnel",
+                drops: ["Tunnel Reward"],
+                parriable: true,
+                backstabbable: true,
+                strongerVS: [DamageType.Slash],
+                weakerVS: [DamageType.Pierce, DamageType.Lightning],
+                damageBaseline: 43511120,
+                damageBaselineName: "the Fort boss"
+            ),
+            new Boss(
+                43510030, "Lordsworn Captain",
+                location: "The Mountaintops",
+                drops: ["Dormant Power"],
+                inShiftingEarth: [ShiftingEarth.Mountaintops],
+                parriable: true,
+                backstabbable: true,
+                strongerVS: [DamageType.Slash],
+                weakerVS: [DamageType.Pierce, DamageType.Lightning],
+                damageBaseline: 43511120,
+                damageBaselineName: "the Fort boss"
+            ),
+            new Boss(
+                43510040, "Lordsworn Captain",
+                location: "The Rotted Woods",
+                drops: ["Dormant Power"],
+                inShiftingEarth: [ShiftingEarth.Woods],
+                parriable: true,
+                backstabbable: true,
+                strongerVS: [DamageType.Slash],
+                weakerVS: [DamageType.Pierce, DamageType.Lightning],
+                damageBaseline: 43511120,
+                damageBaselineName: "the Fort boss"
+            ),
+        ],
+        [
+            new Boss(
+                46000110, "Troll",
+                location: "Tunnel",
+                drops: ["Tunnel Reward"],
+                notInShiftingEarth: [ShiftingEarth.Woods],
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/troll_enemies_elden_ring_nightreign_wiki_600px.jpg",
+                weakerVS: [DamageType.Slash]
+            ),
+            new Boss(
+                46000030, "Troll",
+                location: "Castle",
+                drops: ["Castle Miniboss Reward"],
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                weakerVS: [DamageType.Slash],
+                damageBaseline: 46000110,
+                damageBaselineName: "the Tunnel boss"
+            )
+        ],
+        [
+            new Boss(
+                43401120, "Mad Pumpkin Head",
+                location: "Tunnel",
+                drops: ["Tunnel Reward"],
+                weakerVS: [DamageType.Lightning],
+                strongerVS: [DamageType.Strike]
+            ),
+            new Boss(
+                43401010, "Mad Pumpkin Head",
+                location: "Encampment",
+                weakerVS: [DamageType.Lightning],
+                strongerVS: [DamageType.Strike],
+                damageBaseline: 43401120,
+                damageBaselineName: "the Tunnel boss"
+            )
+        ],
+        [
+            new Boss(
+                42600610, "Erdtree Burial Watchdogs", // sword, staff is 42601610
+                location: "Ruins",
+                drops: ["Strong Standard Reward"],
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/burial-watchdog-boss-nightreign-wiki-guide_(1)-min.png",
+                parriable: true,
+                weakerVS: [DamageType.Strike]
+            ),
+            new Boss(
+                42600110, "Erdtree Burial Watchdogs",
+                location: "Night Boss Entourage",
+                expeditions: ["Sentient Pest", "Augur", "Fissure in the Fog", "Night Aspect"],
+                parriable: true,
+                weakerVS: [DamageType.Strike],
+                damageBaseline: 42600610,
+                damageBaselineName: "the Ruins boss"
+            ),
+        ],
+        [
+            new Boss(
+                31700040, "Albinauric Archers",
+                location: "Ruins",
+                drops: ["Strong Standard Reward"],
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/albinauric_archer-boss-nightreign-wiki-guide-min.jpg",
+                strongerVS: [DamageType.Magic],
+                weakerVS: [DamageType.Holy]
+            ),
+            new Boss(
+                31700020, "Albinauric Archers",
+                location: "The Mountaintops",
+                drops: ["Dormant Power"],
+                inShiftingEarth: [ShiftingEarth.Mountaintops],
+                damageBaseline: 31700040,
+                damageBaselineName: "the Ruins boss",
+                strongerVS: [DamageType.Magic],
+                weakerVS: [DamageType.Holy]
+            ),
+        ],
+        [
+            new Boss(
+                39101120, "Fire Prelate",
+                location: "Crater West",
+                drops: ["Dormant Power"],
+                inShiftingEarth: [ShiftingEarth.Crater],
+                strongerVS: [DamageType.Fire],
+                weakerVS: [DamageType.Holy]
+            ),
+            new Boss(
+                39100130, "Fire Prelates",
+                location: "Crater North",
+                drops: ["Weak Crater Reward"],
+                inShiftingEarth: [ShiftingEarth.Crater],
+                strongerVS: [DamageType.Fire],
+                weakerVS: [DamageType.Holy],
+                damageBaseline: 39101120,
+                damageBaselineName: "the previous enemies"
+            ),
+        ],
+        [
+            new Boss(
+                46020050, "Snowfield Troll",
+                location: "Mountaintops South",
+                drops: ["Dormant Power"],
+                inShiftingEarth: [ShiftingEarth.Mountaintops],
+                imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/snowfield-trolls-boss-nightreign-wiki-guide_(1)-min.jpg",
+                weakerVS: [DamageType.Fire],
+                damageBaseline: 46000110,
+                damageBaselineName: "the Tunnel boss"
+            ),
+            new Boss(
+                46020030, "Snowfield Trolls",
+                location: "Mountaintops East",
+                drops: ["Mountaintops Reward"],
+                inShiftingEarth: [ShiftingEarth.Mountaintops],
+                weakerVS: [DamageType.Fire],
+                damageBaseline: 46000110,
+                damageBaselineName: "the Tunnel boss"
+            ),
+        ],
+    ];
 
     public static readonly List<Boss> KnownNRBosses = [
+        ..KnownNRBossGroups.SelectMany(group => group),
         new Boss(
             75000020, "Gladius, Beast of Night",
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/gladius-beast-of-night-nightlord-elden-ring-nightreign-wiki-guide.png",
@@ -734,13 +1337,18 @@ public partial class Boss
             damageBaselineName: "the standard version"
         ),
         new Boss(
-            75300120, "Faurtis Stoneshield (Scorpion, Everdark Sovereign, Phase 1)", // healthbar
+            75300120, "Faurtis Stoneshield (Scorpion, Everdark Sovereign, Phase 1)",
             strongerVS: [DamageType.Slash],
             weakerVS: [DamageType.Fire, DamageType.Strike, StatusType.ScarletRot, StatusType.BloodLoss, StatusType.Frostbite, StatusType.Sleep],
             nightlord: true,
             expeditions: ["Sentient Pest Everdark Sovereign"],
             damageBaseline: 75200010,
             damageBaselineName: "the standard version"
+        ),
+        new Boss(
+            21500310, "Gnoster, Wisdom of Night (Everdark Sovereign, Phase 1, Healthbar)",
+            nightlord: true,
+            expeditions: ["Sentient Pest Everdark Sovereign"]
         ),
         new Boss(
             75300020, "Faurtis Stoneshield (Scorpion, Everdark Sovereign, Phase 2)",
@@ -759,6 +1367,7 @@ public partial class Boss
         ),
         new Boss(
             75400020, "Maris, Fathom of Night",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/maris-fathom-of-night-nightlord-boss-elden-ring-nightreign-wiki-guide.jpg",
             drops: ["Night of the Fathom", "Relics"],
             strongerVS: [DamageType.Fire],
             weakerVS: [DamageType.Lightning],
@@ -894,6 +1503,17 @@ public partial class Boss
             critable: false
         ),
         new Boss(
+            32500090, "Draconic Tree Sentinel",
+            location: "Castle Rooftop",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
+            drops: ["Strong Field Boss Reward"],
+            parriable: true,
+            critable: false,
+            spEffectIDs: [7791],
+            damageBaseline: 32500090,
+            damageBaselineName: "the field boss"
+        ),
+        new Boss(
             46400020, "Ulcerated Tree Spirit",
             location: "Night Boss",
             drops: ["Night 1 Boss Reward"],
@@ -908,6 +1528,15 @@ public partial class Boss
             location: "Field Boss",
             formidable: true,
             drops: ["Strong Field Boss Reward"]
+        ),
+        new Boss(
+            46400010, "Ulcerated Tree Spirit",
+            location: "Castle Rooftop",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
+            drops: ["Strong Field Boss Reward"],
+            spEffectIDs: [7791],
+            damageBaseline: 46400010,
+            damageBaselineName: "the field boss"
         ),
         new Boss(
             30500010, "Outland Commander",
@@ -955,11 +1584,22 @@ public partial class Boss
         new Boss(
             31000030, "Bell Bearing Hunter",
             location: "Castle Basement",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
             drops: ["Strong Field Boss Reward"],
             parriable: true,
             damageBaseline: 31000010,
             damageBaselineName: "the field boss",
             spEffectIDs: [7790]
+        ),
+        new Boss(
+            31000010, "Bell Bearing Hunter",
+            location: "Castle Rooftop",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
+            drops: ["Strong Field Boss Reward"],
+            parriable: true,
+            damageBaseline: 31000010,
+            damageBaselineName: "the field boss",
+            spEffectIDs: [7791]
         ),
         new Boss(
             31500020,  "Night's Cavalry (Glaive)",
@@ -1132,6 +1772,17 @@ public partial class Boss
             critable: false
         ),
         new Boss(
+            32510020, "Tree Sentinel",
+            location: "Castle Rooftop",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
+            drops: ["Strong Field Boss Reward"],
+            spEffectIDs: [7791],
+            damageBaseline: 32510020,
+            damageBaselineName: "the field boss",
+            parriable: true,
+            critable: false
+        ),
+        new Boss(
             40210020, "Royal Revenant",
             location: "Night Boss",
             imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/royal-revenant-boss-nightreign-wiki-guide-min.png",
@@ -1154,6 +1805,7 @@ public partial class Boss
         new Boss(
             40210030, "Royal Revenant",
             location: "Castle Basement",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
             drops: ["Strong Field Boss Reward"],
             statusTypes: [StatusType.Poison],
             spEffectIDs: [7790],
@@ -1163,6 +1815,7 @@ public partial class Boss
         new Boss(
             40200030, "Royal Revenant",
             location: "Noklateo",
+            inShiftingEarth: [ShiftingEarth.Noklateo],
             drops: ["Dormant Power"],
             statusTypes: [StatusType.Poison],
             damageBaseline: 40210010,
@@ -1216,8 +1869,7 @@ public partial class Boss
         new Boss(
             45102010, "Ancient Dragon",
             location: "Evergaol",
-            drops: ["Strong Evergaol Reward"],
-            spEffectIDs: [99150]
+            drops: ["Strong Evergaol Reward"]
         ),
         new Boss(
             25000020, "Crucible Knight",
@@ -1276,7 +1928,19 @@ public partial class Boss
             statusTypes: [StatusType.Frostbite, StatusType.DeathBlight],
             weakerVS: [DamageType.Strike, DamageType.Holy],
             strongerVS: [DamageType.Pierce, DamageType.Lightning],
-            spEffectIDs: [99152],
+            damageBaseline: 49801020,
+            damageBaselineName: "the field boss"
+        ),
+        new Boss(
+            49801020, "Death Rite Bird",
+            location: "Castle Rooftop",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
+            drops: ["Dormant Power"],
+            weakPoint: "Head",
+            statusTypes: [StatusType.Frostbite, StatusType.DeathBlight],
+            weakerVS: [DamageType.Strike, DamageType.Holy],
+            strongerVS: [DamageType.Pierce, DamageType.Lightning],
+            spEffectIDs: [7791],
             damageBaseline: 49801020,
             damageBaselineName: "the field boss"
         ),
@@ -1311,7 +1975,6 @@ public partial class Boss
             location: "Evergaol", // The Oldest Gaol
             parriable: true,
             drops: ["Strong Evergaol Reward"],
-            spEffectIDs: [99150],
             strongerVS: [DamageType.Fire, DamageType.Holy],
             weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep],
             damageBaseline: 35600020,
@@ -1321,7 +1984,6 @@ public partial class Boss
             35700110, "Godskin Noble",
             location: "Evergaol", // The Oldest Gaol
             parriable: true,
-            spEffectIDs: [99150],
             strongerVS: [DamageType.Strike, DamageType.Fire, DamageType.Holy],
             weakerVS: [DamageType.Slash, StatusType.BloodLoss, StatusType.Sleep],
             damageBaseline: 35700020,
@@ -1360,6 +2022,7 @@ public partial class Boss
         new Boss(
             25000040, "Crucible Knight", // sword
             location: "Castle",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
             parriable: true,
             strongerVS: [DamageType.Magic, DamageType.Holy],
             weakerVS: [DamageType.Fire, DamageType.Lightning],
@@ -1369,6 +2032,7 @@ public partial class Boss
         new Boss(
             25001030, "Crucible Knight", // spear
             location: "Castle",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
             drops: ["Dormant Power"],
             parriable: true,
             strongerVS: [DamageType.Magic, DamageType.Holy],
@@ -1433,6 +2097,7 @@ public partial class Boss
         new Boss(
             30100280, "Banished Knight (Red Eyes)",
             location: "Castle",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
             drops: ["Castle Miniboss Reward"],
             strongerVS: [DamageType.Slash],
             weakerVS: [DamageType.Lightning],
@@ -1444,6 +2109,7 @@ public partial class Boss
         new Boss(
             30100010, "Banished Knight",
             location: "Castle",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
             strongerVS: [DamageType.Slash],
             weakerVS: [DamageType.Lightning],
             backstabbable: true,
@@ -1594,6 +2260,389 @@ public partial class Boss
             backstabbable: true,
             strongerVS: [DamageType.Holy],
             weakerVS: [DamageType.Slash]
+        ),
+        new Boss(
+            21000020, "Black Knife Assassin",
+            location: "Field Boss",
+            drops: ["Weak Field Boss Reward"],
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/black-knife-assassin-boss-nightreign-wiki-guide_(1)-min.png",
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Pierce, DamageType.Holy],
+            weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike]
+        ),
+        new Boss(
+            21000030, "Black Knife Assassin",
+            location: "Castle Basement",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
+            drops: ["Strong Field Boss Reward"],
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Pierce, DamageType.Holy],
+            weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike],
+            damageBaseline: 21000020,
+            damageBaselineName: "the field boss",
+            spEffectIDs: [7790]
+        ),
+        new Boss(
+            21000040, "Black Knife Assassin",
+            location: "Noklateo",
+            inShiftingEarth: [ShiftingEarth.Noklateo],
+            drops: ["Noklateo Reward"],
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Pierce, DamageType.Holy],
+            weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike],
+            damageBaseline: 21000020,
+            damageBaselineName: "the field boss"
+        ),
+        new Boss(
+            31810010, "Red Wolf of the King Consort",
+            location: "Field Boss",
+            drops: ["Weak Field Boss Reward"],
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/red-wolf-of-the-king-nightreign-bosses-wiki-guide-min.png",
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Slash]
+        ),
+        new Boss(
+            31810020, "Red Wolf of the King Consort",
+            location: "Castle Basement",
+            notInShiftingEarth: [ShiftingEarth.Noklateo],
+            drops: ["Strong Field Boss Reward"],
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Slash],
+            damageBaseline: 31810010,
+            damageBaselineName: "the field boss",
+            spEffectIDs: [7790]
+        ),
+        new Boss(
+            50110010, "Golden Hippopotamus",
+            location: "Field Boss",
+            drops: ["Weak Field Boss Reward"],
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/XElden-Ring-Nightreign/golden-hippopotamus-boss-nightreign-wiki-guide_(1)-min.png",
+            weakerVS: [DamageType.Fire, DamageType.Lightning]
+        ),
+        new Boss(
+            44810020, "Miranda Sprout",
+            location: "Field Boss",
+            critable: false
+        ),
+        new Boss(
+            36200010, "Oracle Envoy",
+            location: "Great Church",
+            drops: ["Weak Affinity Reward"],
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/oracle_envoy-boss-nightreign-wiki-guide-min.jpg",
+            backstabbable: true,
+            strongerVS: [DamageType.Fire, DamageType.Lightning, DamageType.Holy],
+            weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Pierce]
+        ),
+        new Boss(
+            44700010, "Abductor Virgin",
+            location: "Fort",
+            drops: ["Weak Standard Reward"],
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/abductor-virgin-boss-nightreign-wiki-guide-min.jpg",
+            critable: false,
+            weakPoint: "Interior",
+            weakerVS: [DamageType.Lightning],
+            strongerVS: [DamageType.Fire, DamageType.Holy]
+        ),
+        new Boss(
+            37040020, "Battlemages",
+            location: "Ruins",
+            drops: ["Dormant Power"],
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/battlemage-boss-nightreign-wiki-guide-min.jpg",
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Pierce, DamageType.Holy]
+        ),
+        new Boss(
+            34715310, "Albinaurics",
+            location: "Ruins",
+            drops: ["Strong Affinity Reward"],
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/albinaurics-field-boss-elden-ring-nightreign-wiki-guide.jpg",
+            parriable: true,
+            backstabbable: true,
+            weakerVS: [DamageType.Holy],
+            strongerVS: [DamageType.Fire]
+        ),
+        new Boss(
+            35500010, "Sanguine Noble",
+            location: "Ruins",
+            drops: ["Strong Affinity Reward"],
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/sanguine-noble-boss-elden-ring-nightreign-wiki-guide-300px.jpg",
+            parriable: true,
+            backstabbable: true,
+            statusTypes: [StatusType.BloodLoss],
+            strongerVS: [DamageType.Fire],
+            weakerVS: [DamageType.Slash]
+        ),
+        new Boss(
+            31800030, "Albinauric Archer's Wolf",
+            location: "Ruins",
+            critable: false,
+            weakerVS: [DamageType.Fire]
+        ),
+        new Boss(
+            31800020, "Albinauric Archer's Wolf",
+            location: "The Mountaintops",
+            critable: false,
+            weakerVS: [DamageType.Fire],
+            damageBaseline: 31800030,
+            damageBaselineName: "the Ruins boss"
+        ),
+        new Boss(
+            37000010, "Depraved Perfumer",
+            location: "Ruins",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/depraved-perfumer-boss-nightreign-wiki-guide_(1)-min.png",
+            drops: ["Strong Affinity Reward"],
+            backstabbable: true,
+            statusTypes: [StatusType.Poison],
+            strongerVS: [DamageType.Magic, DamageType.Fire, DamageType.Lightning, DamageType.Holy],
+            weakerVS: [DamageType.Standard, DamageType.Slash, DamageType.Pierce]
+        ),
+        new Boss(
+            43541010, "Redmane Knights",
+            location: "Encampment",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/redmane-knight-boss-nightreign-wiki-guide-min.png",
+            drops: ["Strong Affinity Reward"],
+            parriable: true,
+            backstabbable: true,
+            damageBaseline: 43511120,
+            damageBaselineName: "the Fort boss Lordsworn Captain",
+            strongerVS: [DamageType.Slash, DamageType.Fire],
+            weakerVS: [DamageType.Pierce, DamageType.Lightning]
+        ),
+        new Boss(
+            44600010, "Flame Chariots",
+            location: "Encampment",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/flame-chariots-boss-nightreign-wiki-guide_(1)-min.png",
+            drops: ["Strong Affinity Reward"],
+            backstabbable: true,
+            strongerVS: [DamageType.Fire],
+            weakerVS: [DamageType.Strike]
+        ),
+        new Boss(
+            43530030, "Royal Army Knights",
+            location: "Encampment",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/royal-army-knights-boss-nightreign-wiki-guide_(1)-min.png",
+            drops: ["Strong Affinity Reward"],
+            parriable: true,
+            backstabbable: true,
+            damageBaseline: 43511120,
+            damageBaselineName: "the Fort boss Lordsworn Captain",
+            strongerVS: [DamageType.Slash, DamageType.Lightning],
+            weakerVS: [DamageType.Pierce]
+        ),
+        new Boss(
+            46004010, "Frenzied Flame Troll",
+            location: "Encampment",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/frenzied-flame-troll-boss-nightreign-wiki-guide_(1)-min.png",
+            drops: ["Dormant Power"],
+            damageBaseline: 46000110,
+            damageBaselineName: "the Tunnel boss",
+            weakerVS: [DamageType.Slash]
+        ),
+        new Boss(
+            39000030, "Fire Monk",
+            location: "Crater",
+            damageBaseline: 39000020,
+            damageBaselineName: "the Great Church boss",
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Fire],
+            weakerVS: [DamageType.Holy]
+        ),
+        new Boss(
+            58100920, "Demi-Human Swordmaster",
+            location: "The Mountaintops",
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/demi-human-swordmaster-boss-nightreign-wiki-guide_(1)-min.jpg",
+            inShiftingEarth: [ShiftingEarth.Mountaintops],
+            damageBaseline: 58100910,
+            damageBaselineName: "the Night Boss",
+            parriable: true,
+            drops: ["Mountaintops Reward"],
+            weakerVS: [DamageType.Slash, DamageType.Fire]
+        ),
+        new Boss(
+            45601020, "Giant Crows",
+            location: "The Mountaintops",
+            inShiftingEarth: [ShiftingEarth.Mountaintops],
+            drops: ["Mountaintops Reward"],
+            weakerVS: [DamageType.Slash, DamageType.Fire],
+            strongerVS: [DamageType.Standard, DamageType.Strike, DamageType.Pierce]
+        ),
+        new Boss(
+            45030010, "Mountaintop Ice Dragon",
+            location: "The Mountaintops",
+            weakPoint: "Head",
+            drops: ["Dormant Power"],
+            inShiftingEarth: [ShiftingEarth.Mountaintops],
+            damageBaseline: 45000010,
+            damageBaselineName: "the Flying Dragon field boss",
+            weakerVS: [DamageType.Strike],
+            strongerVS: [DamageType.Slash, DamageType.Pierce]
+        ),
+        new Boss(
+            46000230, "Headless Troll",
+            location: "Noklateo, the Shrouded City",
+            drops: ["Noklateo Reward"],
+            inShiftingEarth: [ShiftingEarth.Noklateo],
+            damageBaseline: 46000110,
+            damageBaselineName: "the Tunnel boss",
+            weakerVS: [DamageType.Slash]
+        ),
+        new Boss(
+            46200010, "Naturalborn of the Void",
+            location: "Noklateo, the Shrouded City",
+            drops: ["Dormant Power"],
+            inShiftingEarth: [ShiftingEarth.Noklateo],
+            strongerVS: [DamageType.Magic, DamageType.Fire, DamageType.Lightning, DamageType.Holy],
+            weakerVS: [DamageType.Slash, DamageType.Strike, DamageType.Standard, DamageType.Pierce]
+        ),
+        new Boss(
+            46600010, "Golem Horde",
+            location: "Event",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"],
+            drops: ["Favor of the Night"],
+            damageBaseline: 46600030,
+            damageBaselineName: "the Great Church boss",
+            strongerVS: [DamageType.Fire, DamageType.Lightning, DamageType.Holy],
+            weakerVS: [DamageType.Strike]
+        ),
+        new Boss(
+            42410010, "Colossal Fingercreeper",
+            location: "Event",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"],
+            drops: ["Favor of the Night"],
+            weakerVS: [DamageType.Slash, DamageType.Fire],
+            strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Holy]
+        ),
+        new Boss(
+            42400030, "Large Fingercreeper",
+            location: "Event",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"],
+            weakerVS: [DamageType.Slash, DamageType.Fire],
+            strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Holy]
+        ),
+        new Boss(
+            42500030, "Small Fingercreeper",
+            location: "Event",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"],
+            weakerVS: [DamageType.Slash, DamageType.Fire],
+            strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Holy]
+        ),
+
+        /// NPCs
+        new Boss(
+            600030010, "Night Assassin",
+            npc: true,
+            parriable: true,
+            spEffectSetIDs: [110980],
+            drops: ["Condemned Nightfarer Drop"]
+        ),
+        new Boss(
+            600030110, "Night Fallen",
+            npc: true,
+            parriable: true,
+            spEffectSetIDs: [110980],
+            drops: ["Condemned Nightfarer Drop"],
+            weakerVS: [DamageType.Fire, DamageType.Lightning],
+            strongerVS: [DamageType.Standard, DamageType.Strike, DamageType.Pierce]
+        ),
+        new Boss(
+            600030210, "Night Hunter",
+            npc: true,
+            parriable: true,
+            spEffectSetIDs: [110980],
+            drops: ["Condemned Nightfarer Drop"],
+            weakerVS: [DamageType.Slash, DamageType.Strike, DamageType.Pierce, DamageType.Fire],
+            strongerVS: [DamageType.Standard, DamageType.Magic, DamageType.Lightning]
+        ),
+        new Boss(
+            600030310, "Night Thief",
+            npc: true,
+            parriable: true,
+            spEffectSetIDs: [110980],
+            drops: ["Condemned Nightfarer Drop"],
+            weakerVS: [DamageType.Slash, DamageType.Strike, DamageType.Pierce],
+            strongerVS: [DamageType.Magic]
+        ),
+        new Boss(
+            600030410, "Night Raider",
+            npc: true,
+            parriable: true,
+            spEffectSetIDs: [110980],
+            drops: ["Condemned Nightfarer Drop"],
+            weakerVS: [DamageType.Pierce, DamageType.Magic, DamageType.Lightning],
+            strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike, DamageType.Fire]
+        ),
+        new Boss(
+            600030610, "Night Witch",
+            npc: true,
+            parriable: true,
+            spEffectSetIDs: [110980],
+            drops: ["Condemned Nightfarer Drop"],
+            weakerVS: [DamageType.Slash, DamageType.Pierce],
+            strongerVS: [DamageType.Magic]
+        ),
+        new Boss(
+            600030710, "Night Executor",
+            npc: true,
+            parriable: true,
+            spEffectSetIDs: [110980],
+            drops: ["Condemned Nightfarer Drop"],
+            weakerVS: [DamageType.Magic, DamageType.Lightning],
+            strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike]
+        ),
+        new Boss(
+            75400100, "Maris, Fathom of Night (Everdark Sovereign, Phase 1)",
+            strongerVS: [DamageType.Fire],
+            weakerVS: [DamageType.Lightning],
+            statusTypes: [StatusType.Sleep],
+            nightlord: true,
+            expeditions: ["Augur Everdark Sovereign"],
+            damageBaseline: 75400020,
+            damageBaselineName: "the standard version"
+        ),
+        new Boss(
+            75410000, "Maris, Fathom of Night (Everdark Sovereign, Phase 2)",
+            expeditions: ["Augur Everdark Sovereign"],
+            nightlord: true,
+            critable: false,
+            drops: ["Relics", "Sovereign Sigils"],
+            damageBaseline: 75400020,
+            damageBaselineName: "the standard version"
+        ),
+        new Boss(
+            75400010, "Augur", // Event Boss
+            expeditions: ["Sentient Pest", "Fissure in the Fog", "Night Aspect"],
+            drops: ["Unifying Fate"],
+            strongerVS: [DamageType.Fire],
+            weakerVS: [DamageType.Lightning],
+            damageBaseline: 75400020,
+            damageBaselineName: "Maris, Fathom of Night"
+        ),
+        new Boss(
+            75200010, "Sentient Pest", // Event Boss
+            imageUrl: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/sentient-pest-boss-nightreign-wiki-guide_(1)-min.jpg",
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Fire],
+            statusTypes: [StatusType.Poison],
+            expeditions: ["Augur", "Equilibrious Beast", "Night Aspect"],
+            drops: ["Integration of Intelligence"],
+            damageBaseline: 75200020,
+            damageBaselineName: "Gnoster, Wisdom of Night"
+        ),
+        new Boss(
+            75600110, "Equilibrious Beast",
+            drops: ["Demon's Plating"],
+            strongerVS: [DamageType.Magic],
+            weakerVS: [DamageType.Holy, StatusType.Madness],
+            statusTypes: [StatusType.Madness],
+            expeditions: ["Darkdrift Knight", "Fissure in the Fog", "Night Aspect"],
+            damageBaseline: 75600020,
+            damageBaselineName: "Libra, Creature of Night"
         ),
     ];
 }

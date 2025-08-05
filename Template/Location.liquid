@@ -1,0 +1,20 @@
+{% if Nightreign and Boss.Location == 'Castle Basement' %}
+	<h3 class="bonfire">{{Boss.Name}} Location</h3>
+
+	<p>
+		This is one of several bosses which can be found on the lowest floor of the
+		<a class="wiki_link" title="Elden Ring Nightreign Castle" href="/Castle">castle</a>
+		in the center of the map. Enter the basement through one of two passages on the east wall
+		of the moat, on either side of the crumbling bridge.
+	</p>
+{% elsif Nightreign and Boss.Location == 'Castle Rooftop' %}
+	<h3 class="bonfire">{{Boss.Name}} Location</h3>
+	
+	<p>
+		This is one of several bosses which can be found on the roof of the
+		<a class="wiki_link" title="Elden Ring Nightreign Castle" href="/Castle">castle</a>
+		in the center of the map. The easiest way to find it is to take one of the many routes to
+		the middle floor, then climb the stairway in the central room and follow the hall
+		counterclockwise until you reach the roof.
+	</p>
+{% endif %}

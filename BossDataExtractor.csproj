@@ -17,6 +17,8 @@
     <None Remove="Template\Full.liquid" />
     <None Remove="Template\IconLink.liquid" />
     <None Remove="Template\Infobox.liquid" />
+    <None Remove="Template\InfoboxDrops.liquid" />
+    <None Remove="Template\Location.liquid" />
     <None Remove="Template\Negation.liquid" />
     <None Remove="Template\Negations.liquid" />
     <None Remove="Template\NewGamePlus.liquid" />
@@ -44,6 +46,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\Infobox.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\InfoboxDrops.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\Location.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\NewPage.liquid">
@@ -97,7 +105,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SoulsFormats\SoulsFormats\Andre.SoulsFormats.csproj" />
+    <ProjectReference Include="..\Smithbox\src\Andre\SoulsFormats\SoulsFormats\Andre.SoulsFormats.csproj" />
   </ItemGroup>
 
 </Project>

@@ -41,8 +41,8 @@
 	</li>
 	{% if Boss.IsNPC %}
 		<li>
-			This is a Tarnished boss: its stats and attacks work like a player character with
-			equipped items
+			This is a {% if Nightreign %}Nightfarer{% else %}Tarnished{% endif %} boss: its stats
+			and attacks work like a player character with equipped items
 		</li>
 	{% endif %}
 	{% if EldenRing %}
@@ -82,11 +82,34 @@
 				title="elden ring nightreign formidable great enemy icon"
 				src="/file/Elden-Ring-Nightreign/formidable-enemy.png"
 				alt="formidable great enemy">
-			icon at the beginning of day 2.
+			icon at the beginning of day 2
+		</li>
+	{% endif %}
+	{% if Boss.InShiftingEarth.size > 0 %}
+		<li>
+			This only appears when
+			{% for type in Boss.InShiftingEarth %}
+				{% if forloop.last and Boss.InShiftingEarth.size > 1 %}or{% endif %}
+				{% include 'IconLink', type: type -%}
+				{%- unless forloop.last or Boss.Expeditions.size == 2 %},{% endunless %}
+			{% endfor %}
+			{% if Boss.InShiftingEarth.size > 1 %}are{% else %}is{% endif %}
+			active
+		</li>
+	{% elsif Boss.NotInShiftingEarth.size > 0 %}
+		<li>
+			This never appears when
+			{% for type in Boss.NotInShiftingEarth %}
+				{% if forloop.last and Boss.NotInShiftingEarth.size > 1 %}or{% endif %}
+				{% include 'IconLink', type: type -%}
+				{%- unless forloop.last or Boss.Expeditions.size == 2 %},{% endunless %}
+			{% endfor %}
+			{% if Boss.NotInShiftingEarth.size > 1 %}are{% else %}is{% endif %}
+			active
 		</li>
 	{% endif %}
 	{% if Boss.FirstAppearance %}
-		<li>
+	<li>
 			This boss first appeared in
 			<a class="wiki_link" href="{{ Boss.FirstAppearance.Href }}">
 				{{- Boss.FirstAppearance.Name -}}

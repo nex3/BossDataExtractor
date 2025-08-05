@@ -19,17 +19,19 @@ var gamePath = eldenRing
     ? "D:\\Natalie\\Steam\\steamapps\\common\\ELDEN RING\\Game\\"
     : "C:\\Users\\Natalie\\SteamLibrary\\steamapps\\common\\ELDEN RING NIGHTREIGN\\Game\\";
 var gameAbbrev = eldenRing ? "ER" : "NR";
-var smithboxAssetPath = "F:\\Mods\\Smithbox-2-0-5-10-06-2025\\Assets";
+var smithboxAssetPath = "D:\\Natalie\\Code\\smithbox\\src\\Smithbox.Data\\Assets";
 
 var bossName = "Crucible Knight";
-int? bossID = 39701110;
-var displayType = Display.OneEnemyOfMany;
+int? bossID = 46900010;
+string? location = null;
+var displayType = Display.Infobox;
+var multipleEnemiesOfMany = true;
 var minify = true;
 
 var knownBosses = eldenRing ? Boss.KnownERBosses : Boss.KnownNRBosses;
 var boss = bossID == null
-    ? knownBosses.Find((boss) => boss.Name.Contains(bossName))
-    : knownBosses.Find((boss) => boss.ID == bossID);
+    ? knownBosses.Find((boss) => boss.Name.Contains(bossName) && (location == null || boss.Location == location))
+    : knownBosses.Find((boss) => boss.ID == bossID && (location == null || boss.Location == location));
 if (boss == null)
 {
     if (bossID == null)
@@ -41,6 +43,9 @@ if (boss == null)
         throw new Exception($"No boss found with ID {bossID}");
     }
 }
+
+var knownBossGroups = eldenRing ? [] : Boss.KnownNRBossGroups;
+var bossGroup = knownBossGroups.Find(group => group.Contains(boss));
 
 var paramsWeCareAbout = new HashSet<string>([
     "NpcParam", "GameAreaParam", "MultiPlayCorrectionParam", "ResistCorrectParam", "SpEffectParam",
@@ -92,7 +97,7 @@ using (var communityRowNames = JsonDocument.Parse(
         var names = new Dictionary<int, string>();
         foreach (var entry in param.GetProperty("Entries")!.EnumerateArray())
         {
-            names[entry.GetProperty("ID").GetInt32()!] = entry.GetProperty("Name").GetString()!;
+            names[entry.GetProperty("ID").GetInt32()!] = entry.GetProperty("Entries")[0].GetString();
         }
         paramNames[name] = names;
     }
@@ -225,7 +230,7 @@ void loadBossData(Boss boss)
             if (id > 0) ngScaling.Add(spEffects[id]);
         }
     }
-    var ngpScaling = spEffects[(int)bossParams["GameClearSpEffectID"].Value];
+    var ngpScaling = eldenRing ? spEffects[(int)bossParams["GameClearSpEffectID"].Value] : null;
     var dlcpId = (int?)bossParams["dlcGameClearSpEffectID"]?.Value ?? -1;
     var dlcpScaling = dlcpId == -1 ? null : spEffects[dlcpId];
 
@@ -298,9 +303,18 @@ void loadBossData(Boss boss)
     else
     {
         var shortID = boss.ID / 1000 % 100000;
-        var npc = boss.CharaInitID is int charaInitID
-            ? charaInitParam[charaInitID]
-            : charaInitParam[shortID] ?? charaInitParam[2000000 + shortID];
+        PARAM.Row? npc;
+        if (boss.CharaInitID is int charaInitID)
+        {
+            npc = charaInitParam[charaInitID];
+        }
+        else if (eldenRing)
+        {
+            npc = charaInitParam[shortID] ?? charaInitParam[2000000 + shortID];
+        } else {
+            npc = charaInitParam[boss.ID - 600000010];
+        }
+
         List<string> armorFields = ["equip_Helm", "equip_Armer", "equip_Gaunt", "equip_Leg"];
         foreach (var field in armorFields)
         {
@@ -432,7 +446,7 @@ void loadBossData(Boss boss)
 
         // We need to run further calculations, so we break the rules a bit and edit the params
         // directly.
-        var level = (short)npc["soulLv"].Value;
+        var level = (ushort)npc["soulLv"].Value;
         var vigor = (byte)npc["baseVit"].Value;
         double baseResistance = level switch
         {
@@ -478,15 +492,19 @@ void loadBossData(Boss boss)
                 baseDefense + statDefense,
                 (value, row) => value * (float)row["physicsDiffenceRate"].Value
             );
-            var ngpDefense = ngDefense * (float)ngpScaling["physicsDiffenceRate"].Value;
             List<int> defense = [];
             defense.Add((int)Math.Floor(ngDefense));
-            defense.Add((int)Math.Floor(ngpDefense));
-            for (var i = 2; i < 8; i++)
+
+            if (eldenRing)
             {
-                defense.Add((int)Math.Floor(
-                    ngpDefense * (float)clearCountParams[i]["PhysicsDefenseRate"].Value
-                ));
+                var ngpDefense = ngDefense * (float)ngpScaling["physicsDiffenceRate"].Value;
+                defense.Add((int)Math.Floor(ngpDefense));
+                for (var i = 2; i < 8; i++)
+                {
+                    defense.Add((int)Math.Floor(
+                        ngpDefense * (float)clearCountParams[i]["PhysicsDefenseRate"].Value
+                    ));
+                }
             }
             return defense;
         }
@@ -520,13 +538,17 @@ void loadBossData(Boss boss)
             var stat => 60 + (stat - 60) / 3.9
         });
 
-        baseHP = (uint)Math.Floor(vigor switch
-        {
-            < 26 => 300 + 4.25259 * Math.Pow(vigor - 1, 1.5),
-            < 41 => 800 + 33.0532 * Math.Pow(vigor - 25, 1.1),
-            < 61 => 1900 - 12.3588 * Math.Pow(60 - vigor, 1.2),
-            _ => 2100 - 2.46463 * Math.Pow(99 - vigor, 1.2)
-        } * talismanValues<float>("maxHpRate").Aggregate(1.0, (x, y) => x * y));
+        baseHP = (uint)Math.Floor((
+            eldenRing
+            ? vigor switch
+            {
+                < 26 => 300 + 4.25259 * Math.Pow(vigor - 1, 1.5),
+                < 41 => 800 + 33.0532 * Math.Pow(vigor - 25, 1.1),
+                < 61 => 1900 - 12.3588 * Math.Pow(60 - vigor, 1.2),
+                _ => 2100 - 2.46463 * Math.Pow(99 - vigor, 1.2)
+            }
+            : (uint)bossParams["hp"].Value
+        ) * talismanValues<float>("maxHpRate").Aggregate(1.0, (x, y) => x * y));
     }
 
     List<(WeaknessType, string)> weaknessParams = [
@@ -600,6 +622,13 @@ void loadBossData(Boss boss)
             return value * (float)row["physicsAttackPowerRate"].Value;
         }
     );
+
+    if (!eldenRing)
+    {
+        var day2SpEffect = spEffects[(int)bossParams["day2SpEffectID"].Value];
+        boss.Day2HPMult = (float)day2SpEffect["maxHpRate"].Value;
+        boss.Day2DamageMult = (float)day2SpEffect["physicsAttackRate"].Value;
+    }
 
     if (ngpScaling is not null)
     {
@@ -760,7 +789,14 @@ void loadBossData(Boss boss)
     }
 }
 
-loadBossData(boss);
+if (bossGroup != null)
+{
+    foreach (var groupBoss in bossGroup) loadBossData(groupBoss);
+}
+else
+{
+    loadBossData(boss);
+}
 
 var fluid = new FluidParser();
 
@@ -785,13 +821,21 @@ options.Filters.AddFilter("onlyXCount", (input, args, context) =>
     new StringValue(Regex.Replace(input.ToStringValue(), @"(.*?)( x[0-9]+)?$", "$2")));
 options.FileProvider = new PhysicalFileProvider(templateRoot);
 
-string path = options.FileProvider.GetFileInfo(
-    Enum.GetName(typeof(Display), displayType) + ".liquid"
-).PhysicalPath!;
-var template = fluid.Parse(File.ReadAllText(path));
-var context = new TemplateContext(new Context(displayType, boss, eldenRing), options);
-var html = template.Render(context);
-if (minify) html = new HtmlMinifier().Minify(html).MinifiedContent;
+string render(Display displayType, Boss boss)
+{
+    string path = options.FileProvider.GetFileInfo(
+        Enum.GetName(typeof(Display), displayType) + ".liquid"
+    ).PhysicalPath!;
+    var template = fluid.Parse(File.ReadAllText(path));
+    var context = new TemplateContext(new Context(displayType, boss, bossGroup, eldenRing), options);
+    var html = template.Render(context);
+    return minify ? new HtmlMinifier().Minify(html).MinifiedContent : html;
+}
+
+var html =
+    displayType == Display.OneEnemyOfMany && bossGroup != null && multipleEnemiesOfMany
+    ? String.Join("", bossGroup.Select(boss => render(displayType, boss)))
+    : render(displayType, boss);
 
 Thread thread = new Thread(() => Clipboard.SetText(html));
 thread.SetApartmentState(ApartmentState.STA);
