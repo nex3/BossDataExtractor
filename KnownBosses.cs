@@ -722,6 +722,8 @@ public partial class Boss
         [
             new Boss(
                 46900010, "Grafted Scion",
+                topLevelImage: Image.Full1080p("grafted-scion-1"),
+                image: Image.Crop1080p("grafted-scion-field-2-nightreign"),
                 location: "Field Boss",
                 drops: ["Weak Field Boss Reward"],
                 parriable: true,
@@ -810,7 +812,9 @@ public partial class Boss
                 parriable: true,
                 weakerVS: [DamageType.Fire, DamageType.Lightning],
                 strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Pierce]
-            ),
+            ) {
+                CataclysmSpEffectID = 7630
+            },
             new Boss(
                 71000010, "Ancient Hero of Zamor",
                 image: Image.Full4K("ancient-hero-of-zamor-field-1-nightreign"),

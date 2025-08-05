@@ -57,15 +57,47 @@
 					{% else %}
 						+{{ Boss.Day2DamageMult | minus: 1 | times: 100 | round }}%
 					{% endif %}
-					damage
+					<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Calculating+Damage">attack power</a>
+				{% endif %}
+			</li>
+		{% endif %}
+		{% if Boss.CataclysmSpEffectID %}
+			<li>
+				<a class="wiki_link" href="/Events#cataclysm">Cataclysm</a>:
+				{% if Boss.CataclysmHPMult == 1 and Boss.CataclysmDamageMult == 1 %}
+				    no change
+				{% else %}
+					{% if Boss.CataclysmHPMult == 1 %}
+						same
+					{% else %}
+						+{{ Boss.CataclysmHPMult | minus: 1 | times: 100 | round }}%
+					{% endif %}
+					HP,
+					{% if Boss.CataclysmDamageMult == 1 %}
+						same
+					{% else %}
+						+{{ Boss.CataclysmDamageMult | minus: 1 | times: 100 | round }}%
+					{% endif %}
+					
+					{% if Boss.ShowDay2 %}
+						attack power
+					{% else %}
+						<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Calculating+Damage">attack power</a>
+					{% endif %}
 				{% endif %}
 			</li>
 		{% endif %}
 		{% if Boss.DamageBaselineName %}
 			<li>
-				This does
+				This has
 				{% if Boss.RelativeDamage == 1 %}
-					the same damage as
+					the same
+					{% if Boss.ShowDay2 or Boss.CataclysmSpEffectID %}
+						attack power
+					{% else %}
+						<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Calculating+Damage">attack power</a>
+					{% endif %}
+					as
 				{% else %}
 					{% if Boss.RelativeDamage > 1 %}
 						{{ Boss.RelativeDamage | minus: 1 | times: 100 | round }}%
@@ -74,7 +106,12 @@
 						{{ 1 | minus: Boss.RelativeDamage | times: 100 | round }}%
 						less
 					{% endif %}
-					damage than
+					{% if Boss.ShowDay2 or Boss.CataclysmSpEffectID %}
+						attack power
+					{% else %}
+						<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Calculating+Damage">attack power</a>
+					{% endif %}
+					than
 				{% endif %}
 				{{ Boss.DamageBaselineName }}
 			</li>

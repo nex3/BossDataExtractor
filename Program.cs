@@ -22,7 +22,7 @@ var gameAbbrev = eldenRing ? "ER" : "NR";
 var smithboxAssetPath = "D:\\Natalie\\Code\\smithbox\\src\\Smithbox.Data\\Assets";
 
 var bossName = "Crucible Knight";
-int? bossID = 71000110;
+int? bossID = 21000020;
 string? location = null;
 var displayType = Display.OneEnemyOfMany;
 var multipleEnemiesOfMany = true;
@@ -627,7 +627,14 @@ void loadBossData(Boss boss)
     {
         var day2SpEffect = spEffects[(int)bossParams["day2SpEffectID"].Value];
         boss.Day2HPMult = (float)day2SpEffect["maxHpRate"].Value;
-        boss.Day2DamageMult = (float)day2SpEffect["physicsAttackRate"].Value;
+        boss.Day2DamageMult = (float)day2SpEffect["physicsAttackPowerRate"].Value;
+
+        if (boss.CataclysmSpEffectID is int id)
+        {
+            var cataclysmSpEffect = spEffects[id];
+            boss.CataclysmHPMult = (float)cataclysmSpEffect["maxHpRate"].Value;
+            boss.CataclysmDamageMult = (float)cataclysmSpEffect["physicsAttackPowerRate"].Value;
+        }
     }
 
     if (ngpScaling is not null)

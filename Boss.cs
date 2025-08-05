@@ -118,9 +118,9 @@ public partial class Boss
         NightBossState == NightBossState.No &&
         Location != "Night Boss Entourage";
 
-    public int? CondemnedSpEffectID { get; set; }
-    public float? CondemnedHPMult { get; set; }
-    public float? CondemnedDamageMult { get; set; }
+    public int? CataclysmSpEffectID { get; set; }
+    public float? CataclysmHPMult { get; set; }
+    public float? CataclysmDamageMult { get; set; }
 
     public int Stance { get; set; }
     public bool Parriable { get; init; }
