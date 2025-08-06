@@ -843,6 +843,7 @@ public partial class Boss
         [
             new Boss(
                 34600010, "Leonine Misbegotten",
+                topLevelImage: Image.Crop4K("leonine-misbegotten-basement-2-nightreign"),
                 image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/leonine_misbegotten_bosses_elden_ring__night_reign_wiki-300px.png",
                 location: "Encampment",
                 drops: ["Strong Standard Reward"],
@@ -862,6 +863,7 @@ public partial class Boss
             ),
             new Boss(
                 34600040, "Leonine Misbegotten",
+                image: Image.Crop4K("leonine-misbegotten-basement-3-nightreign"),
                 location: "Castle Basement",
                 notInShiftingEarth: [ShiftingEarth.Noklateo],
                 weakerVS: [DamageType.Slash, DamageType.Fire],

@@ -49,13 +49,13 @@
 					{% if Boss.Day2HPMult == 1 %}
 						same
 					{% else %}
-						+{{ Boss.Day2HPMult | minus: 1 | times: 100 | round }}%
+						{{ Boss.Day2HPMult | minus: 1 | times: 100 | round }}% more
 					{% endif %}
 					HP,
 					{% if Boss.Day2DamageMult == 1 %}
 						same
 					{% else %}
-						+{{ Boss.Day2DamageMult | minus: 1 | times: 100 | round }}%
+						{{ Boss.Day2DamageMult | minus: 1 | times: 100 | round }}% more
 					{% endif %}
 					<a class="wiki_link" href="https://eldenring.wiki.fextralife.com/Calculating+Damage">attack power</a>
 				{% endif %}
@@ -70,13 +70,13 @@
 					{% if Boss.CataclysmHPMult == 1 %}
 						same
 					{% else %}
-						+{{ Boss.CataclysmHPMult | minus: 1 | times: 100 | round }}%
+						{{ Boss.CataclysmHPMult | minus: 1 | times: 100 | round }}% more
 					{% endif %}
 					HP,
 					{% if Boss.CataclysmDamageMult == 1 %}
 						same
 					{% else %}
-						+{{ Boss.CataclysmDamageMult | minus: 1 | times: 100 | round }}%
+						{{ Boss.CataclysmDamageMult | minus: 1 | times: 100 | round }}% more
 					{% endif %}
 					
 					{% if Boss.ShowDay2 %}

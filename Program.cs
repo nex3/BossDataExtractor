@@ -22,7 +22,7 @@ var gameAbbrev = eldenRing ? "ER" : "NR";
 var smithboxAssetPath = "D:\\Natalie\\Code\\smithbox\\src\\Smithbox.Data\\Assets";
 
 var bossName = "Crucible Knight";
-int? bossID = 31810010;
+int? bossID = 34600010;
 string? location = null;
 var displayType = Display.OneEnemyOfMany;
 var multipleEnemiesOfMany = true;
