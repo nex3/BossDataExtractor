@@ -109,6 +109,7 @@ public partial class Boss
             if (Location == "Night Boss") return null;
             if (Location == "Night Boss Entourage") return null;
             if (Location == "Castle Basement") return "Castle";
+            if (Location == "Encampment") return "Main Encampment";
             return Location;
         }
     }
