@@ -44,7 +44,21 @@
 				{% unless IsTopLevelInfobox and BossGroup.size > 0 or Display == 'ExtraEnemy' %}
 				<tr>
 						<td>Drops</td>
-						<td>{% include 'InfoboxDrops' %}</td>
+						<td>
+							{%- if Nightreign -%}
+								{%- if Boss.SoloRunes > 0 -%}
+									{% include 'Runes', runes: Boss.TotalSoloRunes %}
+									<span style="color: #b4b2b0">solo</span><br>
+									{% include 'Runes', runes: Boss.TotalDuoRunes %}
+									<span style="color: #b4b2b0">duo</span><br>
+									{% include 'Runes', runes: Boss.TotalTrioRunes %}
+									<span style="color: #b4b2b0">trio</span>
+								{%- endif -%}
+							{%- else -%}
+								{%- include 'Runes', runes: Boss.Runes[0] -%}
+							{%- endif -%}
+							{%- include 'InfoboxDrops' -%}
+						</td>
 					</tr>
 				{% endunless %}
 				{% if IsTopLevelInfobox and BossGroup.size > 0 %}
@@ -60,7 +74,28 @@
 										{{- boss.Location -}}
 									:</strong>
 									<br>
-									{% include 'InfoboxDrops', Boss: boss %}
+									{%- if Nightreign -%}
+										{%- if Boss.SoloRunes > 0 -%}
+											<span title="solo">
+												{%- include 'Runes', runes: Boss.TotalSoloRunes %}
+												<strong>·</strong>
+												{{-""-}}
+											</span>,
+											<span title="duo">
+												{%- include 'Runes', runes: Boss.TotalDuoRunes %}
+												<strong>··</strong>
+												{{-""-}}
+											</span>,
+											<span title="trio">
+												{%- include 'Runes', runes: Boss.TotalTrioRunes %}
+												<strong>∴</strong>
+												{{-""-}}
+											</span>
+										{%- endif -%}
+									{%- else -%}
+										{%- include 'Runes', runes: Boss.Runes[0] -%}
+									{%- endif -%}
+									{%- include 'InfoboxDrops', Boss: boss -%}
 								</p>
 							{% endfor %}
 						</td>

@@ -1,15 +1,3 @@
-{%- if Nightreign -%}
-	{%- if Boss.SoloRunes > 0 -%}
-		{% include 'Runes', runes: Boss.TotalSoloRunes %}
-		<span style="color: #b4b2b0">solo</span><br>
-		{% include 'Runes', runes: Boss.TotalDuoRunes %}
-		<span style="color: #b4b2b0">duo</span><br>
-		{% include 'Runes', runes: Boss.TotalTrioRunes %}
-		<span style="color: #b4b2b0">trio</span>
-	{%- endif -%}
-{%- else -%}
-	{%- include 'Runes', runes: Boss.Runes[0] -%}
-{%- endif -%}
 {%- for drop in Boss.Drops -%}
 	{%- unless forloop.first and Boss.Runes[0] == 0 %}<br>{% endunless -%}
 	<a
