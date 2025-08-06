@@ -75,6 +75,7 @@
 								{% if forloop.length > 1 %}
 									<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
 								{% endif %}
+								{% if Boss.Count > 1 %}<span style="color: #b4b2b0">each</span>{% endif %}
 							{% endfor %}
 							{% if Nightreign %}
 								<span style="color: #b4b2b0">solo</span><br/>
@@ -85,7 +86,9 @@
 										<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
 									{% endif %}
 								{% endfor %}
-								<span style="color: #b4b2b0">duo</span><br/>
+								<span style="color: #b4b2b0">
+									{% if Boss.Count > 1 %}each{% endif %}
+									duo</span><br/>
 								{% for hp in Boss.TrioHP[0] %}
 									{% unless forloop.first %}<br>{% endunless %}
 									{{hp | number}}
@@ -93,7 +96,9 @@
 										<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
 									{% endif %}
 								{% endfor %}
-								<span style="color: #b4b2b0">trio</span>
+								<span style="color: #b4b2b0">
+									{%- if Boss.Count > 1 %}each{% endif %}
+									trio</span>
 							{% endif %}
 						</td>
 					</tr>

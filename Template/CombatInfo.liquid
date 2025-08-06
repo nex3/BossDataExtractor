@@ -8,6 +8,7 @@
 					<strong>{{hp | number}}</strong>
 					HP
 				</span>
+				{% if Boss.Count > 1 %}each{% endif %}
 				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
 			-->{% endfor %}
 			{% if Nightreign %}
@@ -18,6 +19,7 @@
 						<strong>{{hp | number}}</strong>
 						HP
 					</span>
+					{% if Boss.Count > 1 %}each{% endif %}
 				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
 				-->{% endfor %}
 				duo;
@@ -27,6 +29,7 @@
 						<strong>{{hp | number}}</strong>
 						HP
 					</span>
+					{% if Boss.Count > 1 %}each{% endif %}
 				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
 				-->{% endfor %}
 				trio
@@ -289,9 +292,14 @@
             Drops
 			{% if Nightreign %}
 				{% if Boss.SoloRunes > 0 %}
-					{% include 'Runes', runes: Boss.SoloRunes %} solo,
-					{% include 'Runes', runes: Boss.DuoRunes %} duo,
+					{% include 'Runes', runes: Boss.SoloRunes %} solo
+					{%- if Boss.Count > 1 %} each{% endif -%}
+					,
+					{% include 'Runes', runes: Boss.DuoRunes %} duo
+					{%- if Boss.Count > 1 %} each{% endif -%}
+					,
 					{% include 'Runes', runes: Boss.TrioRunes %} trio
+					{%- if Boss.Count > 1 %} each{% endif -%}
 				{%- endif -%}
 			{%- else -%}
 				{%- include 'Runes', runes: Boss.Runes[0] -%}

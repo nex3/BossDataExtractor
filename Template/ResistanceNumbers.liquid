@@ -1,8 +1,8 @@
-{% for num in numbers %}<!--
-	-->{% unless forloop.first %}&nbsp;/ {% endunless %}
-	{% if strong %}<!--
-		--><strong>{% if commas %}{{num | number}}{% else %}{{num}}{% endif %}</strong><!--
-	-->{% else %}<!--
-		-->{% if commas %}{{num | number}}{% else %}{{num}}{% endif %}<!--
-	-->{% endif %}<!--
--->{% endfor %}
+{% for num in numbers -%}
+	{%- unless forloop.first %}&nbsp;/ {% endunless %}
+	{% if strong -%}
+		<strong>{% if commas %}{{num | number}}{% else %}{{num}}{% endif %}</strong>
+	{%- else -%}
+		{%- if commas %}{{num | number}}{% else %}{{num}}{% endif -%}
+	{%- endif -%}
+{%- endfor %}

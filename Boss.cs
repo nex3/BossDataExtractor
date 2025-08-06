@@ -98,6 +98,7 @@ public partial class Boss
     }
 
     public int ID { get; init; }
+    public int Count { get; init; } = 1;
     public List<Boss> AdditionalPhases { get; } = [];
     public string Name { get; init; }
     public string? Location { get; init; }
@@ -176,6 +177,9 @@ public partial class Boss
     public int DuoRunes => (int)Math.Round(Runes[0] * 10.4);
     // Trio Nightreign runs get 8x base runes because everyone is wearing pants with a rune buff
     public int TrioRunes => Runes[0] * 8;
+    public int TotalSoloRunes => SoloRunes * Count;
+    public int TotalDuoRunes => DuoRunes * Count;
+    public int TotalTrioRunes => TrioRunes * Count;
     public List<string> Drops { get; } = [];
     public SortedDictionary<StatusType, List<List<int>>?> Resistance { get; } = [];
     public SortedSet<WeaknessType> Weaknesses { get; } = [];

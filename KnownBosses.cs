@@ -660,6 +660,74 @@ public partial class Boss
     public static readonly List<List<Boss>> KnownNRBossGroups = [
         [
             new Boss(
+                40210020, "Royal Revenant",
+                location: "Night Boss",
+                topLevelImage: Image.Crop1080p("royal-revenant-basement-2"),
+                nightBoss: NightBossState.Day1,
+                expeditions: ["Equilibrious Beast", "Darkdrift Knight", "Night Aspect"],
+                drops: ["Night 1 Boss Reward"],
+                firstAppearance: Game.ER,
+                statusTypes: [StatusType.Poison],
+                strongerVS: [DamageType.Holy],
+                weakerVS: [DamageType.Slash],
+                damageBaseline: 40210010,
+                damageBaselineName: "the field boss"
+            ),
+            new Boss(
+                40210010, "Royal Revenant",
+                location: "Field Boss",
+                image: Image.Full4K("royal-revenant-field-2-nightreign"),
+                drops: ["Weak Field Boss Reward"],
+                statusTypes: [StatusType.Poison]
+            ),
+            new Boss(
+                40210030, "Royal Revenant",
+                location: "Castle Basement",
+                image: Image.Crop1080p("royal-revenant-basement"),
+                notInShiftingEarth: [ShiftingEarth.Noklateo],
+                drops: ["Strong Field Boss Reward"],
+                statusTypes: [StatusType.Poison],
+                spEffectIDs: [7790],
+                damageBaseline: 40210010,
+                damageBaselineName: "the field boss"
+            ),
+            new Boss(
+                40200030, "Royal Revenant",
+                location: "Noklateo",
+                inShiftingEarth: [ShiftingEarth.Noklateo],
+                drops: ["Noklateo Reward"],
+                statusTypes: [StatusType.Poison],
+                damageBaseline: 40210010,
+                damageBaselineName: "the field boss"
+            ),
+        ],
+        [
+            new Boss(
+                31500020, "Night's Cavalry",
+                location: "Night Boss",
+                topLevelImage: Image.Full4K("nights-cavalry-night-boss-2-nightreign"),
+                image: Image.Full4K("nights-cavalry-night-boss-1-nightreign"),
+                drops: ["Night 1 Boss Reward"],
+                parriable: true,
+                backstabbable: true,
+                nightBoss: NightBossState.Day1,
+                expeditions: ["Gaping Jaw", "Darkdrift Knight", "Night Aspect"],
+                strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike, DamageType.Magic, DamageType.Fire, DamageType.Holy],
+                weakerVS: [DamageType.Pierce],
+                firstAppearance: Game.ER,
+                damageBaseline: 31500010,
+                damageBaselineName: "the field boss"
+            ) { Count = 2 },
+            new Boss(
+                31500010, "Night's Cavalry", // Glaive
+                location: "Field Boss",
+                drops: ["Weak Field Boss Reward"],
+                parriable: true,
+                backstabbable: true
+            ),
+        ],
+        [
+            new Boss(
                 31810010, "Red Wolf of the King Consort",
                 location: "Field Boss",
                 drops: ["Weak Field Boss Reward"],
@@ -1679,34 +1747,6 @@ public partial class Boss
             spEffectIDs: [7791]
         ),
         new Boss(
-            31500020,  "Night's Cavalry (Glaive)",
-            location: "Night Boss",
-            drops: ["Night 1 Boss Reward"],
-            parriable: true,
-            backstabbable: true,
-            nightBoss: NightBossState.Day1,
-            expeditions: ["Gaping Jaw", "Darkdrift Knight", "Night Aspect"],
-            firstAppearance: Game.ER,
-            damageBaseline: 31500010,
-            damageBaselineName: "the field boss"
-        ),
-        new Boss(
-            31501020,  "Night's Cavalry (Flail)",
-            location: "Night Boss",
-            parriable: false,
-            backstabbable: true,
-            nightBoss: NightBossState.Day1,
-            expeditions: ["Gaping Jaw", "Darkdrift Knight", "Night Aspect"],
-            firstAppearance: Game.ER
-        ),
-        new Boss(
-            31500010,  "Night's Cavalry", // Glaive
-            location: "Field Boss",
-            drops: ["Weak Field Boss Reward"],
-            parriable: true,
-            backstabbable: true
-        ),
-        new Boss(
             31600020,  "Funeral Steed",
             location: "Night Boss",
             critable: false
@@ -1858,45 +1898,6 @@ public partial class Boss
             damageBaselineName: "the field boss",
             parriable: true,
             critable: false
-        ),
-        new Boss(
-            40210020, "Royal Revenant",
-            location: "Night Boss",
-            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/royal-revenant-boss-nightreign-wiki-guide-min.png",
-            nightBoss: NightBossState.Day1,
-            expeditions: ["Equilibrious Beast", "Darkdrift Knight", "Night Aspect"],
-            drops: ["Night 1 Boss Reward"],
-            firstAppearance: Game.ER,
-            statusTypes: [StatusType.Poison],
-            strongerVS: [DamageType.Holy],
-            weakerVS: [DamageType.Slash],
-            damageBaseline: 40210010,
-            damageBaselineName: "the field boss"
-        ),
-        new Boss(
-            40210010, "Royal Revenant",
-            location: "Field Boss",
-            drops: ["Weak Field Boss Reward"],
-            statusTypes: [StatusType.Poison]
-        ),
-        new Boss(
-            40210030, "Royal Revenant",
-            location: "Castle Basement",
-            notInShiftingEarth: [ShiftingEarth.Noklateo],
-            drops: ["Strong Field Boss Reward"],
-            statusTypes: [StatusType.Poison],
-            spEffectIDs: [7790],
-            damageBaseline: 40210010,
-            damageBaselineName: "the field boss"
-        ),
-        new Boss(
-            40200030, "Royal Revenant",
-            location: "Noklateo",
-            inShiftingEarth: [ShiftingEarth.Noklateo],
-            drops: ["Dormant Power"],
-            statusTypes: [StatusType.Poison],
-            damageBaseline: 40210010,
-            damageBaselineName: "the field boss"
         ),
         new Boss(
             47700020, "Valiant Gargoyle",
