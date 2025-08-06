@@ -31,4 +31,6 @@
     {
         return Name;
     }
+
+    public string Image => FluidRenderer.RenderTemplate("IconImage", new { type = this });
 }

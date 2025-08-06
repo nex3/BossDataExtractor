@@ -2,16 +2,11 @@
     {% assign style = "color: " | append: type.Color %}
 {% endif %}
 <a class="wiki_link"
-        title="{{type}}" data-mce-href="{{type.Href}}"
+        title="{{type}}"
         href="{{type.Href}}"
-        style="{{style}}"
-        data-mce-style="{{style}}">
-	<img title="{{type}} Icon" alt="{{type}} Icon"
-		style="width: 20px"
-        src="{{type.Src}}"
-        data-mce-src="{{type.Src}}"
-    ><!--
-	-->{% unless imageOnly %}<!--
-	    -->{{type}}<!--
-	-->{% endunless %}<!--
---></a>
+        style="{{style}}">
+	{%- include 'IconImage', type: type -%}
+	{%- unless imageOnly -%}
+	    {{- type -}}
+	{%- endunless -%}
+</a>

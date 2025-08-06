@@ -1,16 +1,10 @@
 ﻿using DotNext.Collections.Generic;
-using Fluid;
-using Fluid.Values;
-using Microsoft.Extensions.FileProviders;
 using SoulsFormats;
 using System.IO;
-using System.Linq;
 using System.Numerics;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows;
-using WebMarkupMin.Core;
 
 // Elden Ring or Nightreign
 var eldenRing = false;
@@ -22,9 +16,9 @@ var gameAbbrev = eldenRing ? "ER" : "NR";
 var smithboxAssetPath = "D:\\Natalie\\Code\\smithbox\\src\\Smithbox.Data\\Assets";
 
 var bossName = "Crucible Knight";
-int? bossID = 34600010;
+int? bossID = 44800020;
 string? location = null;
-var displayType = Display.OneEnemyOfMany;
+var displayType = Display.CrossEnemy;
 var multipleEnemiesOfMany = true;
 var minify = true;
 
@@ -805,44 +799,13 @@ else
     loadBossData(boss);
 }
 
-var fluid = new FluidParser();
-
-var templateRoot = Path.Combine(
-    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
-    @"Template"
-);
-var options = new TemplateOptions();
-options.MemberAccessStrategy = UnsafeMemberAccessStrategy.Instance;
-options.Filters.AddFilter("spaceToPlus", (input, args, context) =>
-    new StringValue(input.ToStringValue().Replace(' ', '+')));
-options.Filters.AddFilter("number", (input, args, context) =>
-    new StringValue($"{input.ToNumberValue():n0}"));
-options.Filters.AddFilter("slugify", (input, args, context) =>
-    new StringValue(Regex.Replace(
-        input.ToStringValue().ToLower().Replace("'s", "s"),
-        @"[^a-z0-9]+", "-")
-    ));
-options.Filters.AddFilter("noXCount", (input, args, context) =>
-    new StringValue(Regex.Replace(input.ToStringValue(), @" x[0-9]+$", "")));
-options.Filters.AddFilter("onlyXCount", (input, args, context) =>
-    new StringValue(Regex.Replace(input.ToStringValue(), @"(.*?)( x[0-9]+)?$", "$2")));
-options.FileProvider = new PhysicalFileProvider(templateRoot);
-
-string render(Display displayType, Boss boss)
-{
-    string path = options.FileProvider.GetFileInfo(
-        Enum.GetName(typeof(Display), displayType) + ".liquid"
-    ).PhysicalPath!;
-    var template = fluid.Parse(File.ReadAllText(path));
-    var context = new TemplateContext(new Context(displayType, boss, bossGroup, eldenRing), options);
-    var html = template.Render(context);
-    return minify ? new HtmlMinifier().Minify(html).MinifiedContent : html;
-}
+string renderBoss(Boss boss) =>
+    FluidRenderer.RenderBoss(displayType, boss, bossGroup, minify: minify, eldenRing: eldenRing);
 
 var html =
     displayType == Display.OneEnemyOfMany && bossGroup != null && multipleEnemiesOfMany
-    ? String.Join("", bossGroup.Select(boss => render(displayType, boss)))
-    : render(displayType, boss);
+    ? String.Join("", bossGroup.Select(renderBoss))
+    : renderBoss(boss);
 
 Thread thread = new Thread(() => Clipboard.SetText(html));
 thread.SetApartmentState(ApartmentState.STA);

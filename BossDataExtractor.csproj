@@ -15,6 +15,7 @@
     <None Remove="Template\Defenses.liquid" />
     <None Remove="Template\ExtraEnemy.liquid" />
     <None Remove="Template\Full.liquid" />
+    <None Remove="Template\IconImage.liquid" />
     <None Remove="Template\IconLink.liquid" />
     <None Remove="Template\Infobox.liquid" />
     <None Remove="Template\InfoboxDrops.liquid" />
@@ -43,6 +44,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\ExtraEnemy.liquid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Template\IconImage.liquid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Template\Infobox.liquid">

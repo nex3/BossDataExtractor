@@ -708,7 +708,7 @@ public partial class Boss
             ),
             new Boss(
                 21000040, "Black Knife Assassin",
-                location: "Noklateo, the Shrouded City",
+                location: "Noklateo",
                 inShiftingEarth: [ShiftingEarth.Noklateo],
                 drops: ["Noklateo Reward"],
                 parriable: true,
@@ -763,7 +763,7 @@ public partial class Boss
         [
             new Boss(
                 46801020, "Fallingstar Beast",
-                location: "The Crater",
+                location: "Crater",
                 inShiftingEarth: [ShiftingEarth.Crater],
                 drops: ["Strong Crater Reward"],
                 strongerVS: [DamageType.Standard, DamageType.Slash, DamageType.Strike, DamageType.Pierce],
@@ -843,14 +843,16 @@ public partial class Boss
         [
             new Boss(
                 34600010, "Leonine Misbegotten",
+                location: "Encampment",
                 topLevelImage: Image.Crop4K("leonine-misbegotten-basement-2-nightreign"),
                 image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/leonine_misbegotten_bosses_elden_ring__night_reign_wiki-300px.png",
-                location: "Encampment",
                 drops: ["Strong Standard Reward"],
                 parriable: true,
                 weakerVS: [DamageType.Slash, DamageType.Fire],
                 strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Holy]
-            ),
+            ) {
+                CataclysmSpEffectID = 7630
+            },
             new Boss(
                 34600020, "Leonine Misbegotten",
                 location: "Field Boss",
@@ -878,14 +880,16 @@ public partial class Boss
         [
             new Boss(
                 42700030, "Elder Lion",
-                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/elder_lion_boss_elden_ring_night_reign_wiki_300px.jpg",
                 location: "Encampment",
+                topLevelImage: Image.Full4K("elder-lion-ruins-1-nightreign"),
+                image: Image.Full4K("elder-lion-ruins-2-nightreign"),
                 drops: ["Strong Standard Reward"],
                 weakerVS: [DamageType.Fire]
             ),
             new Boss(
                 42700020, "Elder Lion",
                 location: "Field Boss",
+                image: Image.Full4K("elder-lion-field-1-nightreign"),
                 drops: ["Weak Field Boss Reward"],
                 weakerVS: [DamageType.Fire],
                 damageBaseline: 42700030,
@@ -894,6 +898,7 @@ public partial class Boss
             new Boss(
                 42700040, "Elder Lion",
                 location: "Castle Courtyard",
+                image: Image.Full4K("elder-lion-castle-nightreign"),
                 notInShiftingEarth: [ShiftingEarth.Noklateo],
                 drops: ["Castle Miniboss Reward"],
                 weakerVS: [DamageType.Fire],
@@ -905,15 +910,14 @@ public partial class Boss
             new Boss(
                 41300020, "Demi-Human Queen",
                 location: "Field Boss",
-                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/demi-human_queen-boss-nightreign-wiki-guide-min.jpg",
+                topLevelImage: Image.Full4K("demi-human-queen-field-1-nightreign"),
+                image: Image.Full4K("demi-human-queen-field-2-nightreign"),
                 drops: ["Weak Field Boss Reward"],
-                weakerVS: [DamageType.Fire, StatusType.Poison, StatusType.ScarletRot],
-                damageBaseline: 41300020,
-                damageBaselineName: "the field boss"
+                weakerVS: [DamageType.Fire, StatusType.Poison, StatusType.ScarletRot]
             ),
             new Boss(
                 41300030, "Demi-Human Queen",
-                location: "The Crater",
+                location: "Crater",
                 inShiftingEarth: [ShiftingEarth.Crater],
                 drops: ["Weak Crater Reward"],
                 weakerVS: [DamageType.Fire, StatusType.Poison, StatusType.ScarletRot],
@@ -924,20 +928,22 @@ public partial class Boss
         [
             new Boss(
                 44800410, "Miranda Blossom",
-                location: "Ruins",
+                location: "Poison Ruins",
                 statusTypes: [StatusType.Poison],
                 strongerVS: [DamageType.Strike, DamageType.Lightning, DamageType.Holy],
                 weakerVS: [DamageType.Slash, DamageType.Fire],
+                damageTypes: [DamageType.Standard, DamageType.Strike, DamageType.Holy],
                 damageBaseline: 44800020,
                 damageBaselineName: "the field boss"
-            ),
+            ) { Affinity = StatusType.Poison },
             new Boss(
                 44800020, "Miranda Blossom",
                 location: "Field Boss",
-                image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/miranda_blossom_boss_elden_ring_nightrein_wiki(1).jpg",
+                image: Image.Full4K("miranda-blossom-field-nightreign"),
                 statusTypes: [StatusType.Poison],
                 strongerVS: [DamageType.Strike, DamageType.Lightning, DamageType.Holy],
                 weakerVS: [DamageType.Slash, DamageType.Fire],
+                damageTypes: [DamageType.Standard, DamageType.Strike, DamageType.Holy],
                 drops: ["Weak Field Boss Reward"]
             ),
         ],
@@ -960,7 +966,7 @@ public partial class Boss
             ),
             new Boss(
                 45050040, "Flying Dragon",
-                location: "The Mountaintops",
+                location: "Mountaintop",
                 weakerVS: [DamageType.Pierce],
                 drops: ["Mountaintops Reward"],
                 weakPoint: "Head",
@@ -1029,7 +1035,7 @@ public partial class Boss
             ),
             new Boss(
                 49100120, "Magma Wyrm",
-                location: "The Crater",
+                location: "Crater",
                 drops: ["Dormant Power", "Special Armament Strenghtening"],
                 weakPoint: "Head",
                 image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/magma-wyrm-nightreign-bosses-wiki-guide.png",
@@ -1119,7 +1125,7 @@ public partial class Boss
             ),
             new Boss(
                 43550010, "Mausoleum Knight", // Normal
-                location: "Noklateo, the Shifting City",
+                location: "Noklateo",
                 inShiftingEarth: [ShiftingEarth.Noklateo],
                 damageBaseline: 43550020,
                 damageBaselineName: "the Great Church boss",
@@ -1130,7 +1136,7 @@ public partial class Boss
             ),
             new Boss(
                 43551020, "Mausoleum Knight", // Flaming Sword
-                location: "Noklateo, the Shifting City",
+                location: "Noklateo",
                 inShiftingEarth: [ShiftingEarth.Noklateo],
                 drops: ["Dormant Power"],
                 damageBaseline: 43550020,
@@ -1155,7 +1161,7 @@ public partial class Boss
             ),
             new Boss(
                 39001010, "Fire Monk",
-                location: "The Crater",
+                location: "Crater",
                 parriable: true,
                 backstabbable: true,
                 inShiftingEarth: [ShiftingEarth.Crater],
@@ -1189,7 +1195,7 @@ public partial class Boss
             ),
             new Boss(
                 43510030, "Lordsworn Captain",
-                location: "The Mountaintops",
+                location: "Mountaintop",
                 drops: ["Dormant Power"],
                 inShiftingEarth: [ShiftingEarth.Mountaintops],
                 parriable: true,
@@ -1201,7 +1207,7 @@ public partial class Boss
             ),
             new Boss(
                 43510040, "Lordsworn Captain",
-                location: "The Rotted Woods",
+                location: "Rotted Woods",
                 drops: ["Dormant Power"],
                 inShiftingEarth: [ShiftingEarth.Woods],
                 parriable: true,
@@ -1278,7 +1284,7 @@ public partial class Boss
             ),
             new Boss(
                 31700020, "Albinauric Archers",
-                location: "The Mountaintops",
+                location: "Mountaintop",
                 drops: ["Dormant Power"],
                 inShiftingEarth: [ShiftingEarth.Mountaintops],
                 damageBaseline: 31700040,
@@ -2402,7 +2408,7 @@ public partial class Boss
         ),
         new Boss(
             31800020, "Albinauric Archer's Wolf",
-            location: "The Mountaintops",
+            location: "Mountaintop",
             critable: false,
             weakerVS: [DamageType.Fire],
             damageBaseline: 31800030,
@@ -2472,7 +2478,7 @@ public partial class Boss
         ),
         new Boss(
             58100920, "Demi-Human Swordmaster",
-            location: "The Mountaintops",
+            location: "Mountaintop",
             image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/demi-human-swordmaster-boss-nightreign-wiki-guide_(1)-min.jpg",
             inShiftingEarth: [ShiftingEarth.Mountaintops],
             damageBaseline: 58100910,
@@ -2483,7 +2489,7 @@ public partial class Boss
         ),
         new Boss(
             45601020, "Giant Crows",
-            location: "The Mountaintops",
+            location: "Mountaintop",
             inShiftingEarth: [ShiftingEarth.Mountaintops],
             drops: ["Mountaintops Reward"],
             weakerVS: [DamageType.Slash, DamageType.Fire],
@@ -2491,7 +2497,7 @@ public partial class Boss
         ),
         new Boss(
             45030010, "Mountaintop Ice Dragon",
-            location: "The Mountaintops",
+            location: "Mountaintop",
             weakPoint: "Head",
             drops: ["Dormant Power"],
             inShiftingEarth: [ShiftingEarth.Mountaintops],

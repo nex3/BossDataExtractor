@@ -19,11 +19,14 @@
 						{% unless Display == 'ExtraEnemy' or IsTopLevelInfobox %}
 							<h4>
 								{%- if Boss.LocationForLink -%}
-									<a href="/{{Boss.LocationForLink | spaceToPlus}}">
-										{{- Boss.Location -}}
+								<a href="/{{Boss.LocationForLink | spaceToPlus}}">
+								{%- endif -%}
+								{%- if Boss.LocationIcon -%}
+									{%- include 'IconImage', type: Boss.LocationIcon -%}
+								{%- endif -%}
+								{{- Boss.Location -}}
+								{%- if Boss.LocationForLink -%}
 									</a>
-								{%- else -%}
-									{{ Boss.Location }}
 								{%- endif -%}
 							</h4>
 						{% endunless %}
@@ -50,7 +53,13 @@
 						<td colspan="2">
 							{% for boss in BossGroup %}
 								<p>
-									<strong>{{ boss.Location }}:</strong><br>
+									<strong>
+										{%- if boss.LocationIcon -%}
+											{%- include 'IconImage', type: boss.LocationIcon -%}
+										{%- endif -%}
+										{{- boss.Location -}}
+									:</strong>
+									<br>
 									{% include 'InfoboxDrops', Boss: boss %}
 								</p>
 							{% endfor %}

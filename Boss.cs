@@ -1,4 +1,5 @@
 ﻿using DotNext.Collections.Generic;
+using System.Xaml.Schema;
 
 public partial class Boss
 {
@@ -90,7 +91,7 @@ public partial class Boss
         if (additionalPhases != null)
         {
             foreach (var phaseID in additionalPhases)
-            { 
+            {
                 AdditionalPhases.Add(new Boss(phaseID, name, location));
             }
         }
@@ -113,6 +114,23 @@ public partial class Boss
             return Location;
         }
     }
+
+    public IconLink? LocationIcon
+    {
+        get
+        {
+            return Location switch
+            {
+                "Crater" => ShiftingEarth.Crater,
+                "Mountaintop" => ShiftingEarth.Mountaintops,
+                "Rotted Woods" => ShiftingEarth.Woods,
+                "Noklateo" => ShiftingEarth.Noklateo,
+                _ => Affinity,
+            };
+        }
+    }
+
+    public IconLink? Affinity { get; init; }
 
     public string? ClosestGrace { get; init; }
     public bool IsBoss { get; }

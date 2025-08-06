@@ -4,7 +4,10 @@
 	<ul>
 		{% for boss in BossGroup %}
 			<li>
-				{{ boss.Location }}
+				{%- if boss.LocationIcon -%}
+					{%- include 'IconImage', type: boss.LocationIcon -%}
+				{%- endif -%}
+				{{- boss.Location }}
 				[<a class="wiki_link" href="/{{boss.Name | spaceToPlus}}#{{ boss.Location | slugify }}">More Info ↓</a>]
 			</li>
 		{% endfor %}
