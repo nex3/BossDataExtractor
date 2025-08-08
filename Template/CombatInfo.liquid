@@ -2,37 +2,44 @@
 	{% if ShowEnemySpecific %}
 	    <li>
             Health:
-			{% for hp in Boss.HP[0] %}<!--
-				-->{% unless forloop.first %}, {% endunless %}
+			{% if Nightreign %}<span title="one player">{% endif %}
+			{% for hp in Boss.HP[0] -%}
+				{%- unless forloop.first %}, {% endunless %}
 				<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
 					<strong>{{hp | number}}</strong>
 					HP
 				</span>
 				{% if Boss.Count > 1 %}each{% endif %}
-				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
-			-->{% endfor %}
+				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif -%}
+			{%- endfor %}
 			{% if Nightreign %}
-				solo;
-				{% for hp in Boss.DuoHP[0] %}<!--
-					-->{% unless forloop.first %}, {% endunless %}
-					<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
-						<strong>{{hp | number}}</strong>
-						HP
-					</span>
-					{% if Boss.Count > 1 %}each{% endif %}
-				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
-				-->{% endfor %}
-				duo;
-				{% for hp in Boss.TrioHP[0] %}<!--
-					-->{% unless forloop.first %}, {% endunless %}
-					<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
-						<strong>{{hp | number}}</strong>
-						HP
-					</span>
-					{% if Boss.Count > 1 %}each{% endif %}
-				{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
-				-->{% endfor %}
-				trio
+				<strong>·</strong></span>;
+				<span title="two players">
+					{% for hp in Boss.DuoHP[0] -%}
+						{%- unless forloop.first %}, {% endunless %}
+						<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+							<strong>{{hp | number}}</strong>
+							HP
+						</span>
+						{% if Boss.Count > 1 %}each{% endif %}
+						{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif -%}
+					{%- endfor %}
+					<strong>··</strong>
+					{{-""-}}
+				</span>;
+				<span title="three players">
+					{% for hp in Boss.TrioHP[0] %}<!--
+						-->{% unless forloop.first %}, {% endunless %}
+						<span style="color: #ffffff;" data-mce-style="color: #ffffff;">
+							<strong>{{hp | number}}</strong>
+							HP
+						</span>
+						{% if Boss.Count > 1 %}each{% endif %}
+					{% if forloop.length > 1 %}(phase {{forloop.index}}){% endif %}<!--
+					-->{% endfor %}
+					<strong>∴</strong>
+					{{-""-}}
+				</span>
 			{% endif %}
 		</li>
 		{% unless Boss.IsNPC or Nightreign %}
@@ -292,14 +299,24 @@
             Drops
 			{% if Nightreign %}
 				{% if Boss.SoloRunes > 0 %}
-					{% include 'Runes', runes: Boss.SoloRunes %} solo
-					{%- if Boss.Count > 1 %} each{% endif -%}
-					,
-					{% include 'Runes', runes: Boss.DuoRunes %} duo
-					{%- if Boss.Count > 1 %} each{% endif -%}
-					,
-					{% include 'Runes', runes: Boss.TrioRunes %} trio
-					{%- if Boss.Count > 1 %} each{% endif -%}
+					<span title="one player">
+						{% include 'Runes', runes: Boss.SoloRunes %}
+						{% if Boss.Count > 1 %}each{% endif %}
+						<strong>·</strong>
+						{{-""-}}
+					</span>,
+					<span title="two players">
+						{% include 'Runes', runes: Boss.DuoRunes %}
+						{% if Boss.Count > 1 %}each{% endif %}
+						<strong>··</strong>
+						{{-""-}}
+					</span>,
+					<span title="three players">
+						{% include 'Runes', runes: Boss.TrioRunes %}
+						{% if Boss.Count > 1 %}each{% endif %}
+						<strong>∴</strong>
+						{{-""-}}
+					</span>
 				{%- endif -%}
 			{%- else -%}
 				{%- include 'Runes', runes: Boss.Runes[0] -%}

@@ -148,6 +148,7 @@ public partial class Boss
 
     public bool ShowDay2 =>
         (Day2HPMult != null || Day2DamageMult != null) &&
+        !Nightlord &&
         NightBossState == NightBossState.No &&
         Location != "Night Boss Entourage";
 

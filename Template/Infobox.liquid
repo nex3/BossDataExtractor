@@ -47,12 +47,21 @@
 						<td>
 							{%- if Nightreign -%}
 								{%- if Boss.SoloRunes > 0 -%}
-									{% include 'Runes', runes: Boss.TotalSoloRunes %}
-									<span style="color: #b4b2b0">solo</span><br>
-									{% include 'Runes', runes: Boss.TotalDuoRunes %}
-									<span style="color: #b4b2b0">duo</span><br>
-									{% include 'Runes', runes: Boss.TotalTrioRunes %}
-									<span style="color: #b4b2b0">trio</span>
+									<span title="one player">
+										{%- include 'Runes', runes: Boss.TotalSoloRunes %}
+										<strong style="color: #b4b2b0">·</strong>
+										{{-""-}}
+									</span><br>
+									<span title="two players">
+										{%- include 'Runes', runes: Boss.TotalDuoRunes %}
+										<strong style="color: #b4b2b0">··</strong>
+										{{-""-}}
+									</span><br>
+									<span title="three players">
+										{% include 'Runes', runes: Boss.TotalTrioRunes %}
+										<strong style="color: #b4b2b0">∴</strong>
+										{{-""-}}
+									</span>
 								{%- endif -%}
 							{%- else -%}
 								{%- include 'Runes', runes: Boss.Runes[0] -%}
@@ -76,17 +85,17 @@
 									<br>
 									{%- if Nightreign -%}
 										{%- if Boss.SoloRunes > 0 -%}
-											<span title="solo">
+											<span title="one player">
 												{%- include 'Runes', runes: Boss.TotalSoloRunes %}
 												<strong>·</strong>
 												{{-""-}}
 											</span>,
-											<span title="duo">
+											<span title="two players">
 												{%- include 'Runes', runes: Boss.TotalDuoRunes %}
 												<strong>··</strong>
 												{{-""-}}
 											</span>,
-											<span title="trio">
+											<span title="three players">
 												{%- include 'Runes', runes: Boss.TotalTrioRunes %}
 												<strong>∴</strong>
 												{{-""-}}
@@ -104,36 +113,48 @@
 					<tr>
 						<td>HP</td>
 						<td>
-							{% for hp in Boss.HP[0] %}
-								{% unless forloop.first %}<br>{% endunless %}
-								{{hp | number}}
-								{% if forloop.length > 1 %}
+							{%- if Nightreign %}<span title="one player">{% endif -%}
+							{%- for hp in Boss.HP[0] -%}
+								{%- unless forloop.first %}<br>{% endunless -%}
+								{{- hp | number -}}
+								{%- if forloop.length > 1 %}
 									<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
-								{% endif %}
-								{% if Boss.Count > 1 %}<span style="color: #b4b2b0">each</span>{% endif %}
-							{% endfor %}
-							{% if Nightreign %}
-								<span style="color: #b4b2b0">solo</span><br/>
-								{% for hp in Boss.DuoHP[0] %}
-									{% unless forloop.first %}<br>{% endunless %}
-									{{hp | number}}
-									{% if forloop.length > 1 %}
-										<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
-									{% endif %}
-								{% endfor %}
-								<span style="color: #b4b2b0">
-									{% if Boss.Count > 1 %}each{% endif %}
-									duo</span><br/>
-								{% for hp in Boss.TrioHP[0] %}
-									{% unless forloop.first %}<br>{% endunless %}
-									{{hp | number}}
-									{% if forloop.length > 1 %}
-										<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
-									{% endif %}
-								{% endfor %}
-								<span style="color: #b4b2b0">
-									{%- if Boss.Count > 1 %}each{% endif %}
-									trio</span>
+								{%- endif -%}
+								{%- if Boss.Count > 1 %} <span style="color: #b4b2b0">each</span>{% endif -%}
+							{%- endfor -%}
+							{%- if Nightreign %}
+									<strong style="color: #b4b2b0">·</strong>
+								</span><br/>
+								<span title="two players">
+									{%- for hp in Boss.DuoHP[0] -%}
+										{%- unless forloop.first %}<br>{% endunless -%}
+										{{- hp | number -}}
+										{%- if forloop.length > 1 %}
+											<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
+										{%- endif -%}
+									{%- endfor %}
+									<span style="color: #b4b2b0">
+										{%- if Boss.Count > 1 %}each {% endif -%}
+										<strong>··</strong>
+										{{-""-}}
+									</span>
+									{{-""-}}
+								</span><br/>
+								<span title="three players">
+									{%- for hp in Boss.TrioHP[0] -%}
+										{%- unless forloop.first %}<br>{% endunless -%}
+										{{- hp | number -}}
+										{%- if forloop.length > 1 %}
+											<span style="color: #b4b2b0">(phase {{forloop.index}})</span>
+										{%- endif -%}
+									{%- endfor %}
+									<span style="color: #b4b2b0">
+										{%- if Boss.Count > 1 %}each {% endif -%}
+										<strong>∴</strong>
+										{{-""-}}
+									</span>
+									{{-""-}}
+								</span>
 							{% endif %}
 						</td>
 					</tr>

@@ -1531,12 +1531,24 @@ public partial class Boss
         ),
         new Boss(
             49000010, "Caligo, Miasma of Night",
+            image: Image.Full1080p("caligo-nightreign"),
             drops: ["Night of the Miasma", "Relics"],
             strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Holy],
             weakerVS: [DamageType.Fire],
             statusTypes: [StatusType.Frostbite],
             nightlord: true,
             expeditions: ["Fissure in the Fog"]
+        ),
+        new Boss(
+            49010010, "Caligo, Miasma of Night",
+            image: "https://eldenringnightreign.wiki.fextralife.com/file/Elden-Ring-Nightreign/caligo-miasma-of-night-everdark-sovereign-nightlord-boss-elden-ring-nightreign-wiki-guide.png",
+            location: "Everdark Sovereign",
+            drops: ["Relics", "Sovereign Sigils"],
+            strongerVS: [DamageType.Magic, DamageType.Lightning, DamageType.Holy],
+            weakerVS: [DamageType.Fire],
+            statusTypes: [StatusType.Frostbite],
+            nightlord: true,
+            expeditions: ["Fissure in the Fog Everdark Sovereign"]
         ),
         new Boss(
             75800010, "The Shape of Night",
