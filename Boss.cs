@@ -6,76 +6,33 @@ public partial class Boss
     public Boss(
         int id,
         string name,
-        string? location = null,
-        Image? image = null,
-        Image? topLevelImage = null,
-        IEnumerable<int>? additionalPhases = null,
-        bool boss = true,
-        bool npc = false,
-        int? gameAreaID = null,
-        int? charaInitID = null,
         IEnumerable<int>? spEffectSetIDs = null,
         IEnumerable<int>? spEffectIDs = null,
-        string? closestGrace = null,
-        bool optional = true,
         bool multiplayerAllowed = true,
         bool summonsAllowed = true,
-        bool parriable = false,
-        bool backstabbable = false,
-        int parriesPerCrit = 1,
-        bool critable = true,
-        IEnumerable<DamageType>? damageTypes = null,
-        IEnumerable<StatusType>? statusTypes = null,
         IEnumerable<IconLink>? strongerVS = null,
         IEnumerable<IconLink>? weakerVS = null,
-        IEnumerable<string>? drops = null,
         string? weakPoint = null,
         IEnumerable<string>? summonableNPCs = null,
         int? damageBaseline = null,
         string? damageBaselineName = null,
 
         // Nightreign-specific attributes
-        bool nightlord = false,
-        NightBossState nightBoss = NightBossState.No,
-        IEnumerable<string>? expeditions = null,
-        Game? firstAppearance = null,
-        bool formidable = false,
         IEnumerable<ShiftingEarth>? inShiftingEarth = null,
         IEnumerable<ShiftingEarth>? notInShiftingEarth = null
     ) {
         ID = id;
         Name = name;
-        Location = location;
-        Image = image ?? Image.None();
-        TopLevelImage = topLevelImage;
-        ClosestGrace = closestGrace ?? location;
-        IsBoss = boss;
-        IsNPC = npc;
-        Optional = optional;
         MultiplayerAllowed = multiplayerAllowed;
         SummonsAllowed = summonsAllowed;
-        GameAreaID = gameAreaID;
-        CharaInitID = charaInitID;
         if (spEffectIDs != null) SPEffectIDs.AddAll(spEffectIDs);
         if (spEffectSetIDs != null) SPEffectSetIDs.AddAll(spEffectSetIDs);
-        if (damageTypes != null) DamageTypes.AddAll(damageTypes);
-        if (statusTypes != null) StatusTypes.AddAll(statusTypes);
         if (strongerVS != null) StrongerVS.AddAll(strongerVS);
         if (weakerVS != null) WeakerVS.AddAll(weakerVS);
         if (inShiftingEarth != null) InShiftingEarth.AddAll(inShiftingEarth);
         if (notInShiftingEarth != null) NotInShiftingEarth.AddAll(notInShiftingEarth);
         WeakPoint = weakPoint;
-        if (drops != null) Drops.AddAll(drops);
-        Backstabbable = backstabbable || npc;
-        Parriable = parriable;
-        ParriesPerCrit = parriesPerCrit;
-        Critable = critable && (!npc || parriable);
         if (summonableNPCs != null) SummonableNPCs.AddAll(summonableNPCs);
-        Nightlord = nightlord;
-        NightBossState = nightBoss;
-        if (expeditions != null) Expeditions.AddAll(expeditions);
-        if (firstAppearance != null) FirstAppearance = firstAppearance;
-        Formidable = formidable;
         if (damageBaseline is { } baselineId)
         {
             DamageBaselineBoss = new Boss(baselineId, name);
@@ -87,19 +44,21 @@ public partial class Boss
             }
             DamageBaselineName = damageBaselineName;
         }
-
-        if (additionalPhases != null)
-        {
-            foreach (var phaseID in additionalPhases)
-            {
-                AdditionalPhases.Add(new Boss(phaseID, name, location));
-            }
-        }
     }
 
     public int ID { get; init; }
     public int Count { get; init; } = 1;
-    public List<Boss> AdditionalPhases { get; } = [];
+    public List<int> AdditionalPhaseIDs {
+        init
+        {
+            field = value;
+            _additionalPhases = [..
+                value.Select((phaseID) => new Boss(phaseID, Name) { Location = Location })
+            ];
+        }
+    } = [];
+    public List<Boss> AdditionalPhases => _additionalPhases;
+    private readonly List<Boss> _additionalPhases = [];
     public string Name { get; init; }
     public string? Location { get; init; }
 
@@ -133,10 +92,10 @@ public partial class Boss
 
     public IconLink? Affinity { get; init; }
 
-    public string? ClosestGrace { get; init; }
-    public bool IsBoss { get; }
-    public bool IsNPC { get; }
-    public bool Optional { get; init; }
+    public string? ClosestGrace { get => field ?? Location; init; }
+    public bool IsBoss { get; init; } = true;
+    public bool IsNPC { get; init; } = false;
+    public bool Optional { get; init; } = true;
     public bool MultiplayerAllowed { get; init; }
     public bool SummonsAllowed { get; init; }
     public int? GameAreaID { get; init; }
@@ -158,11 +117,17 @@ public partial class Boss
 
     public int Stance { get; set; }
     public bool Parriable { get; init; }
-    public bool Backstabbable { get; init; }
+    public bool? Backstabbable {
+        get => field ?? IsNPC;
+        init;
+    }
     public int ParriesPerCrit{ get; init; }
-    public bool Critable { get; init; }
-    public SortedSet<DamageType> DamageTypes { get; } = [];
-    public SortedSet<StatusType> StatusTypes { get; } = [];
+    public bool? Critable {
+        get => field ?? (!IsNPC || Parriable);
+        init;
+    }
+    public SortedSet<DamageType> DamageTypes { get; init; } = [];
+    public SortedSet<StatusType> StatusTypes { get; init; } = [];
     public SortedSet<IconLink> StrongerVS { get; } = [];
     public SortedSet<IconLink> WeakerVS { get; } = [];
     public SortedDictionary<DamageType, int> Negations { get; } = [];
@@ -181,7 +146,7 @@ public partial class Boss
     public int TotalSoloRunes => SoloRunes * Count;
     public int TotalDuoRunes => DuoRunes * Count;
     public int TotalTrioRunes => TrioRunes * Count;
-    public List<string> Drops { get; } = [];
+    public List<string> Drops { get; init; } = [];
     public SortedDictionary<StatusType, List<List<int>>?> Resistance { get; } = [];
     public SortedSet<WeaknessType> Weaknesses { get; } = [];
     public string? WeakPoint { get; }
@@ -189,7 +154,7 @@ public partial class Boss
     public List<string> SummonableNPCs { get; } = [];
     public (float, float) MultiplayerHPScaling { get; set; } = (1, 1);
     public bool Nightlord { get; init; }
-    public NightBossState NightBossState { get; init; }
+    public NightBossState NightBossState { get; init; } = NightBossState.No;
     public bool IsNightBoss => NightBossState != NightBossState.No;
     public int? NightBossDayNumber => NightBossState switch
     {
@@ -197,12 +162,12 @@ public partial class Boss
         NightBossState.Day2 => 2,
         _ => null
     };
-    public bool Formidable { get; init; }
+    public bool Formidable { get; init; } = false;
     public Image Image { get; init; } = Image.None();
     public string ImageHtml => Image.ToHtml(this);
     public Image? TopLevelImage { get; init; }
     public string? TopLevelImageHtml => TopLevelImage?.ToHtml(this);
-    public List<string> Expeditions { get; } = [];
+    public List<string> Expeditions { get; init; } = [];
     public Game? FirstAppearance { get; init; }
     public double DamageMultiplier { get; set; } = 1.0;
     public double? DamageBaseline { get; set; }
