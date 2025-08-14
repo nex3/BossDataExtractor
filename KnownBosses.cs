@@ -2680,5 +2680,98 @@ public partial class Boss
             damageBaseline: 75600020,
             damageBaselineName: "Libra, Creature of Night"
         ),
+        new Boss(
+            46004080, "Frenzied Horde", // night horde
+            location: "Event",
+            image: Image.Full4K("frenzied-horde-nightreign-full"),
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"],
+            drops: ["Favor of the Night"],
+            damageTypes: [DamageType.Standard, DamageType.Strike, DamageType.Fire],
+            statusTypes: [StatusType.Madness],
+            weakerVS: [DamageType.Slash],
+            damageBaseline: 46000110,
+            damageBaselineName: "the Tunnel boss"
+        ) { Count = 2 },
+        new Boss(
+            43530130, "Knight", // night horde
+            location: "Event",
+            parriable: true,
+            backstabbable: true,
+            statusTypes: [StatusType.Madness],
+            damageTypes: [DamageType.Standard, DamageType.Strike, DamageType.Fire],
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Pierce],
+            damageBaseline: 43511120,
+            damageBaselineName: "the Fort boss Lordsworn Captain",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"]
+        ),
+        new Boss(
+            43134030, "Soldier", // night horde
+            location: "Event",
+            parriable: true,
+            backstabbable: true,
+            strongerVS: [DamageType.Holy],
+            weakerVS: [DamageType.Pierce],
+            statusTypes: [StatusType.Madness],
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"]
+        ) { Count = 4 },
+        new Boss(
+            43738030, "Foot Soldier", // night horde
+            location: "Event",
+            parriable: true,
+            backstabbable: true,
+            statusTypes: [StatusType.Madness],
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"]
+        ) { Count = 7 },
+        new Boss(
+            45600030, "Giant Crow", // night horde
+            location: "Event",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"],
+            drops: ["Favor of the Night"],
+            damageBaseline: 45601020,
+            damageBaselineName: "the Mountaintop boss Giant Crows"
+        ) { Count = 2 },
+        new Boss(
+            45500030, "Giant Dog", // night horde
+            location: "Event",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"]
+        ) { Count = 5 },
+        new Boss(
+            42810010, "Shield-Headed Ant", // night horde
+            location: "Event",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"],
+            drops: ["Favor of the Night"],
+            strongerVS: [DamageType.Standard, DamageType.Strike, DamageType.Slash, DamageType.Pierce],
+            weakerVS: [DamageType.Lightning]
+        ) { Count = 2 },
+        new Boss(
+            42800520, "Winged Ant", // night horde
+            location: "Event",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"],
+            strongerVS: [DamageType.Slash],
+            weakerVS: [DamageType.Fire]
+        ) { Count = 4 },
+        new Boss(
+            42800020, "Worker Ant", // night horde
+            location: "Event",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"]
+        ) { Count = 6 },
+        new Boss(
+            45050010, "Dragon Horde",
+            location: "Event",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"],
+            drops: ["Favor of the Night"],
+            damageBaseline: 45000010,
+            damageBaselineName: "the Flying Dragon of the Hills field boss",
+            weakerVS: [DamageType.Pierce]
+        ) { Count = 2 },
+        new Boss(
+            40001020, "Wraith Horde",
+            location: "Event",
+            expeditions: ["Tricephalos", "Augur", "Darkdrift Knight"],
+            drops: ["Favor of the Night"],
+            strongerVS: [DamageType.Holy],
+            weakerVS: [DamageType.Slash]
+        ) { Count = 9 },
     ];
 }

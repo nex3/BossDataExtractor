@@ -16,9 +16,9 @@ var gameAbbrev = eldenRing ? "ER" : "NR";
 var smithboxAssetPath = "D:\\Natalie\\Code\\smithbox\\src\\Smithbox.Data\\Assets";
 
 var bossName = "Crucible Knight";
-int? bossID = 49000010;
+int? bossID = 40001020;
 string? location = null;
-var displayType = Display.Infobox;
+var displayType = Display.NewPage;
 var multipleEnemiesOfMany = true;
 var minify = true;
 
@@ -78,18 +78,20 @@ foreach (var file in bnd.Files)
 }
 
 var paramNames = new Dictionary<string, Dictionary<int, string>>();
-using (var communityRowNames = JsonDocument.Parse(
-    File.ReadAllText(
-        Path.Join(smithboxAssetPath, $"PARAM\\{gameAbbrev}\\Community Row Names.json")
-    )
-))
+
+foreach (var name in paramsWeCareAbout)
 {
-    foreach (var param in communityRowNames.RootElement.GetProperty("Params").EnumerateArray())
+    var path = Path.Join(smithboxAssetPath, $"PARAM\\{gameAbbrev}\\Community Row Names\\{name}.json");
+    if (!File.Exists(path))
     {
-        var name = param.GetProperty("Name").GetString()!;
-        if (!paramsWeCareAbout.Contains(name)) continue;
+        paramNames[name] = [];
+        continue;
+    }
+
+    using (var param = JsonDocument.Parse(File.ReadAllText(path)))
+    {
         var names = new Dictionary<int, string>();
-        foreach (var entry in param.GetProperty("Entries")!.EnumerateArray())
+        foreach (var entry in param.RootElement.GetProperty("Entries")!.EnumerateArray())
         {
             names[entry.GetProperty("ID").GetInt32()!] = entry.GetProperty("Entries")[0].GetString();
         }
@@ -234,7 +236,10 @@ void loadBossData(Boss boss)
         boss.Stance = (int)Math.Round((float)bossParams["superArmorDurability"].Value);
 
         var behavior = bossParams["behaviorVariationId"];
-        if (attacksForEnemy.TryGetValue((int)behavior.Value / 10, out var bossAttacks))
+        if (
+            boss.DamageTypes.Count == 0 &&
+            attacksForEnemy.TryGetValue((int)behavior.Value / 10, out var bossAttacks)
+        )
         {
             foreach (var attack in bossAttacks)
             {
