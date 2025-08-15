@@ -6,13 +6,8 @@ public partial class Boss
     public Boss(
         int id,
         string name,
-        IEnumerable<int>? spEffectSetIDs = null,
-        IEnumerable<int>? spEffectIDs = null,
         bool multiplayerAllowed = true,
         bool summonsAllowed = true,
-        IEnumerable<IconLink>? strongerVS = null,
-        IEnumerable<IconLink>? weakerVS = null,
-        string? weakPoint = null,
         IEnumerable<string>? summonableNPCs = null,
         int? damageBaseline = null,
         string? damageBaselineName = null,
@@ -25,13 +20,8 @@ public partial class Boss
         Name = name;
         MultiplayerAllowed = multiplayerAllowed;
         SummonsAllowed = summonsAllowed;
-        if (spEffectIDs != null) SPEffectIDs.AddAll(spEffectIDs);
-        if (spEffectSetIDs != null) SPEffectSetIDs.AddAll(spEffectSetIDs);
-        if (strongerVS != null) StrongerVS.AddAll(strongerVS);
-        if (weakerVS != null) WeakerVS.AddAll(weakerVS);
         if (inShiftingEarth != null) InShiftingEarth.AddAll(inShiftingEarth);
         if (notInShiftingEarth != null) NotInShiftingEarth.AddAll(notInShiftingEarth);
-        WeakPoint = weakPoint;
         if (summonableNPCs != null) SummonableNPCs.AddAll(summonableNPCs);
         if (damageBaseline is { } baselineId)
         {
@@ -100,8 +90,8 @@ public partial class Boss
     public bool SummonsAllowed { get; init; }
     public int? GameAreaID { get; init; }
     public int? CharaInitID { get; init; }
-    public SortedSet<int> SPEffectSetIDs { get; } = [];
-    public SortedSet<int> SPEffectIDs { get; } = [];
+    public SortedSet<int> SPEffectSetIDs { get; init; } = [];
+    public SortedSet<int> SPEffectIDs { get; init; } = [];
     public float? Day2HPMult { get; set; }
     public float? Day2DamageMult { get; set; }
 
@@ -128,8 +118,8 @@ public partial class Boss
     }
     public SortedSet<DamageType> DamageTypes { get; init; } = [];
     public SortedSet<StatusType> StatusTypes { get; init; } = [];
-    public SortedSet<IconLink> StrongerVS { get; } = [];
-    public SortedSet<IconLink> WeakerVS { get; } = [];
+    public SortedSet<IconLink> StrongerVS { get; init; } = [];
+    public SortedSet<IconLink> WeakerVS { get; init; } = [];
     public SortedDictionary<DamageType, int> Negations { get; } = [];
     public SortedSet<ShiftingEarth> InShiftingEarth { get; } = [];
     public SortedSet<ShiftingEarth> NotInShiftingEarth { get; } = [];
@@ -149,7 +139,7 @@ public partial class Boss
     public List<string> Drops { get; init; } = [];
     public SortedDictionary<StatusType, List<List<int>>?> Resistance { get; } = [];
     public SortedSet<WeaknessType> Weaknesses { get; } = [];
-    public string? WeakPoint { get; }
+    public string? WeakPoint { get; init; }
     public int? WeakPointExtraDamage { get; set; }
     public List<string> SummonableNPCs { get; } = [];
     public (float, float) MultiplayerHPScaling { get; set; } = (1, 1);
